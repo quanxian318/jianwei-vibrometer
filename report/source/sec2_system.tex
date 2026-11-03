@@ -1,0 +1,166 @@
+% ======================================================================
+\section{系统组成及功能说明}
+% ======================================================================
+
+\subsection{整体介绍}
+\label{sec:arch}
+
+见微由四部分组成：AX7010 开发板（XC7Z010，512 MB DDR3）、AN5642 双目相机、自研主载板与前面板，以及插在主载板上的 Arduino Nano ESP32。系统架构见图~\ref{fig:arch}。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1cm,y=1cm]
+% --- AX7010 regions
+\draw[fill=plc!40,draw=axred!55,rounded corners=4pt] (3.3,6.15) rectangle (10.7,10.75);
+\node[anchor=north west,font=\footnotesize\bfseries,text=axred!85!black] at (3.4,10.72) {PL：可编程逻辑};
+\draw[fill=extc,draw=mute,rounded corners=2pt] (3.65,5.2) rectangle (10.7,5.9);
+\node[font=\footnotesize] at (7.17,5.55) {DDR3 512 MB：VDMA 经 HP0 写入，PS 直接读取};
+\draw[fill=psc!50,draw=navy!50,rounded corners=4pt] (3.3,0.3) rectangle (10.7,4.95);
+\node[anchor=south west,font=\footnotesize\bfseries,text=navy] at (3.4,0.33) {PS：双核 Cortex-A9，Linux，主程序 vibmond};
+\node[draw=axred,thick,rounded corners=5pt,fit={(3.18,0.18)(10.82,10.9)},inner sep=0pt] (ax) {};
+\node[anchor=south,font=\footnotesize\bfseries,text=axred] at (7,10.92) {ALINX AX7010（AMD Zynq-7010）};
+% --- PL blocks
+\node[blk=plc,minimum width=2.05cm] (cap)  at (4.5,9.55) {双路 OV5640\\像素采集};
+\node[blk=plc,minimum width=2.05cm] (vdma) at (7.0,9.55) {AXI VDMA ×3\\帧缓存读写};
+\node[blk=plc,minimum width=2.05cm] (hdmi) at (9.5,9.55) {VTC + rgb2dvi\\HDMI 输出};
+\node[blk=plc,minimum width=2.05cm] (pdm)  at (4.5,7.3) {PDM 接收\\2 MHz、FIFO};
+\node[blk=plc,minimum width=2.05cm] (uart) at (7.0,7.3) {UART16550\\打印、CTS};
+\node[blk=plc,minimum width=2.05cm] (lamp) at (9.5,7.3) {补光 PWM\\心跳看门狗};
+% --- PS blocks
+\node[blk=psc,minimum width=2.05cm] (aco) at (4.5,3.75) {PDM 抽取\\声学包络谱};
+\node[blk=psc,minimum width=2.05cm] (spc) at (7.0,3.75) {频谱分析\\基线门限判定};
+\node[blk=psc,minimum width=2.05cm] (trk) at (9.5,3.75) {多点亚像素\\LK 跟踪};
+\node[blk=psc,minimum width=2.05cm] (ste) at (4.5,1.65) {双目辅助深度\\约 1 Hz};
+\node[blk=psc,minimum width=2.05cm] (ui)  at (7.0,1.65) {界面、记录\\报警、打印};
+\node[blk=psc,minimum width=2.05cm] (api) at (9.5,1.65) {HTTP API\\Nano 协议};
+% --- left: target and sensors
+\node[blk=extc,minimum width=2.1cm] (tgt) at (1.3,10.2) {振动目标\\散斑铝片};
+\node[blk=extc,minimum width=2.1cm] (cam) at (1.3,8.75) {AN5642\\双目相机};
+\node[blk=extc,minimum width=2.1cm] (mic) at (1.3,7.3) {MP34DT01\\PDM 麦克风};
+% --- right: peripherals
+\node[blk=extc,minimum width=2.9cm] (scr) at (14.2,9.55) {7 英寸触摸屏\\HDMI + USB 触摸};
+\node[blk=ownc,minimum width=2.9cm] (pnl) at (14.2,8.4) {前面板（自研）\\旋钮、按键、WS2812};
+\node[blk=extc,minimum width=2.9cm] (ld)  at (14.2,7.3) {补光灯、十字激光};
+\node[blk=extc,minimum width=2.9cm] (prn) at (14.2,6.35) {热敏打印机};
+\node[blk=ownc,minimum width=2.9cm] (cb)  at (14.2,4.95) {主载板（自研）\\电源、监测、RTC\\IO 扩展、报警驱动};
+\node[blk=espc,minimum width=2.9cm] (nano) at (14.2,3.2) {Nano ESP32\\NFC、语音、Wi-Fi};
+\node[blk=extc,minimum width=2.9cm] (app) at (14.2,1.5) {手机 / 电脑 APP};
+% --- arrows
+\draw[arr,dashed] (tgt) -- node[right,lbl]{散斑图像} (cam);
+\draw[arr,dashed] (tgt.west) -- ++(-0.25,0) |- node[pos=0.27,left,lbl,align=right]{机器\\声音} (mic.west);
+\draw[arr] (cam.east) -- ++(0.5,0) |- (cap.west);
+\node[lbl,above] at (3.1,9.55) {DVP};
+\draw[arr] (mic) -- node[above,lbl]{CLK/DAT} (pdm);
+\draw[arr] (cap) -- (vdma);
+\draw[arr] (vdma) -- (hdmi);
+\draw[darr] (vdma.south) -- (7.0,5.9);
+\draw[arr] (9.5,5.2) -- (trk.north);
+\draw[arr] (pdm.south) -- ++(0,-0.5) -| (3.47,4.6) |- (aco.west);
+\node[lbl,rotate=90] at (3.47,5.55) {AXI-Lite};
+\draw[arr] (trk) -- (spc);
+\draw[arr] (aco) -- (spc);
+\draw[arr] (spc) -- (ui);
+\draw[arr] (ste) -- (ui);
+\draw[darr] (ui) -- (api);
+\draw[arr] (hdmi) -- (scr);
+\draw[arr] (lamp) -- (ld);
+\draw[arr] (uart.south) -- ++(0,-0.4) -- (12.2,6.5) -- (12.2,6.35) -- (prn.west);
+\draw[darr] (cb.west) -- node[above,lbl]{J801 40 针} (10.82,4.95);
+\draw[darr] (pnl.east) -- ++(0.3,0) |- (cb.east);
+\draw[darr] (api.east) -- ++(0.9,0) |- node[pos=0.75,above,lbl]{UART} (nano.west);
+\draw[darr] ([yshift=-1mm]api.south east) -- node[below,lbl,pos=0.55]{局域网 HTTP} (app.west);
+\draw[darr,dashed] (nano) -- node[right,lbl]{热点网关} (app);
+\end{tikzpicture}}
+\caption{见微系统架构（红：AX7010 与 PL，蓝：PS，绿：ESP32，黄：自研硬件，灰：外购模块）}
+\label{fig:arch}
+\end{figure}
+
+测量主链路如下：被测表面的散斑图像进入 AN5642，两路 OV5640 的像素由 PL 接收后经 VDMA 写入 DDR；PS 上的主程序 vibmond 读取帧缓存，对每个测点做亚像素跟踪，扣除参考点估计的相机平移后得到相对位移序列；位移序列按 128 帧分窗做频谱，与停机基线比较后汇总出主频和振幅；结果同时送往本地界面、报警输出、记录存储、打印服务和 HTTP 接口。声学辅助链路与之并行：PL 以 2 MHz 驱动 PDM 麦克风并缓存原始位流，PS 每 10 ms 读一次，抽取为 31.25 kHz 音频后做包络谱，给出独立的主频估计。
+
+\subsubsection{软硬件划分依据}
+
+划分的原则是按数据带宽、时序确定性和修改频率三个维度判断每项功能放在哪里（表~\ref{tab:partition}）。凡是需要以固定时钟节拍处理每个像素、每个位或每个 PWM 周期的工作都放在 PL；凡是需要反复调参、依赖浮点运算或要与用户交互的工作放在 PS；与测振结论无关、但需要独立协议栈的无线、文件系统和音频放在 ESP32。PS 是整机测量状态和最终记录的唯一管理者，界面、报警和打印读取同一份测量结果，ESP32 不自行给出“合格/超限”结论，PL 也不决定界面流程。
+
+\begin{table}[htbp]
+\centering
+\caption{PL、PS 与 ESP32 的职责划分及依据}
+\label{tab:partition}
+\small
+\begin{tabularx}{\linewidth}{@{}L{2.2cm}L{1.2cm}YL{5.1cm}@{}}
+\toprule
+\tabhead \tabh{功能} & \tabh{位置} & \tabh{实现} & \tabh{划分依据} \\
+\midrule
+双路视频采集 & PL & OV5640 接收、VDMA 帧缓存、HDMI 时序 & 双路约 249 MB/s，DMA 减少 CPU 搬运开销 \\
+PDM 麦克风 & PL+PS & PL：2 MHz 时钟、相位采样、FIFO、时间戳；PS：CIC/FIR 抽取 & 位级采样要求纳秒级确定性；抽取放 PS 节省 Slice \\
+补光与安全 & PL & 20 kHz PWM，2 s 心跳超时与掉电预警强制关断 & 保护不能依赖 Linux 调度 \\
+打印串口 & PL+PS & AXI UART16550 硬件 FIFO 与 CTS；PS 光栅排版与分段发送 & 流控需要硬件及时响应 \\
+多点跟踪 & PS & 25×25 逆组合 LK，12 测点 + 4 参考点 & 每帧约 16×8×625 次插值，A9 可承担；便于调参 \\
+频谱与判定 & PS & 去趋势、Hann、FFT、基线门限、插值与汇总 & 浮点运算，参数需频繁调整 \\
+双目深度 & PS & 160×90 Census + 两路径 SGM，约 1 Hz & 辅助功能；原 PL 核占 Slice 过多已迁出 \\
+界面与记录 & PS & 帧缓冲 UI、JSON 记录、HTTP API、打印排版 & 交互与存储逻辑复杂 \\
+NFC/语音/无线 & ESP32 & PN532、microSD、I²S 功放、Wi-Fi/NTP、APP 网关 & 协议栈独立，不占用测量 CPU \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+以 PDM 麦克风为例说明划分时的取舍。MP34DT01 要求 1～3.25 MHz 的时钟，并在时钟的一个半周期内采样数据；Linux 用户态无法以这种精度翻转引脚，必须由 PL 完成。但完整的 CIC + FIR 抽取在 PL 中需要多级累加器和乘法器，而当前设计的 Slice 占用已达 91\%。考虑到 PDM 字流只有 $2\,\mathrm{MHz}/32=62.5\,\mathrm{k}$ 字/s，PS 用查表法处理每个 32 位字只需 20 次查表和一次 63 抽头卷积（每两个字一次），计算量很小。于是 PL 只保留 2 MHz 时钟、相位采样、8192 字 FIFO（约 131 ms）和时间戳，抽取放到 PS，并用单元测试保证 PS 实现与参考模型逐位一致。
+
+亚像素跟踪当前在 PS 上运行。我们已经实现并验证了 PL 端的 LK 累加核（每时钟处理一个像素，与 C++ 模型 16/16 组逐位一致，见 \ref{sec:opt} 节），但要把它接入整机还需要搜索序列器、窗口装载和 DMA 接口，在 Slice 已经紧张的情况下优先保证视频、声学和外设链路稳定，跟踪暂留 PS。
+
+\subsubsection{一次测量会话的数据流}
+
+一次测量从选定测点开始，到输出报警和记录结束（图~\ref{fig:session}）。停机基线与测量结果绑定同一个测点布局：布局（测点、参考点坐标与尺寸）的哈希值写入基线文件，采样率相差超过 1\% 时拒绝比较；重新开机后不沿用上一次运行的基线，必须重新采集。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=4mm and 5mm]
+\node[blk=psc,minimum width=2.5cm] (s1) {选定测点框\\与 4 个参考点};
+\node[blk=psc,minimum width=2.5cm,right=of s1] (s2) {停机基线\\每 8 帧一窗};
+\node[blk=psc,minimum width=2.5cm,right=of s2] (s3) {保存包络\\≥5 窗，绑定布局};
+\node[blk=psc,minimum width=2.5cm,right=of s3] (s4) {启动电机\\开始测量};
+\node[blk=psc,minimum width=2.5cm,below=8mm of s4] (s5) {每 32 帧一窗\\逐点频谱};
+\node[blk=psc,minimum width=2.5cm,left=of s5] (s6) {窗口判定\\信号/静默/拒绝};
+\node[blk=psc,minimum width=2.5cm,left=of s6] (s7) {汇总：主频中位数\\代表点波形};
+\node[blk=espc,minimum width=2.5cm,left=of s7] (s8) {声学包络\\独立核对};
+\node[blk=ownc,minimum width=11.9cm,below=8mm of $(s7)!0.5!(s6)$] (s9) {判级：代表点峰峰值 $A_{pp}$ 与阈值比较\\报警灯、蜂鸣器、语音、APP 推送、JSON 记录、热敏打印};
+\draw[arr] (s1) -- (s2);
+\draw[arr] (s2) -- (s3);
+\draw[arr] (s3) -- (s4);
+\draw[arr] (s4) -- (s5);
+\draw[arr] (s5) -- (s6);
+\draw[arr] (s6) -- (s7);
+\draw[arr] (s8) -- (s7);
+\draw[arr] (s7.south) -- (s7.south |- s9.north);
+\end{tikzpicture}
+\caption{一次测量会话的数据流}
+\label{fig:session}
+\end{figure}
+
+\subsubsection{接口设计}
+
+各单元之间的接口在表~\ref{tab:ifaces} 中汇总。PL 外设经 AXI-Lite 映射到 PS 地址空间，地址由块设计固定；PS 与 Nano 之间使用自定义的二进制帧协议 V1（\ref{sec:nano} 节）；APP 通过 \code{/api/v1/} 下的 HTTP 接口访问设备，首次连接需配对。
+
+\begin{table}[htbp]
+\centering
+\caption{主要接口与地址}
+\label{tab:ifaces}
+\small
+\begin{tabularx}{\linewidth}{@{}L{2.6cm}L{4.4cm}Y@{}}
+\toprule
+\tabhead \tabh{接口} & \tabh{物理层 / 地址} & \tabh{内容} \\
+\midrule
+相机 → PL & 2×DVP（AN5642 扩展口） & 1280×720，45 帧/s，帧边界与像素时钟 \\
+PL → DDR & VDMA0/1/2，经 S\_AXI\_HP0 & 两路相机写入、显示读出；寄存器 0x4300\_0000/0x4301\_0000/0x4302\_0000 \\
+显示 & VTC 0x43C0\_0000，动态时钟 0x43C1\_0000 & 1024×600 HDMI，rgb2dvi 串行化 \\
+PDM 麦克风 & \code{pdm\_mic} 0x4403\_0000 & 17 个寄存器：控制、FIFO、字计数、时间戳锁存（表~\ref{tab:pdmregs}） \\
+打印串口 & AXI UART16550 0x4405\_0000 & 115200 8N1，CTS 流控，硬件 FIFO \\
+补光 & AXI GPIO 0x4407\_0000 → \code{lamp\_projector} & 命令字：使能、亮度百分比、心跳位 \\
+载板外设 & J801 40 针：I²C0/1/2、SPI、GPIO & TCA9555、INA226、DS3231、IMU、加速度计、ToF、温湿度、PDM \\
+PS ↔ Nano & PS UART0（EMIO），RTS/CTS + IRQ & 协议 V1：A5 5A 帧头、JSON 载荷、CRC-16/CCITT-FALSE \\
+PS ↔ APP & 以太网 / Wi-Fi，HTTP & \code{/api/v1/}：info、pair、live、status、settings、points、command、records \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\FloatBarrier

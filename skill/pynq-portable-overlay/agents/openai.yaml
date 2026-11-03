@@ -1,0 +1,4 @@
+interface:
+  display_name: "通用 PYNQ Overlay"
+  short_description: "复用 Overlay、寄存器与 DMA 验证流程，支持换板和算子移植"
+  default_prompt: "用 $pynq-portable-overlay 检查这组 bit/HWH 和 DMA 接口契约。"

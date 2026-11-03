@@ -1,0 +1,365 @@
+% ======================================================================
+\section{完成情况及性能参数}
+% ======================================================================
+
+\subsection{整体介绍}
+
+见微已完成整机装配并在板上跑通完整测量流程：双路相机采集与显示、多点跟踪、停机基线、频谱判定、声学核对、阈值判级、声光与语音报警、热敏打印、JSON 记录和 APP 推送。各功能的完成情况见表~\ref{tab:status}。
+
+\begin{table}[htbp]
+\centering
+\caption{功能完成情况}
+\label{tab:status}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.0cm}L{2.0cm}Y@{}}
+\toprule
+\tabhead \tabh{功能} & \tabh{状态} & \tabh{依据} \\
+\midrule
+双路采集与 HDMI 显示 & 板上运行 & 45.048 帧/s，452 帧无丢帧，界面实时预览 \\
+多点跟踪与基线判定 & 板上运行 & 12/12 测点、11/11 窗口通过 \\
+声学辅助测频 & 板上运行 & PDM 实采，声学 19.928 Hz 与视觉一致 \\
+声光与语音报警 & 板上运行 & 实测时红灯、蜂鸣器、“振动异常”语音同时动作 \\
+热敏打印 & 板上运行 & 独立 UART，现场打印测量报告 \\
+APP 与网关 & 板上运行 & 局域网实时数据、报警推送与结果详情 \\
+双目辅助深度 & 板上运行 & PS 后端以 160×90 分辨率约每秒更新一次 \\
+毫米标定 & 试验尺标 & 本次比例 0.20309 mm/像素 \\
+NFC 与语音共用 SPI & 联调中 & 接入 NFC 后 SD 语音偶发异常，原因未定位 \\
+前面板编码器与状态灯 & RTL 已仿真 & 载板控制核尚未并入当前位流 \\
+PL 亚像素跟踪 & 核心已验证 & LK 累加核逐位一致，整机接入待完成 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{工程成果}
+
+\subsubsection{机械成果}
+
+V17 外壳的底壳、顶盖和 M2 垫柱三个打印件已全部打印装配，屏幕、前面板、NFC、报警灯、四个功能按键、补光灯、十字激光、相机支架和打印机均已安装到位（图~\ref{fig:mech}）。相机下倾约 25°，放在桌面时视场覆盖前方的试验台；报警灯与 NFC 位于顶盖左上，麦克风孔位于前面板右下，四个按键从左到右依次为风扇、报警灯、照明和电源允许开关。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.61443\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.65mm]{\figpath/photo/device_side.jpg}
+\caption{整机斜视}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.34557\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.65mm]{\figpath/photo/interior.jpg}
+\caption{壳内布置}
+\end{subfigure}
+\caption{整机装配成果}
+\label{fig:mech}
+\end{figure}
+
+\subsubsection{电路成果}
+
+主载板与前面板各完成一版设计、贴片和装配，装入整机运行（图~\ref{fig:circ}）。载板提供三路 5 V 与两路 3.3 V 供电，INA226 读数显示测量时整机功耗约 9.3 W；TCA9555 报警输出、DS3231 时间源以及打印机、补光、报警灯和蜂鸣器的驱动在实测中正常工作。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.34562\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.64mm]{\figpath/photo/carrier_wired.jpg}
+\caption{主载板接线}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.61438\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.64mm]{\figpath/photo/touch_screen.jpg}
+\caption{触摸屏与外设联调}
+\end{subfigure}
+\caption{电路联调}
+\label{fig:circ}
+\end{figure}
+
+\subsubsection{软件成果}
+
+PL 端完成双路视频、HDMI、PDM 接收、补光 PWM 与看门狗、打印 UART 的集成，生成可上板位流；LK 累加核、双目 Census+SGM 核、载板控制核和显示增强核完成 RTL 与仿真验证。PS 端 vibmond 完成多点测振、声学分析、双目深度、界面、记录、打印、报警、HTTP 接口和 Nano 链路，以静态 ARM 二进制部署。Nano 固件 0.2.3 已烧录，13 条语音写入 SD 卡并读回校验。APP 完成三端外壳与共用界面。
+
+\subsection{特性成果}
+
+\subsubsection{板端实测结果}
+
+2026 年 11 月 4 日 02:05 的完整测量如表~\ref{tab:record} 所示。被测物为减速电机驱动的散斑铝片，相机 1 输出 1280×720 图像，测量框位于 (197, 235)，大小 256×124 像素，12 个测点按 4 列 3 行排布，4 个参考点贴在铝片下方静止的背景上（图~\ref{fig:points}）。先采 15 s 停机基线，再启动电机测量约 10 s。
+
+\begin{table}[htbp]
+\centering
+\caption{2026-11-04 板端测量记录 \code{jianwei-ax7010-20261104-020520}}
+\label{tab:record}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.6cm}L{4.3cm}Y@{}}
+\toprule
+\tabhead \tabh{项目} & \tabh{结果} & \tabh{说明} \\
+\midrule
+开始时间 / 时长 & 02:05:10.6 / 10.012 s & RTC 时间源，单调时钟计时 \\
+帧数 / 帧率 & 452 帧 / 45.0477 帧/s & 收到帧率与相机帧率相同 \\
+丢帧 / 跟踪失败 / 饱和 & 0 / 0 / 0 & 无重采样补点 \\
+帧间隔抖动 & 0.417 ms & 约为帧周期的 1.9\% \\
+分析窗 & 11 个，全部为信号窗 & 128 帧窗，每 32 帧一次 \\
+视觉主频 & 19.9476 Hz & 11 窗范围 19.851～19.964 Hz \\
+声学主频 & 19.9277 Hz & 3000～8000 Hz 包络，27.2 dB \\
+主频差 & 0.0199 Hz（0.10\%） & 容差 0.399 Hz，判为一致 \\
+超过基线的测点 & 12/12 & 信号/基线比 36.3～95.0 \\
+代表测点 & 第 2 点（比值 95.0） & 波形、频谱检查通过 \\
+峰峰值 & 1.0294 像素 / 0.2090 mm & 代表测点 $y$ 方向时域值 \\
+有效值 & 0.3451 像素 / 0.0701 mm & 同一序列，去线性趋势 \\
+尺标比例 & 0.20309 mm/像素 & 试验尺标，$y$ 方向 \\
+判级 & 报警 & 阈值：预警 0.01 mm，报警 0.02 mm \\
+照明 & 开启，60\% & 十字激光关闭 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.47\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=6.4cm,xmin=180,xmax=470,ymin=220,ymax=545,y dir=reverse,
+  axis equal image,xlabel={$x$ / 像素},ylabel={$y$ / 像素},tick label style={font=\scriptsize},label style={font=\footnotesize},
+  colormap={warm}{rgb255(0)=(255,236,179) rgb255(1)=(242,140,40) rgb255(2)=(178,34,34)},
+  colorbar,colorbar style={width=2.5mm,ylabel={信号/基线比},ylabel style={font=\scriptsize},tick label style={font=\scriptsize}},
+  point meta min=30,point meta max=100]
+\draw[navy,thick] (axis cs:197,235) rectangle (axis cs:453,359);
+\addplot[scatter,only marks,mark=*,mark size=3.6pt,scatter src=explicit] coordinates {
+ (229,255.67)[81.1] (293,255.67)[95.0] (357,255.67)[67.3] (421,255.67)[59.7]
+ (229,297)[75.6] (293,297)[62.3] (357,297)[60.7] (421,297)[36.3]
+ (229,338.33)[65.0] (293,338.33)[67.9] (357,338.33)[54.1] (421,338.33)[37.3]};
+\addplot[only marks,mark=square*,mark size=3pt,color=navy] coordinates {(266,494) (298,494) (266,526) (298,526)};
+\node[font=\scriptsize,anchor=south west,text=navy] at (axis cs:197,232) {测量框};
+\node[font=\scriptsize,anchor=west,text=navy] at (axis cs:305,510) {参考点};
+\end{axis}
+\end{tikzpicture}
+\caption{测点与参考点在图像中的位置}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.5\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=6.4cm,ybar,bar width=8pt,ymin=0,ymax=105,xmin=0.3,xmax=12.7,
+  xtick={1,...,12},xlabel={测点编号},ylabel={信号/基线比 $g_i$},tick label style={font=\scriptsize},
+  label style={font=\footnotesize},nodes near coords,nodes near coords style={font=\tiny,rotate=90,anchor=west},
+  grid=major,grid style={draw=gray!20}]
+\addplot[fill=amber!80,draw=amber!60!black] coordinates {(1,81.1) (2,95.0) (3,67.3) (4,59.7) (5,75.6) (6,62.3) (7,60.7) (8,36.3) (9,65.0) (10,67.9) (11,54.1) (12,37.3)};
+\draw[axred,thick,dashed] (axis cs:0.3,3) -- (axis cs:12.7,3);
+\node[font=\scriptsize,text=axred,anchor=south east] at (axis cs:12.6,4) {门限 3};
+\end{axis}
+\end{tikzpicture}
+\caption{逐点信号/基线比}
+\end{subfigure}
+\caption{2026-11-04 实测的测点布局与判定结果}
+\label{fig:points}
+\end{figure}
+
+12 个测点的信号/基线比都在 36 以上，远高于门限 3。测量框右列的测点 4、8、12 振幅较小（谐波有效值 0.26～0.30 像素），比值最低；左列和中部测点振幅较大，比值最高，铝片各处振幅的差异在测点之间清楚地表现出来。视觉与声学两条独立链路给出的主频相差 0.02 Hz，远小于视觉单窗 0.352 Hz 的频点间隔；11 个窗口的主频分布在 19.851～19.964 Hz 之间，取中位数后结果稳定。
+
+从按下“开始测量”到报警输出的过程与设计流程一致：基线采集完成时播放“停机基线已采集，请开始测量”；启动电机后点击开始，10 s 测量结束即给出结果，峰峰值 0.209 mm 超过 0.02 mm 报警阈值，红灯点亮、蜂鸣器间歇鸣响并播报“振动异常，请及时检查设备”，手机 APP 同时弹出报警；随后从结果页触发打印，热敏打印机输出含主频、峰峰值、12/12 测点和波形的报告（图~\ref{fig:uilive}、图~\ref{fig:app}）。
+
+\subsubsection{资源与时序}
+
+当前位流对应的 Vivado 2025.2 实现结果见表~\ref{tab:util}。LUT 和 BRAM 约用一半，但 Slice 占用 91.3\%：视频通路的 AXI 互联、VDMA 和格式转换分散在大量 Slice 中，每个 Slice 只用了部分 LUT。Slice 的占用成为后续加入跟踪加速核时的主要布局约束。已约束路径的最差建立裕量为 +0.756 ns，位于 125 MHz 时钟域；保持裕量为 +0.028 ns。
+
+\begin{table}[htbp]
+\centering
+\caption{PL 资源占用与时序（XC7Z010-1CLG400，实现后）}
+\label{tab:util}
+\small
+\begin{tabular}{@{}lrrr@{\hspace{2.5em}}lr@{}}
+\toprule
+\tabhead \tabh{资源} & \tabh{使用} & \tabh{可用} & \tabh{占用率} & \tabh{时序项} & \tabh{结果} \\
+\midrule
+LUT & 8945 & 17600 & 50.82\% & WNS（建立） & +0.756 ns \\
+触发器 & 14420 & 35200 & 40.97\% & WHS（保持） & +0.028 ns \\
+Slice & 4017 & 4400 & 91.30\% & WPWS（脉宽） & +0.333 ns \\
+BRAM & 30.5 & 60 & 50.83\% & 失败端点 & 0 \\
+DSP & 0 & 80 & 0\% & 时钟 & 100/125/40 MHz \\
+IOB & 53 & 100 & 53.00\% & MMCM & 1/2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{优化过程}
+\label{sec:opt}
+
+\paragraph{资源：双目深度从 PL 迁到 PS。}项目初期按“PL 做双目匹配、PS 做标定换算”的思路，在 PL 中实现了 Census + SGM 双目核并与队友原有的 BM 核做了对比。新核在 Middlebury 数据上精度明显更好\cite{scharstein2002}（表~\ref{tab:stereo}），与 C++ 模型逐位一致，板上诊断配置每 4 帧做一次 PS/PL 复算，累计 83 次核对零差异。但把双目核、DMA 和麦克风接收核一起放进整机后，Slice 接近用满，时序裕量只剩 +0.462 ns，已没有空间接入显示增强和位移核。考虑到主测振并不依赖深度，我们把双目深度降为辅助功能，移除 PL 双目核及其专用互联，改由 PS 以 160×90 分辨率约每秒计算一次。表~\ref{tab:res} 按功能阶段列出了资源变化：LUT 减少 5081 个，BRAM 减少 11 块，DSP 从 3 个降到 0。表中同时列出各阶段保留的功能。
+
+\begin{table}[htbp]
+\centering
+\caption{PL 资源随架构调整的变化}
+\label{tab:res}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.2cm}Yrrrr@{}}
+\toprule
+\tabhead \tabh{阶段} & \tabh{功能范围} & \tabh{LUT} & \tabh{BRAM} & \tabh{DSP} & \tabh{Slice} \\
+\midrule
+PL 双目阶段 & 双路视频、PL 双目核 + DMA、PDM 接收 & 13655 & 41.5 & 3 & 4400 \\
+PS 深度阶段 & 移除 PL 双目核，深度迁到 PS & 8574 & 30.5 & 0 & 4026 \\
+当前位流 & 在上一阶段基础上增加打印 UART & 8945 & 30.5 & 0 & 4017 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.86\linewidth,height=5.6cm,ybar,bar width=13pt,ymin=0,ymax=112,
+  symbolic x coords={PL 双目阶段,PS 深度阶段,当前位流},xtick=data,enlarge x limits=0.22,
+  ylabel={占用率 / \%},legend style={at={(0.5,1.03)},anchor=south,legend columns=3,font=\footnotesize,draw=none},
+  tick label style={font=\footnotesize},label style={font=\footnotesize},nodes near coords,
+  nodes near coords style={font=\tiny},every node near coord/.append style={/pgf/number format/.cd,fixed,precision=1},
+  grid=major,grid style={draw=gray!20}]
+\addplot[fill=axred!70,draw=axred!60!black] coordinates {(PL 双目阶段,77.6) (PS 深度阶段,48.7) (当前位流,50.8)};
+\addplot[fill=navy!55,draw=navy] coordinates {(PL 双目阶段,69.2) (PS 深度阶段,50.8) (当前位流,50.8)};
+\addplot[fill=amber!80,draw=amber!60!black] coordinates {(PL 双目阶段,100.0) (PS 深度阶段,91.5) (当前位流,91.3)};
+\legend{LUT,BRAM,Slice}
+\end{axis}
+\end{tikzpicture}
+\caption{三个阶段的 PL 资源占用率}
+\label{fig:res}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{PL 双目核与原 BM 核的对比（9 个 Middlebury 场景，模拟两相机曝光差异，$D=64$）}
+\label{tab:stereo}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\tabhead \tabh{方案} & \tabh{有效像素密度} & \tabh{误差 >2 像素比例} & \tabh{RMS 误差} \\
+\midrule
+原 BM 核 + 空间支持滤波 & 77.3\% & 8.2\% & 5.42 像素 \\
+新 PL 核原始输出 & 90.9\% & 4.4\% & 2.10 像素 \\
+新 PL 核 + PS 后处理 & 87.0\% & 3.1\% & 1.46 像素 \\
+\midrule
+\multicolumn{4}{@{}p{0.86\linewidth}@{}}{资源（综合估计）：新核约 2.0k LUT、1.5k FF、5.5 BRAM、4 DSP；原 BM 核 6605 LUT、4442 FF、17 BRAM} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{精度：跟踪算法从 NCC 改为逆组合 LK。}早期单点跟踪使用整数 NCC 搜索加抛物线插值。在 32×32 模板、斜坡加正弦的合成亚像素平移序列上，NCC 抛物线插值的误差 RMS 为 0.13 像素，存在明显的系统偏差（像素锁定）；逆组合 LK 在无噪声时为 0.005 像素，加 $\sigma=2$ 灰度噪声时为 0.014 像素，精度提高 10～25 倍。多点测振核因此采用 LK，NCC 仅保留为质量判据。
+
+\paragraph{实时性：面向 PL 的 LK 累加核与 PS 端的等价优化。}LK 每次迭代的主要计算是双线性插值和五个累加和（$\sum I$、$\sum I^2$、$\sum g_xI$、$\sum g_yI$、$\sum TI$）。我们在 PL 中实现了 \code{lk\_accum}：每个时钟处理一个像素，插值精度 1/256 像素，五路 48 位整数乘加，整数 ZNCC 搜索与 LK 亚像素更新共用同一个引擎。与 C++ 位精确模型比较，合成纹理 8 例加实拍帧 8 例共 16 组黄金向量逐位一致，32×32 模板每遍 1029 个时钟。按每测点每帧约 81 次整数搜索、最多 25 次细搜和 6 次 LK 迭代估算，100 MHz 下单测点约 1.2 ms，4 个测点加 1 个背景约 5.8 ms，低于 45 帧/s 的 22 ms 帧周期，为后续把多点跟踪迁入 PL 准备好了核心。PS 端在不改变数值结果的前提下做了两项优化：高斯平滑只处理模板可能读到的区域（约为整帧计算量的十分之一）；模板插值时预先缓存 25 个行坐标与 25 个列坐标的整数部分和小数部分，插值与累加顺序保持不变，结果与原核逐位一致。
+
+\paragraph{鲁棒性：从现场失败中修正的四处问题。}一是频率搜索上限：原算法只搜索到 $0.45f_s\approx20.3$ Hz，1320 r/min 电机约 22 Hz 的峰被排除，修改为 30 Hz 软件上限并在奈奎斯特频点处增加“仍在上升则不下结论”的保护，合成信号回归 7、21.6、22 Hz 通过。二是丢帧处理：把“任何丢帧即整窗无效”改为“连续丢帧不超过 2 帧、总量不超过 5\%、间隔偏差不超过 10\% 时重采样”，并在记录中保留原始帧数和丢帧标志。三是参考点纹理：参考点落在弱纹理纸面时停机基线反复失败，移到静止纸片上清晰的文字处后，69 个基线窗口全部通过，此后把“参考点必须有二维纹理”写入操作说明。四是打印分段：24 行一段、排空后间隔 120 ms，解决了文字压扁。表~\ref{tab:optsum} 汇总了这些优化前后的对比。
+
+\begin{table}[htbp]
+\centering
+\caption{优化前后对比}
+\label{tab:optsum}
+\small
+\begin{tabularx}{\linewidth}{@{}L{2.8cm}L{3.6cm}L{3.6cm}Y@{}}
+\toprule
+\tabhead \tabh{项目} & \tabh{优化前} & \tabh{优化后} & \tabh{依据} \\
+\midrule
+PL LUT / BRAM / DSP & 13655 / 41.5 / 3 & 8945 / 30.5 / 0 & 实现报告，功能范围不同 \\
+跟踪误差（合成） & NCC 0.13 像素 & LK 0.005～0.014 像素 & 32×32 合成序列 \\
+双目坏点率 & BM 8.2\% & 新核 + 后处理 3.1\% & Middlebury 9 场景 \\
+可测频率上限 & 20.3 Hz（$0.45f_s$） & 22.5 Hz（奈奎斯特） & 22 Hz 合成回归 \\
+丢帧处理 & 任一丢帧整窗无效 & ≤5\% 有界重采样 & 回归测试与记录标志 \\
+平滑计算量 & 整帧 & 约 1/10，结果逐位一致 & 模板读取范围分析 \\
+PDM 抽取 & 逐位积分（约 1000 万次加法/s） & 查表（125 万次/s） & 与逐位实现逐位一致 \\
+打印 & 局部文字压扁 & 720 行报告正常 & 同一报告重打对照 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{测试与验证}
+
+各部分的测试方式与结果见表~\ref{tab:tests}。所有比较类测试都以退出码和逐项差异判定，不以“程序没有报错”作为通过依据。
+
+\begin{table}[htbp]
+\centering
+\caption{测试与验证汇总}
+\label{tab:tests}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.6cm}YL{3.4cm}@{}}
+\toprule
+\tabhead \tabh{对象} & \tabh{方法} & \tabh{结果} \\
+\midrule
+PDM 接收核 & Icarus 测试平台，寄存器读写与 FIFO 行为 & 通过 \\
+PDM 抽取 & 查表实现与逐位 CIC/FIR 参考对比，随机与边界码流 & 逐位一致 \\
+PDM 寄存器表 & 单元测试解析 RTL 读写译码与驱动头文件比对 & 17 个寄存器一致 \\
+LK 累加核 & 16 组黄金向量（合成 8 + 实拍 8） & 16/16 逐位一致 \\
+双目核（PL 深度阶段） & RTL/C++ 逐位对比；板上每 4 帧复算 & 83 次零差异 \\
+测振算法 & 合成位移回归：7/21.6/22 Hz、两种相位、丢帧与采样率失配 & 通过，失配被拒绝 \\
+报警逻辑 & 主机测试：判级、静音、重试、刷新、阈值修改重判、无效结果清灯 & 通过 \\
+主机集成 & PS 主程序与 ESP32 网关核心集成检查 & 105 项通过 \\
+ARM 构建 & 静态链接 vibmond；代码包保存部署快照与 SHA256 & 已归档 \\
+Nano 固件 & 0.2.3 编译、DFU 烧录、USB 命令应答、SD 语音读回校验 & 通过 \\
+板端实测 & 2026-11-04 完整测量 & 见表~\ref{tab:record} \\
+技能包 & 一键离线复跑：正例、反例、故障注入 & 见 \ref{sec:llm} 节 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{复现说明}
+
+完整工程发布在 \url{https://github.com/quanxian318/jianwei-vibrometer}。仓库按源码、仿真、构建、板端文件、测试数据、技能包和报告组织，同时提供硬件工程、外壳模型、演示视频及中英文海报。主要入口见表~\ref{tab:repo}。
+
+\begin{table}[htbp]
+\centering
+\caption{代码与工程入口}
+\label{tab:repo}
+\small
+\begin{tabularx}{\linewidth}{@{}L{6.4cm}Y@{}}
+\toprule
+\tabhead \tabh{目录或文件} & \tabh{内容} \\
+\midrule
+\path{src/ax7010/linux/vibmon} & PS 主程序、测振、声学、界面、工具与测试 \\
+\path{src/ax7010/pl} & RTL、测试平台与黄金向量 \\
+\path{build/vivado} & 当前 BD、RTL、用户 IP、约束和实现报告 \\
+\path{src/nano_esp32} & Nano 固件、预编译文件与 SD 卡语音 \\
+\path{src/mobile_app}、\path{src/shared} & 多端 APP 与共用协议 \\
+\path{sim}、\path{data} & 仿真入口、测试结果与板端测量 JSON \\
+\path{board/artifacts} & PL 位流与 PS 可执行快照 \\
+\path{hardware} & 原生 EDA 工程、原理图、BOM、网表及外壳模型 \\
+\path{docs} & 接线、模块设置、构建说明及散斑图样 \\
+\path{skill}、\path{report} & 技能包、协作记录和技术报告 \\
+\path{media} & 演示视频、海报和产品图片 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{1. 硬件装配。}用嘉立创 EDA 专业版打开原生工程，按 Gerber 与 BOM 制作两块 PCB；外壳采用最终模型中的底壳、顶盖和垫柱三个打印件。按照逐引脚接线表连接 AX7010、主载板、前面板及外设。PN532 使用 SPI 模式，拨码开关 1 置 OFF、2 置 ON；MP34DT01 的 L/R 接地。接入 AX7010 前检查电源输出和线束针序。
+
+\paragraph{2. PL 构建。}在仓库根目录打开终端，使用 Vivado 2025.2：
+\begin{lstlisting}
+cd build/vivado
+vivado -mode batch -source create_project.tcl -tclargs build
+\end{lstlisting}
+脚本指定器件 \code{xc7z010clg400-1}，加载 BD、RTL、约束与用户 IP 后执行综合、实现和位流生成。归档的实现结果保存在 \path{reports_original_build}。
+
+\paragraph{3. PS 构建与测试。}在 Linux 或 WSL 中，从仓库根目录执行：
+\begin{lstlisting}
+cd src/ax7010/linux/vibmon
+make -j4 BUILD=build_host \
+  build_host/test_drivers build_host/test_vibration_band \
+  build_host/test_multipoint build_host/test_render \
+  build_host/test_uart16550
+build_host/test_drivers
+build_host/test_vibration_band
+build_host/test_multipoint
+build_host/test_render
+build_host/test_uart16550
+\end{lstlisting}
+交叉编译 ARM 程序：
+\begin{lstlisting}
+make -j4 BUILD=build_arm \
+  CXX=arm-linux-gnueabihf-g++ CC=arm-linux-gnueabihf-gcc \
+  AR=arm-linux-gnueabihf-ar \
+  CXXFLAGS='-O2 -g -mfpu=neon -mfloat-abi=hard' \
+  CFLAGS='-O2 -g -mfpu=neon -mfloat-abi=hard' \
+  LDFLAGS='-static -pthread' build_arm/vibmond
+\end{lstlisting}
+
+\paragraph{4. 板端运行。}Linux 镜像为视频帧缓存预留 DDR 顶端内存。停止相机与界面进程后，使用 \code{prepare\_an5642\_runtime.py} 加载位流并配置时钟。按 \path{config/current_board.example.json} 设置板级设备路径、外设和标定文件，然后运行：
+\begin{lstlisting}
+./vibmond -c board.json
+\end{lstlisting}
+
+\paragraph{5. Nano 与 APP。}从仓库根目录使用 arduino-cli 编译并烧录 Nano 固件：
+\begin{lstlisting}
+arduino-cli compile --fqbn arduino:esp32:nano_nora \
+  src/nano_esp32/vibmon_nano
+arduino-cli upload --fqbn arduino:esp32:nano_nora \
+  -p <port> src/nano_esp32/vibmon_nano
+\end{lstlisting}
+将 \path{src/nano_esp32/sd_card/voice} 下的 13 条 WAV 复制到 FAT32 microSD 卡的 \path{/voice} 目录。APP 共用网页位于 \path{src/mobile_app/web}，Android、iOS 和 Windows 外壳分别使用 Android Studio、Xcode 和 Visual Studio 构建。
+
+\paragraph{6. 测量。}在被测面贴散斑，参考点选在静止背景的清晰纹理处。固定机位后设置测量框和参考点，完成尺标标定，停机采集约 15 s 基线，启动被测物后测量约 10 s。结果页显示主频、位移峰峰值、有效值、声学核对和报警状态，可在 APP 中查看并打印报告。更换机位后重新标定、采集基线。
+
+\FloatBarrier
+

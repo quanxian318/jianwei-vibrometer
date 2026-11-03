@@ -1,0 +1,79 @@
+{
+  "page_mm": [
+    210,
+    297
+  ],
+  "pattern_mm": [
+    190.0,
+    260.0
+  ],
+  "png_dpi": 600,
+  "pdf_pages": 3,
+  "raster_binary": true,
+  "periodic_tile": false,
+  "patterns": [
+    {
+      "name": "fine",
+      "nominal_diameter_mm": 0.5,
+      "diameter_range_mm": [
+        0.425,
+        0.575
+      ],
+      "dots": 108149,
+      "vector_black_fraction": 0.4200007424500738,
+      "seed": 2026102101,
+      "raster_black_fraction_600dpi": 0.41501016350413944
+    },
+    {
+      "name": "medium",
+      "nominal_diameter_mm": 0.8,
+      "diameter_range_mm": [
+        0.68,
+        0.9199999999999999
+      ],
+      "dots": 42185,
+      "vector_black_fraction": 0.4200068804568233,
+      "seed": 2026102102,
+      "raster_black_fraction_600dpi": 0.4168475462770289
+    },
+    {
+      "name": "coarse",
+      "nominal_diameter_mm": 1.2,
+      "diameter_range_mm": [
+        1.02,
+        1.38
+      ],
+      "dots": 18736,
+      "vector_black_fraction": 0.42002116418541147,
+      "seed": 2026102103,
+      "raster_black_fraction_600dpi": 0.4188263750187917
+    },
+    {
+      "name": "large",
+      "nominal_diameter_mm": 2.0,
+      "diameter_range_mm": [
+        1.7,
+        2.3
+      ],
+      "dots": 6759,
+      "vector_black_fraction": 0.42004393441423526,
+      "seed": 2026102104,
+      "raster_black_fraction_600dpi": 0.41899640765693213,
+      "separate_pdf": "asset_6ad18eb660.pdf"
+    }
+  ],
+  "sha256": {
+    "asset_68b1df2da3.png": "075a437b8f7fd5c35c637c9462140e55d911e483940558237a20eed8397f7824",
+    "asset_48d60db71a.png": "fd566bd68fd56463421359338824627802f0f957ba968f7bc7d0ababa6f5b4b0",
+    "asset_6ad18eb660.pdf": "d56ec0912e1f08791b3fc43af12c4805bb6693b8e4660e1a05842f44156dc558",
+    "asset_259baf5532.svg": "6fe2e50ed5fb50702a375a7c117659151cbc4a3ffb3c9361d28ac59d5f18907a",
+    "asset_b4b3ab4a3d.png": "f7bb576ffa0ba8a0f5cf85e19244083839ddc931a13ae3403e73342edee804ac",
+    "asset_d55a451fa3.svg": "da573a6cf603c55b561a779282d33c07fe01feaf1b5153b841e27dd91f5ca049",
+    "asset_ea4b59ff42.png": "29f642784267ef70288a03d606f244fc47aa9a179eacca0f036645348099f655",
+    "asset_a27a2f0080.svg": "7eae55071728b2cb511e6f9c3ecc07845aa1c98d22b88658fb0e7b3f51495767",
+    "asset_6076f9386a.png": "fca9e31c4761c4a966e33bc28affe85a1b792998a571adae7cfcb4f3c8d4610f",
+    "asset_7f40fd2ca4.svg": "8f8fad2bbb64f4baad1dd1961571bc836feea5f9c1c5e781bfbb6dfb8fc9229d",
+    "asset_992fd6b41a.png": "218bd52a53b362c99e658967f80dc5579bb53c092c4a9a05ef9132770aee82ec",
+    "asset_a74faa9be8.pdf": "1351209eee0e8b46b17cf7f544a4e6764d8fd529b31bd6b3b8db0841eeed5773"
+  }
+}

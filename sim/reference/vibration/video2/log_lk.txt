@@ -1,0 +1,11 @@
+tip_upper: init 1 status 0 contrast 12.5 isotropy 0.251 sigma/noise x 0.0092 y 0.0133 px
+tip_lower: init 1 status 0 contrast 25.4 isotropy 0.807 sigma/noise x 0.0110 y 0.0099 px
+plate_mid: init 1 status 0 contrast 10.0 isotropy 0.446 sigma/noise x 0.0062 y 0.0046 px
+plate_root: init 0 status 3 contrast 5.2 isotropy 0.138 sigma/noise x 0.0000 y 0.0000 px
+wall_ref: init 1 status 0 contrast 4.8 isotropy 0.830 sigma/noise x 0.0144 y 0.0135 px
+field: valid 0 no_clear_line peak 10.857 Hz fraction 0.0200 median 0.0000
+  line 10.857 Hz  0.0200  harmonic 0
+  line 7.974 Hz  0.0174  harmonic 0
+  line 2.821 Hz  0.0113  harmonic 0
+  line 11.073 Hz  0.0035  harmonic 0
+  line 5.039 Hz  0.0009  harmonic 0

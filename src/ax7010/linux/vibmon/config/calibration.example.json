@@ -1,0 +1,6 @@
+{
+  "id": "CAL-YYYYMMDD-01",
+  "mm_per_px": 0.0,
+  "axis": "y",
+  "note": "Fill in from a known-displacement or target-grid calibration for the current lens, distance and measuring plane; copy to /etc/vibmon/calibration.json. A value <= 0 keeps results in pixels."
+}

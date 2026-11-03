@@ -1,0 +1,58 @@
+% ======================================================================
+\section{总结}
+% ======================================================================
+
+\subsection{可扩展之处}
+
+\paragraph{把多点跟踪迁入 PL。}LK 累加核已经逐位验证，下一步是补上整数搜索序列器、模板窗口装载和结果 DMA，把每帧 16 个模板的插值与累加交给 PL，PS 只做 2×2 更新和后续分析。这样可以在同样的帧率下支持更多测点，或配合更高帧率的相机提高可测频率。所需的 Slice 需要通过精简视频通路的互联和格式转换来腾出。
+
+\paragraph{提高采样率。}当前频率上限约 22.5 Hz。OV5640 在缩小输出窗口时可以提高帧率，测点区域通常只占画面的一小部分，按测量框开窗后有望把采样率提高一倍以上，覆盖更高的转频。对超过奈奎斯特频率的稳态振动，也可以利用已知的混叠关系做频率判读，但必须与声学结果交叉核对。
+
+\paragraph{正式标定与物理量输出。}用棋盘格完成相机内参与双目标定，在振动台上以已知幅值和频率做对照试验，给出位移的不确定度；在此基础上同时输出速度和加速度有效值，便于与 ISO 20816 的振动烈度分级对应，并加入多次测量的趋势记录。
+
+\paragraph{更复杂的现场。}测振核中已经有基于 RANSAC 与迭代加权最小二乘的背景仿射运动估计函数，接入后可以补偿相机轻微转动、缩放及局部近似仿射的背景变化，放宽对设备放置的要求。全视场亮度谱线检测也可以迁入 PL 实时运行，用来在大视场中快速找到振动最强的区域，再自动布置测点。
+
+\paragraph{完善外设与约束。}定位 NFC 与 SD 卡共用 SPI 时的语音异常，把载板控制核并入位流以启用前面板编码器和状态灯，补充时序约束消除无时钟和未约束端点，并在 PYNQ-Z2 实板上验证通用 PYNQ 技能。
+
+\subsection{心得体会}
+
+做这个作品之前，我们以为视觉测振的难点在算法精度。真正做下来才发现，大部分时间花在了算法之外：帧率是不是真的 45 帧、有没有丢帧、参考点有没有纹理、标定尺是不是和测点在同一深度、报警寄存器写进去了灯是不是真的亮了。每一个环节出问题，最后都表现为“测量无效”或者一个看起来合理但其实不对的数字。后来我们养成了一个习惯：结果出来先看采样和质量字段，再看频率和幅值，屏幕上显示的、寄存器回读的和现场看到的分别记录。
+
+资源分配也给了我们很深的体会。PL 双目核的精度明显好于原来的方案，逐位验证也做完了，最后还是把它从位流里拿掉了，因为主功能是测振，而 Slice 只够保证视频、声学和外设链路稳定。这让我们明白，软硬件划分不是看哪个模块“适合硬件”，而是看在有限的资源里哪些事必须准时、哪些事可以慢一点。
+
+电路设计上，最容易被忽略的是电源域和默认状态。主载板上有两个 3.3 V 域，AX7010 没上电时 Nano 一侧仍可能有电，如果没有带部分掉电功能的缓冲器，信号就会倒灌进 FPGA；负载驱动设置默认关断电平，TCA9555 上电默认输入，软件接管后再使能对应负载。这些细节在原理图上只是几个电阻和一颗缓冲器，却决定了整机能不能放心地反复上下电。
+
+和大模型协作的经验是：模型读代码、读日志、查数据手册的速度远快于我们，也常能提出我们没想到的排查方向，但它看不到实物，容易把“命令执行成功”当成“功能实现了”。我们逐渐学会了给它明确的约束（比如“不要动摄像头链路”），在它下结论时要求它说明还有哪些没有验证，并用现场观察去反驳它的判断。把这些反复用到的做法整理成技能包之后，后面的调试明显顺了很多。
+
+\clearpage
+% ======================================================================
+\section{参考文献}
+% ======================================================================
+\begingroup
+\renewcommand{\section}[2]{}
+\small
+\begin{thebibliography}{99}
+\setlength{\itemsep}{2pt}
+\bibitem{iso20816} ISO 20816-1:2016. Mechanical vibration---Measurement and evaluation of machine vibration---Part 1: General guidelines[S]. Geneva: ISO, 2016.
+\bibitem{sutton2009} Sutton M A, Orteu J J, Schreier H W. Image Correlation for Shape, Motion and Deformation Measurements[M]. New York: Springer, 2009.
+\bibitem{chen2015} Chen J G, Wadhwa N, Cha Y J, et al. Modal identification of simple structures with high-speed video using motion magnification[J]. Journal of Sound and Vibration, 2015, 345: 58--71.
+\bibitem{davis2014} Davis A, Rubinstein M, Wadhwa N, et al. The visual microphone: passive recovery of sound from video[J]. ACM Transactions on Graphics, 2014, 33(4): 79.
+\bibitem{lucas1981} Lucas B D, Kanade T. An iterative image registration technique with an application to stereo vision[C]// Proceedings of the 7th International Joint Conference on Artificial Intelligence. 1981: 674--679.
+\bibitem{baker2004} Baker S, Matthews I. Lucas-Kanade 20 years on: a unifying framework[J]. International Journal of Computer Vision, 2004, 56(3): 221--255.
+\bibitem{harris1978} Harris F J. On the use of windows for harmonic analysis with the discrete Fourier transform[J]. Proceedings of the IEEE, 1978, 66(1): 51--83.
+\bibitem{hogenauer1981} Hogenauer E B. An economical class of digital filters for decimation and interpolation[J]. IEEE Transactions on Acoustics, Speech, and Signal Processing, 1981, 29(2): 155--162.
+\bibitem{randall2011} Randall R B, Antoni J. Rolling element bearing diagnostics---A tutorial[J]. Mechanical Systems and Signal Processing, 2011, 25(2): 485--520.
+\bibitem{zabih1994} Zabih R, Woodfill J. Non-parametric local transforms for computing visual correspondence[C]// European Conference on Computer Vision. Stockholm, 1994: 151--158.
+\bibitem{hirschmuller2008} Hirschmüller H. Stereo processing by semiglobal matching and mutual information[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2008, 30(2): 328--341.
+\bibitem{scharstein2002} Scharstein D, Szeliski R. A taxonomy and evaluation of dense two-frame stereo correspondence algorithms[J]. International Journal of Computer Vision, 2002, 47(1--3): 7--42.
+\bibitem{ug585} AMD. Zynq 7000 SoC Technical Reference Manual (UG585)[Z].
+\bibitem{pg020} AMD. AXI Video Direct Memory Access LogiCORE IP Product Guide (PG020)[Z].
+\bibitem{pg143} AMD. AXI UART 16550 LogiCORE IP Product Guide (PG143)[Z].
+\bibitem{tps5430} Texas Instruments. TPS5430 3-A, Wide Input Range, Step-Down Converter[Z]. Datasheet.
+\bibitem{ina226} Texas Instruments. INA226 High-Side or Low-Side Measurement, Bidirectional Current and Power Monitor with I²C Compatible Interface[Z]. Datasheet.
+\bibitem{tlv3011} Texas Instruments. TLV3011 Nanopower, 1.8-V, Comparator with Voltage Reference[Z]. Datasheet.
+\bibitem{max98357} Analog Devices (Maxim Integrated). MAX98357A/MAX98357B Tiny, Low-Cost, PCM Class D Amplifier with Class AB Performance[Z]. Datasheet.
+\bibitem{mp34dt01} STMicroelectronics. MP34DT01-M MEMS audio sensor omnidirectional digital microphone[Z]. Datasheet.
+\bibitem{pynq} AMD. PYNQ: Python Productivity for Zynq[EB/OL]. \url{https://pynq.readthedocs.io/}.
+\end{thebibliography}
+\endgroup

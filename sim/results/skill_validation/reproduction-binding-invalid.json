@@ -1,0 +1,1 @@
+{"revision": "example-a", "bit_sha256": "invalid-hash", "config_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "cases": "vectors-a", "command": "run --cases vectors-a"}

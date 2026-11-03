@@ -1,0 +1,4 @@
+interface:
+  display_name: "FPGA 大模型协作"
+  short_description: "组织软硬件协同评审、故障复现与可追溯的实验和协作证据"
+  default_prompt: "用 $fpga-llm-collaboration 整理这个 FPGA 项目的故障复现和验证证据。"

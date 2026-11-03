@@ -1,0 +1,470 @@
+% ----------------------------------------------------------------------
+\subsection{软件系统介绍}
+% ----------------------------------------------------------------------
+
+\subsubsection{软件整体介绍}
+
+软件由四部分组成：Vivado 块设计与自写 RTL 构成的 PL 逻辑；运行在 PS Linux 上的主程序 vibmond；Nano ESP32 固件；Android、iOS 与 Windows 共用的 APP。另有 PC 端仿真工具和 PS 与 Nano 共用的协议库。各部分规模见表~\ref{tab:loc}。
+
+\begin{table}[htbp]
+\centering
+\caption{软件组成与代码规模}
+\label{tab:loc}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.3cm}L{3.0cm}r Y@{}}
+\toprule
+\tabhead \tabh{部分} & \tabh{语言 / 工具} & \tabh{行数} & \tabh{内容} \\
+\midrule
+PL 自写 RTL & Verilog，Vivado 2025.2 & 2712 & PDM 接收、补光 PWM、LK 累加核、双目核、载板控制、显示增强 \\
+PS 主程序 vibmond & C++17，ARM 交叉编译 & 22149 & 采集、跟踪、频谱、声学、双目、UI、记录、打印、HTTP、Nano 链路 \\
+多点测振核 & C99 & 1976 & 模板跟踪、参考补偿、窗口频谱、基线门限 \\
+PS 测试与工具 & C++/Python & 6904 & 单元测试、主机集成测试、黄金向量生成、离线回放 \\
+Nano 固件 & C++，Arduino-ESP32 & 3865 & 协议链路、NFC、SD、语音、Wi-Fi/NTP、APP 网关、掉电 \\
+协议库 vibproto & C++/Python & 1444 & 帧编解码、CRC、测试向量 \\
+APP & HTML/JS，Java，Swift，C++ & 4843 & 共用网页界面与三端原生外壳 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+vibmond 是一个静态链接的单进程多线程程序（图~\ref{fig:swarch}）。测量引擎线程负责取帧、跟踪和窗口分析，PL 相机源另有一个线程等待帧完成；声学、双目、视觉增强、传感器和打印各有独立的服务线程；帧缓冲界面单独一个渲染线程；HTTP 服务、Nano 链路和定时任务由主事件循环调度。各服务之间只通过带锁的快照和事件队列交换数据，测量结果由应用层统一汇总后再分发给界面、报警、记录和网络接口。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.96\linewidth}{!}{%
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[blk=plc,minimum width=3cm] (plcam) at (0,4.6) {PL 相机源\\VDMA 帧缓存};
+\node[blk=plc,minimum width=3cm] (plpdm) at (0,3.2) {PDM 接收核\\0x4403\_0000};
+\node[blk=plc,minimum width=3cm] (plio) at (0,1.8) {I²C/SPI/GPIO\\UART16550};
+\node[blk=psc,minimum width=3.3cm] (eng) at (4.4,4.6) {测量引擎线程\\跟踪、窗口分析};
+\node[blk=psc,minimum width=3.3cm] (aco) at (4.4,3.2) {声学服务线程\\每 10 ms 读 FIFO};
+\node[blk=psc,minimum width=3.3cm] (sen) at (4.4,1.8) {传感器/打印线程\\INA226、TCA9555};
+\node[blk=psc,minimum width=3.3cm] (ste) at (4.4,0.4) {双目/视觉增强线程\\约 1 Hz};
+\node[blk=psc,minimum width=3.6cm,minimum height=3.6cm] (app) at (9.0,2.5) {应用层\\测量状态机\\结果汇总与判级\\设置与标定\\记录存储};
+\node[blk=psc,minimum width=3.0cm] (ui) at (13.1,4.6) {帧缓冲 UI 线程\\1024×600};
+\node[blk=psc,minimum width=3.0cm] (http) at (13.1,3.2) {HTTP API\\/api/v1/};
+\node[blk=psc,minimum width=3.0cm] (link) at (13.1,1.8) {Nano 链路\\协议 V1};
+\node[blk=psc,minimum width=3.0cm] (alm) at (13.1,0.4) {报警输出\\灯、蜂鸣、语音};
+\foreach \a/\b in {plcam/eng,plpdm/aco,plio/sen} {\draw[arr] (\a) -- (\b);}
+\foreach \a in {eng,aco,sen,ste} {\draw[arr] (\a.east) -- (app.west |- \a.east);}
+\foreach \b in {ui,http,link,alm} {\draw[arr] (app.east |- \b.west) -- (\b.west);}
+\node[lbl] at (9.0,0.15) {主事件循环：HTTP、Nano、定时任务};
+\end{tikzpicture}}
+\caption{PS 主程序 vibmond 的线程与数据流}
+\label{fig:swarch}
+\end{figure}
+
+\subsubsection{PL 逻辑设计}
+\label{sec:pl}
+
+PL 的块设计如图~\ref{fig:bd} 所示。两路 OV5640 采集 IP 输出 AXI4-Stream 视频，经格式转换后由 VDMA0、VDMA1 写入 DDR；VDMA2 从 DDR 读出界面帧，经视频定时控制器（VTC）和 AXI4-Stream 转视频输出模块交给 rgb2dvi 编码为 HDMI，像素时钟由 axi\_dynclk 通过 MMCM 动态配置。三路 VDMA 的存储端口经互联汇入 PS 的 S\_AXI\_HP0，所有 AXI-Lite 寄存器经 M\_AXI\_GP0 访问。自写模块有两个：PDM 麦克风接收核 \code{pdm\_mic} 和补光 PWM 与看门狗 \code{lamp\_projector}；打印串口使用 AXI UART16550；载板与传感器两路 I²C 由 PS 的 I²C 控制器经 EMIO 和 I²C 分支 IP 引出，Nano 串口使用 PS UART0 经 EMIO 引出。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[blk=psc,minimum width=2.4cm,minimum height=5.4cm] (ps7) at (0,2.6) {Zynq PS7\\\\M\_AXI\_GP0\\\\S\_AXI\_HP0\\\\UART0/I²C（EMIO）\\\\FCLK 100/125/40 MHz\\\\IRQ\_F2P};
+\node[blk=extc,minimum width=2.2cm] (ic1) at (3.4,4.6) {AXI 外设互联};
+\node[blk=extc,minimum width=2.2cm] (ic2) at (3.4,0.6) {AXI 存储互联};
+\node[blk=plc,minimum width=2.6cm] (cam0) at (6.9,2.2) {alinx\_ov5640 0\\+ 格式转换};
+\node[blk=plc,minimum width=2.6cm] (cam1) at (6.9,0.9) {alinx\_ov5640 1\\+ 格式转换};
+\node[blk=plc,minimum width=2.2cm] (v0) at (10.0,2.2) {VDMA0 S2MM};
+\node[blk=plc,minimum width=2.2cm] (v1) at (10.0,0.9) {VDMA1 S2MM};
+\node[blk=plc,minimum width=2.2cm] (v2) at (10.0,-0.4) {VDMA2 MM2S};
+\node[blk=plc,minimum width=2.6cm] (vo) at (13.3,-0.4) {AXI4-S 转视频\\+ VTC};
+\node[blk=plc,minimum width=2.2cm] (dvi) at (16.4,-0.4) {rgb2dvi\\HDMI};
+\node[blk=plc,minimum width=2.2cm] (dyn) at (16.4,1.0) {axi\_dynclk\\像素时钟};
+\node[blk=plc,minimum width=2.6cm] (pdm) at (6.9,5.6) {pdm\_mic\\（自写）};
+\node[blk=plc,minimum width=2.6cm] (lamp) at (10.0,5.6) {AXI GPIO\\→ lamp\_projector};
+\node[blk=plc,minimum width=2.6cm] (uart) at (13.3,5.6) {AXI UART16550};
+\node[blk=plc,minimum width=2.6cm] (i2c) at (16.4,5.6) {I²C 分支 ×2\\EMIO 引出};
+\node[blk=extc,minimum width=2.2cm] (sensor) at (6.9,-0.6) {AN5642\\两路 DVP};
+\draw[darr] (ps7.east |- ic1) -- (ic1);
+\draw[darr] (ps7.east |- ic2) -- (ic2);
+\draw[arr] (ic1.north) |- (pdm.west);
+\draw[arr] (ic1.north) ++(0,0.3) -- ++(0,0.62) -| (lamp.north);
+\draw[arr] (ic1.north) ++(0,0.3) -- ++(0,0.62) -| (uart.north);
+\draw[arr] (ic1.east) -| (v2.north) ;
+\draw[arr] (sensor.north) -- (cam1.south);
+\draw[arr] (cam0) -- (v0);
+\draw[arr] (cam1) -- (v1);
+\draw[arr] (v0.south west) ++(0,0.1) -| (ic2.north);
+\draw[arr] (v1.west) -| (ic2.north);
+\draw[arr] (v2.west) -| (ic2.east);
+\draw[arr] (v2) -- (vo);
+\draw[arr] (vo) -- (dvi);
+\draw[arr] (dyn) -- (dvi);
+\draw[arr] (ps7.north) |- (i2c.north) ;
+\node[lbl] at (3.4,5.3) {GP0};
+\node[lbl] at (3.4,-0.1) {HP0};
+\end{tikzpicture}}
+\caption{PL 块设计（简化）}
+\label{fig:bd}
+\end{figure}
+
+\paragraph{PDM 麦克风接收核。}MP34DT01 输出 1 位 Σ-Δ 码流\cite{mp34dt01}，数据在时钟的一个半周期内有效，另一个半周期为高阻。接收核以 100 MHz 系统时钟分频产生 2 MHz 时钟（半周期 25 个系统时钟，可由寄存器 HALF\_DIV 修改），数据线经两级同步后，在有效半周期开始后第 SAMPLE\_AT 个系统时钟采样一位。模块的 L/R 引脚接地时数据在时钟低电平期间有效（PHASE=0），接电源时在高电平期间有效（PHASE=1）。由于数据线有板上上拉，相位选错或模块缺失时读到的全是 1，软件据此判断线路异常。
+
+每 32 位拼成一个字（第 0 位最早）写入深度 $2^{13}=8192$ 字的 FIFO，可缓存 $8192\times32/2\,\mathrm{MHz}\approx131\,\mathrm{ms}$ 的码流，PS 每 10 ms 读一次，有一个数量级的余量。FIFO 满时置位 OVERFLOW 并冻结：此后到达的字全部丢弃并计数，直到 PS 写 1 清除，这样 FIFO 中永远不会出现跨越丢失段的数据。读取 WORDS 寄存器时，硬件在同一时钟锁存 FIFO 深度、丢字数、当前字已填充的位数和时钟计数器，PS 由此恢复每个字的时间：设锁存时已完成字数为 $W$、当前字已有 $b$ 位、锁存时刻为 $t_s$，则第 $i$ 个字的最后一位采样于
+\begin{equation}
+t_i=t_s-\bigl[32\,(W-1-i)+b\bigr]\,T_b,\qquad T_b=\frac{1}{f_{\mathrm{PDM}}}=0.5\,\mu\mathrm{s},
+\end{equation}
+再扣除抽取滤波器 534.75 µs 的群时延，即得到 PCM 样点对应的声学时刻，与视频帧时间戳处在同一单调时钟下。寄存器映射见表~\ref{tab:pdmregs}，单元测试会解析 RTL 的读写译码，确认它与 PS 驱动头文件逐项一致。
+
+\begin{table}[htbp]
+\centering
+\caption{\code{pdm\_mic} 寄存器映射（基地址 0x4403\_0000）}
+\label{tab:pdmregs}
+\small
+\begin{tabular}{@{}lllL{8.2cm}@{}}
+\toprule
+\tabhead \tabh{偏移} & \tabh{名称} & \tabh{访问} & \tabh{说明} \\
+\midrule
+0x000 & ID & 只读 & 0x50444D31（“PDM1”） \\
+0x004 & VERSION & 只读 & 0x00020000，输出原始 PDM 字 \\
+0x008 & CLK\_HZ & 只读 & 系统时钟频率 \\
+0x00C & CTRL & 读写 & bit0 EN（0→1 时计数器清零），bit1 PHASE，bit8 CLEAR（清空 FIFO） \\
+0x010 & HALF\_DIV & 读写 & 每半个 PDM 周期的系统时钟数，最小 4 \\
+0x014 & SAMPLE\_AT & 读写 & 有效半周期开始后第几个时钟采样 \\
+0x018 & STATUS & 读/写 1 清零 & bit0 运行，bit1 溢出（写 1 同时清零丢字数），bit2 掉电停钟 \\
+0x01C & LEVEL & 只读 & FIFO 中的字数 \\
+0x020 & DATA & 只读（弹出） & 读出队首字，FIFO 空时返回 0 \\
+0x024 & WORDS & 只读（锁存） & 已完成字数，同时锁存下面四个寄存器 \\
+0x028--0x03C & LEVEL\_L 等 & 只读 & 锁存的深度、已填充位数、时钟计数、丢字数；自由运行计数器 TS \\
+0x040 & CONFIG & 只读 & [15:8] FIFO 深度对数，[7:0] 每字位数 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{补光 PWM 与看门狗。}\code{lamp\_projector} 由 AXI GPIO 写入的 32 位命令字控制：bit0 照明使能、bit1 十字激光使能、[14:8] 照明亮度百分比、bit16 心跳位。PWM 周期为 $100\,\mathrm{MHz}/20\,\mathrm{kHz}=5000$ 个时钟，占空比在每个周期起点更新为 $\text{percent}\times50$ 个时钟，因此改变亮度不会产生毛刺。PS 需要周期性翻转心跳位，2 s 内没有翻转、掉电预警有效或复位时，两路输出都被强制为低；十字激光只做开关，不随照明亮度斩波。该模块只有一个计数器和一个乘常数比较，不占用 DSP 和存储。
+
+\paragraph{打印串口。}AXI UART16550 工作在 100 MHz，115200 波特率的除数为 $100\times10^6/(16\times115200)\approx54$，实际波特率 115741，误差 0.47\%，在串口允许范围内。CTS 硬件流控使打印机缓冲区满时 UART 自动暂停发送\cite{pg143}。
+
+\subsubsection{视觉测振算法}
+\label{sec:vision}
+
+视觉测振的流程如图~\ref{fig:pipeline} 所示：每帧对所有测点和参考点做亚像素跟踪，扣除参考点估计的相机平移；每 32 帧取最近 128 帧组成一个分析窗，检查采样质量后逐点做频谱，与停机基线包络比较；测量结束后汇总所有窗口，选出代表测点计算时域峰峰值和有效值，换算为毫米后判级。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[blk=plc,minimum width=2.3cm] (f) at (0,0) {BGR 帧\\帧号 + 时间戳};
+\node[blk=psc,minimum width=2.3cm] (g) at (2.9,0) {灰度化\\3×3 高斯};
+\node[blk=psc,minimum width=2.6cm] (t) at (5.95,0) {16 个模板\\逆组合 LK};
+\node[blk=psc,minimum width=2.4cm] (q) at (9.0,0) {质量判据\\NCC、条件数};
+\node[blk=psc,minimum width=2.6cm] (r) at (12.05,0) {参考点中位数\\扣除相机平移};
+\node[blk=psc,minimum width=2.4cm] (w) at (15.05,0) {128 帧窗\\采样检查};
+\node[blk=psc,minimum width=2.4cm] (s) at (15.05,-1.8) {去趋势、Hann\\FFT 二维幅值};
+\node[blk=psc,minimum width=2.6cm] (b) at (12.05,-1.8) {停机包络门限\\$S[k]$ 与 $g_i\ge3$};
+\node[blk=psc,minimum width=2.6cm] (a) at (9.0,-1.8) {多窗汇总\\主频中位数};
+\node[blk=psc,minimum width=2.6cm] (p) at (5.95,-1.8) {代表点波形\\峰峰值、有效值};
+\node[blk=ownc,minimum width=2.6cm] (m) at (2.9,-1.8) {毫米换算\\阈值判级};
+\node[blk=extc,minimum width=2.3cm] (o) at (0,-1.8) {报警、记录\\界面、APP};
+\draw[arr] (f)--(g); \draw[arr] (g)--(t); \draw[arr] (t)--(q); \draw[arr] (q)--(r); \draw[arr] (r)--(w);
+\draw[arr] (w)--(s); \draw[arr] (s)--(b); \draw[arr] (b)--(a); \draw[arr] (a)--(p); \draw[arr] (p)--(m); \draw[arr] (m)--(o);
+\end{tikzpicture}}
+\caption{视觉测振处理流程}
+\label{fig:pipeline}
+\end{figure}
+
+\paragraph{成像与位移换算。}设相机焦距为 $f$（像素），测点所在平面距相机 $Z$，平面近似正对光轴。像面上的位移 $\Delta u$（像素）与物面位移 $\Delta X$ 的关系为 $\Delta X=(Z/f)\,\Delta u=s\,\Delta u$，其中 $s$ 为尺标比例（mm/像素）。若被测面与像面夹角为 $\theta$，沿倾斜方向的位移会被压缩 $\cos\theta$ 倍；被测面沿光轴的离面振动 $\Delta Z$ 则使比例变化 $\Delta s/s=\Delta Z/Z$，并不直接表现为像面平移。因此测点应尽量正对相机，标定尺放在与测点相同的深度和方向上。
+
+\paragraph{亚像素跟踪：逆组合 Lucas–Kanade。}每个测点以 25×25 像素模板 $T(\mathbf{x})$ 表示，$\mathbf{x}\in\Omega$。初始化时对模板去均值得到 $\tilde T$，用中心差分计算梯度 $\nabla\tilde T=(g_x,g_y)^{\mathsf T}$ 并去均值，同时求出结构张量
+\begin{equation}
+\mathbf{H}=\sum_{\mathbf{x}\in\Omega}\nabla\tilde T\,\nabla\tilde T^{\mathsf T}=\begin{bmatrix}a&b\\b&c\end{bmatrix},\quad
+a=\sum g_x^2,\ b=\sum g_xg_y,\ c=\sum g_y^2 .
+\end{equation}
+跟踪时，在当前位移估计 $\mathbf{u}$ 处对新帧双线性插值得到 $I(\mathbf{x}+\mathbf{u})$，去均值后记为 $\tilde I_{\mathbf u}$。为适应自动曝光和光照变化，先估计亮度增益
+\begin{equation}
+\gamma=\frac{\langle\tilde I_{\mathbf u},\tilde T\rangle}{\langle\tilde T,\tilde T\rangle},\qquad 0.25\le\gamma\le4 .
+\end{equation}
+逆组合形式把增量放在模板一侧，求使下式最小的 $\Delta\mathbf{u}$：
+\begin{equation}
+E(\Delta\mathbf{u})=\sum_{\mathbf{x}\in\Omega}\Bigl[\tilde T(\mathbf{x}+\Delta\mathbf{u})-\gamma^{-1}\tilde I_{\mathbf u}(\mathbf{x})\Bigr]^2 .
+\end{equation}
+对 $\tilde T(\mathbf{x}+\Delta\mathbf{u})$ 作一阶展开 $\tilde T(\mathbf{x})+\nabla\tilde T^{\mathsf T}\Delta\mathbf{u}$，令 $\partial E/\partial\Delta\mathbf{u}=0$，得到法方程
+\begin{equation}
+\mathbf{H}\,\Delta\mathbf{u}=\sum_{\mathbf{x}\in\Omega}\nabla\tilde T(\mathbf{x})\,r(\mathbf{x}),\qquad r=\gamma^{-1}\tilde I_{\mathbf u}-\tilde T ,
+\end{equation}
+记右端为 $(\beta_x,\beta_y)^{\mathsf T}$，二阶系统可直接求逆：
+\begin{equation}
+\Delta u_x=\frac{c\,\beta_x-b\,\beta_y}{ac-b^2},\qquad \Delta u_y=\frac{a\,\beta_y-b\,\beta_x}{ac-b^2}.
+\end{equation}
+对平移运动，把模板移动 $\Delta\mathbf{u}$ 等价于把图像移动 $-\Delta\mathbf{u}$，因此更新为 $\mathbf{u}\leftarrow\mathbf{u}-\Delta\mathbf{u}$。与正向 LK 相比，逆组合形式的 $\mathbf{H}$ 和梯度只在初始化时计算一次，每次迭代只需 625 次双线性插值和两次内积\cite{baker2004}。迭代最多 8 次，单步更新限幅 3 像素，两个分量都小于 0.005 像素时停止\cite{lucas1981}。每帧 12 个测点加 4 个参考点、最多 8 次迭代，插值次数约 $16\times8\times625=8\times10^4$，在 Cortex-A9 上可以跟上 45 帧/s。图像在跟踪前经 $\sigma\approx0.7$ 像素的 3×3 高斯平滑，抑制散斑边缘的高频成分，使一阶展开在更大范围内成立。原测振核对整帧做平滑，而一个模板在一帧内最多读到上次位置周围 $12+8\times3+2=38$ 像素的范围（半模板、8 次限幅迭代、梯度与插值邻点），因此 PS 集成时只平滑这些区域并合并重叠矩形，权重和加法顺序与原核完全相同，结果逐位一致，平滑计算量约为整帧的十分之一。
+
+\paragraph{跟踪质量判据。}结构张量的两个特征值 $\lambda_1\ge\lambda_2$ 刻画了模板在两个方向上的纹理强度。只有一条边缘时 $\lambda_2\approx0$，沿边缘方向的位移无法确定（孔径问题）。程序使用两个不需要求特征值的量：
+\begin{equation}
+\kappa=\frac{\det\mathbf H}{(\operatorname{tr}\mathbf H)^2}=\frac{\lambda_1\lambda_2}{(\lambda_1+\lambda_2)^2}\in\Bigl(0,\tfrac14\Bigr],\qquad
+\eta=\frac{\det\mathbf H}{\operatorname{tr}\mathbf H}=\frac{\lambda_1\lambda_2}{\lambda_1+\lambda_2}\approx\lambda_2 .
+\end{equation}
+$\kappa$ 衡量各向同性，要求大于 0.005（约等于 $\lambda_2/\lambda_1>0.005$）；$\eta$ 近似较弱方向的梯度能量，要求大于 5。此外，收敛后模板与当前图像块的归一化互相关
+\begin{equation}
+\rho=\frac{\langle\tilde I_{\mathbf u},\tilde T\rangle}{\lVert\tilde I_{\mathbf u}\rVert\,\lVert\tilde T\rVert}
+\end{equation}
+须大于 0.85，增益须在 $[0.25,4]$ 之内，模板方差大于 1，位移小于 100 像素且距图像边界不少于 15 像素。任一条件不满足，该点该帧记为无效。
+
+在加性白噪声 $\sigma_n$ 下，平移估计的协方差下界近似为 $\operatorname{Cov}(\hat{\mathbf u})\succeq\sigma_n^2\,\mathbf H^{-1}$，最弱方向的标准差约为 $\sigma_n/\sqrt{\lambda_2}$。这说明散斑纹理越丰富（$\lambda_2$ 越大）、图像噪声越小，跟踪精度越高，也是前文选择散斑尺寸的依据。
+
+\paragraph{相机运动补偿。}设备放在桌面上，相机本身也会随环境轻微晃动。4 个参考点放在不随被测物振动的静止背景上，每帧得到 4 个参考位移 $\mathbf{d}_j$。先求分量中位数 $\mathbf{m}$，取距 $\mathbf{m}$ 不超过 0.25 像素的点为内点，至少 3 个内点时以内点均值作为相机平移 $\mathbf{t}$，并记录内点散布 $\sigma_r$：
+\begin{equation}
+\mathcal{I}=\bigl\{j:\lVert\mathbf d_j-\mathbf m\rVert<0.25\bigr\},\qquad
+\mathbf t=\frac{1}{|\mathcal I|}\sum_{j\in\mathcal I}\mathbf d_j,\qquad
+\mathbf u_i^{\mathrm{rel}}=\mathbf u_i-\mathbf t .
+\end{equation}
+中位数的崩溃点为 50\%，4 个参考点中即使有 1 个跟丢或落在运动物体上也不会拖偏估计；0.25 像素的门限把漂移的参考点排除在均值之外。参考内点不足 3 个的帧整体无效。该方法只扣除平移；手持拍摄时的旋转和透视变化需要更高阶的背景模型，因此设备应稳定放置。
+
+\paragraph{采样时间轴与有界重采样。}频谱分析假设等间隔采样，而 Linux 下帧到达时间存在抖动，偶尔还会丢帧。分析窗用帧序号和单调时钟时间戳估计相机的真实采样周期
+\begin{equation}
+\bar T=\frac{t_{N-1}-t_0}{s_{N-1}-s_0},\qquad f_s=1/\bar T ,
+\end{equation}
+其中 $s$ 为帧序号。用序号跨度而不是收到的帧数作分母，丢帧不会使采样率被低估。窗口必须满足三个条件，否则整窗拒绝：相邻帧序号差不超过 3（连续丢帧不超过 2 帧）；丢帧总数不超过 $5\%$；每段间隔 $\Delta t/\Delta s$ 与 $\bar T$ 的偏差不超过 10\%。满足条件的窗口再按时间戳线性插值到等间隔网格。
+
+重采样的代价可以定量估计。对频率为 $f$ 的正弦，在相邻两样点之间以比例 $\alpha$ 线性插值，插值值与真实值之比的模为
+\begin{equation}
+\lvert G(\alpha)\rvert=\sqrt{(1-\alpha)^2+\alpha^2+2\alpha(1-\alpha)\cos(2\pi f\bar T)} ,
+\end{equation}
+$\alpha=0.5$ 时为 $\cos(\pi f/f_s)$。时间戳抖动只有采样周期的约 2\%（0.42 ms/22.2 ms），$\alpha$ 接近 0 或 1，误差可以忽略；但若在丢帧处插值，20 Hz 信号在 45 帧/s 下的 $\cos(\pi f/f_s)\approx0.18$，该样点的幅值几乎完全丢失。这正是丢帧比例必须严格限制、且停机基线要求连续无丢帧的原因。11 月 4 日的记录丢帧为 0，没有发生插值补点。
+
+\paragraph{窗口频谱。}每个窗口 $N=128$ 帧，对每个测点的 $x$、$y$ 位移分别去除最小二乘线性趋势，乘 Hann 窗 $w[n]=0.5-0.5\cos\bigl(2\pi n/(N-1)\bigr)$ 后做 FFT，单边幅值按相干增益修正：
+\begin{equation}
+A_x[k]=\frac{2\,\lvert X[k]\rvert}{\sum_n w[n]},\qquad f_k=\frac{k\,f_s}{N},\qquad A_i[k]=\sqrt{A_{x,i}^2[k]+A_{y,i}^2[k]} .
+\end{equation}
+二维合成幅值 $A_i[k]$ 与振动在像面内的方向无关，避免了预先指定测量方向。在 $f_s=45.05\,\mathrm{Hz}$ 时频点间隔 $\Delta f=0.352\,\mathrm{Hz}$，奈奎斯特频率 22.52 Hz。Hann 窗的等效噪声带宽为 1.5 个频点，当信号频率落在两个频点正中间时幅值最多损失 1.42 dB\cite{harris1978}。峰值位置用三点抛物线插值修正：
+\begin{equation}
+\delta=\frac{A[k-1]-A[k+1]}{2\bigl(A[k-1]-2A[k]+A[k+1]\bigr)},\qquad \hat f=(k^*+\delta)\frac{f_s}{N},\quad\lvert\delta\rvert\le0.75 .
+\end{equation}
+
+\paragraph{停机基线门限。}环境中总有一些与被测振动无关的谱线：照明闪烁、楼板与桌面的低频晃动、相机自身的微小抖动以及跟踪噪声。见微不设固定的噪声阈值，而是在电机停机时采集基线：每 8 帧计算一次 128 帧窗口的频谱（要求连续无丢帧、所有测点有效），对每个测点、每个频点保存所有窗口中的最大值作为包络，
+\begin{equation}
+E_i[k]=\max_{w}A_i^{(w)}[k],\qquad W\ge5 .
+\end{equation}
+用最大值而不是平均值，是为了把间歇出现的背景成分也包括进来。基线文件同时记录测点布局的哈希值和采样率，布局变化或采样率相差超过 1\% 时拒绝比较。
+
+测量时，先对所有有效测点在每个频点上取中位数，得到聚合谱和聚合背景，以两者的能量差选出主频频点：
+\begin{equation}
+S[k]=\Bigl(\operatorname*{med}_i A_i[k]\Bigr)^2-\Bigl(\operatorname*{med}_i E_i[k]\Bigr)^2,\qquad
+k^*=\arg\max_{k:\ 0.5\,\mathrm{Hz}\le f_k\le30\,\mathrm{Hz},\ 0<k<N/2} S[k] .
+\end{equation}
+若 $S[k^*]\le0$，说明没有任何频点超出背景，该窗记为“静默”；若 $k^*$ 恰为奈奎斯特频点的前一个且谱值仍向奈奎斯特频点上升（单边谱中奈奎斯特频点被减半，故比较 $2A[N/2]\ge A[N/2-1]$），说明峰值没有被分辨出来、可能来自混叠，该窗同样不给出结论。然后逐点计算信号与基线之比，取主频频点及左右相邻频点中最大的基线值作分母，以容纳频率估计误差和窗口频谱的扇贝效应：
+\begin{equation}
+g_i=\frac{A_i[k^*]}{\max\limits_{\lvert j-k^*\rvert\le1}E_i[j]},\qquad g_i\ge3\ \text{判为超过基线}.
+\end{equation}
+
+门限 3 倍（约 9.5 dB）的误报概率可以按平稳高斯背景估计。此时单个窗口某频点的幅值服从瑞利分布，设尺度为 $\sigma$，令 $v=A^2/(2\sigma^2)$，则 $P(A>a)=e^{-a^2/2\sigma^2}$。基线包络是 $W$ 个独立窗口的最大值，其 $v$ 的分布函数为 $F(v)=(1-e^{-v})^W$。新窗口中纯背景超过 3 倍包络的概率为
+\begin{equation}
+P_{\mathrm{fa}}=\int_0^\infty e^{-9v}\,\mathrm{d}F(v)=W\!\int_0^1\!x^{9}(1-x)^{W-1}\mathrm{d}x=\frac{9!\,W!}{(W+9)!} .
+\end{equation}
+$W=5$ 时 $P_{\mathrm{fa}}\approx5\times10^{-4}$，$W=9$ 时约 $2\times10^{-5}$。15 s 停机基线约有 675 帧，按 50\% 重叠折算约 9 个独立窗口。再加上聚合谱必须超出聚合背景（$S[k^*]>0$），由纯背景引起的误判概率很低。实际背景不完全平稳，这也是包络取最大值、并要求停机与测量在同一机位完成的原因。
+
+\paragraph{多窗汇总与代表测点。}测量阶段每 32 帧分析一次（相邻窗口重叠 75\%），10 s 约得到 11 个窗口。至少有一个测点超过基线的窗口为“信号窗”，所有信号窗主频的中位数作为结果主频。每个测点用正弦拟合求谐波有效值：在窗口内以最小二乘拟合 $x(\tau)=c_0+c_1\tau+a\sin2\pi\hat f\tau+b\cos2\pi\hat f\tau$，二维谐波有效值为
+\begin{equation}
+x_{\mathrm{rms},i}=\sqrt{\tfrac12\bigl(a_x^2+b_x^2+a_y^2+b_y^2\bigr)} .
+\end{equation}
+信号/基线比最大的有效测点作为代表测点，取其选定方向（本次为 $y$）的完整位移序列，按实测帧率重采样、去除线性趋势后计算时域峰峰值和有效值：
+\begin{equation}
+A_{pp}=\max_n d[n]-\min_n d[n],\qquad d_{\mathrm{rms}}=\sqrt{\frac1N\sum_n\bigl(d[n]-\bar d\bigr)^2},\qquad d[n]=s\,u^{\mathrm{rel}}_y[n] .
+\end{equation}
+单一正弦时 $A_{pp}/d_{\mathrm{rms}}=2\sqrt2\approx2.83$；本次实测为 $0.209/0.0701\approx2.98$，接近正弦振动的比例关系。
+
+\paragraph{位移噪声估计。}\label{sec:noise}信号/基线比给出了停机背景在主频处的大小。代表窗口中第 $i$ 个测点的谐波幅值约为 $\sqrt2\,x_{\mathrm{rms},i}$，于是背景包络约为
+\begin{equation}
+E_i[k^*]\approx\frac{\sqrt2\,x_{\mathrm{rms},i}}{g_i} .
+\end{equation}
+代入 11 月 4 日记录的 12 个测点（$x_{\mathrm{rms}}=0.26\sim0.46$ 像素，$g=36\sim95$），得到 $E\approx0.005\sim0.011$ 像素，按 0.203 mm/像素约为 1.1～2.3 µm。这一数值包含了跟踪噪声、残余相机运动和环境扰动，与同类 LK 跟踪器在合成图像上 0.005～0.014 像素的误差同一量级，可以作为当前机位下位移分辨能力的估计。
+
+\paragraph{标定与物理量。}尺标比例 $s$ 由放在测点同一深度的直尺确定：读取直尺上间距 $L$ 的两条刻线在图像中的距离 $p$（像素），$s=L/p$。比例的相对误差为
+\begin{equation}
+\frac{\delta s}{s}=\sqrt{\Bigl(\frac{\delta L}{L}\Bigr)^2+\Bigl(\frac{\delta p}{p}\Bigr)^2+\Bigl(\frac{\delta Z}{Z}\Bigr)^2},
+\end{equation}
+三项分别来自刻线读数、像素定位和直尺与测点的深度差。本次使用试验尺标 $s=0.20309$ mm/像素（$y$ 方向），代表测点峰峰值 1.029 像素对应 0.209 mm。对单频振动，位移、速度和加速度的有效值满足 $v_{\mathrm{rms}}=2\pi f\,d_{\mathrm{rms}}$、$a_{\mathrm{rms}}=(2\pi f)^2d_{\mathrm{rms}}$，本次分别约为 8.8 mm/s 和 1.10 m/s²。设备状态评价标准（如 ISO 20816）多以速度有效值分级\cite{iso20816}，后续版本将同时输出速度量。
+
+\paragraph{报警判级。}判级以代表测点的峰峰值为准，严格采用 $A_{pp}>T$：超过预警阈值亮黄灯，超过报警阈值亮红灯并启动蜂鸣器和语音。没有有效毫米振幅时进入“未判级”并清除旧的灯态，不会因为上一次的结果残留报警。阈值在设置页可改，修改后立即对当前有效结果重新判级，历史记录保留测量时的阈值快照。报警输出通过 TCA9555 掩码写入，每秒回读方向和输出寄存器并在不一致时重写。实测中红灯、蜂鸣器和报警语音随判级动作。
+
+\subsubsection{声学辅助测频}
+\label{sec:acoustic}
+
+\paragraph{PDM 抽取。}PDM 码流可以看作 2 MHz 采样的 1 位信号，量化噪声被 Σ-Δ 调制推到高频。PS 用五级 CIC 滤波器 32 倍抽取到 62.5 kHz，再用 63 抽头 FIR 补偿 CIC 的通带下垂并 2 倍抽取到 31.25 kHz\cite{hogenauer1981}。CIC 的传递函数和幅频响应为
+\begin{equation}
+H_{\mathrm{CIC}}(z)=\left(\frac{1-z^{-R}}{1-z^{-1}}\right)^{N},\qquad
+\bigl\lvert H_{\mathrm{CIC}}(f)\bigr\rvert=\left\lvert\frac{\sin(\pi fR/f_{\mathrm{in}})}{R\sin(\pi f/f_{\mathrm{in}})}\right\rvert^{N},
+\end{equation}
+其中 $R=32$、$N=5$、$f_{\mathrm{in}}=2\,\mathrm{MHz}$。直流增益为 $R^N=2^{25}$，内部寄存器需要 $1+N\log_2R=26$ 位，程序中积分器与梳状器均按 26 位模运算实现。FIR 系数为 Q17 定点，系数和为 131072（直流增益 1），设计目标是把 CIC 的下垂补偿到 10 kHz，并从 15.625 kHz 开始进入阻带。用实际系数计算的级联响应（图~\ref{fig:pdmresp}）在 0～10 kHz 内波动 $\pm0.003$ dB，CIC 在 10 kHz 处原有的 $-1.84$ dB 下垂被完全补偿；15.625 kHz 以上的衰减不小于 95 dB。总群时延为
+\begin{equation}
+\tau=\frac{N(R-1)}{2f_{\mathrm{in}}}+\frac{(63-1)/2}{f_{\mathrm{in}}/R}=38.75\,\mu\mathrm{s}+496\,\mu\mathrm{s}=534.75\,\mu\mathrm{s},
+\end{equation}
+与测量记录中的滤波延迟一致，时间对齐时直接扣除。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth,height=6.2cm,xmin=0,xmax=40,ymin=-130,ymax=8,
+  xlabel={频率 / kHz},ylabel={幅度 / dB},grid=both,grid style={line width=0.2pt,draw=gray!25},
+  major grid style={line width=0.3pt,draw=gray!40},legend style={at={(0.5,1.03)},anchor=south,legend columns=3,font=\footnotesize,draw=none},
+  tick label style={font=\footnotesize},label style={font=\small},xtick={0,5,10,15.625,20,25,31.25,35,40},
+  xticklabels={0,5,10,15.6,20,25,31.25,35,40}]
+\addplot[navy!60,thick,dashed] table[x=f,y=cic]{data/pdm_response.dat};
+\addplot[amber!90!black,thick,dotted] table[x=f,y=fir]{data/pdm_response.dat};
+\addplot[axred,very thick] table[x=f,y=total]{data/pdm_response.dat};
+\legend{CIC（5 级，÷32）,FIR（63 抽头，÷2）,级联}
+\draw[fill=green!40!black,fill opacity=0.07,draw=none] (axis cs:0,-130) rectangle (axis cs:10,8);
+\draw[fill=axred,fill opacity=0.06,draw=none] (axis cs:15.625,-130) rectangle (axis cs:40,8);
+\node[font=\footnotesize,anchor=north] at (axis cs:5,-12) {通带 ±0.003 dB};
+\node[font=\footnotesize,anchor=south] at (axis cs:28,-72) {阻带 ≤ −95 dB};
+\end{axis}
+\end{tikzpicture}
+\caption{PDM 抽取滤波器的幅频响应（按代码中的实际系数计算）}
+\label{fig:pdmresp}
+\end{figure}
+
+PS 端没有逐位运行积分器，而是利用 CIC 的线性性质查表：五级 CIC 等价于 156 抽头的 FIR，系数为 $(1+z^{-1}+\cdots+z^{-31})^5$ 的展开式。每个输出样点只与最近 5 个 32 位字有关，把每个字按字节拆开，预先算好“第 $d$ 个字的第 $j$ 个字节取值 $v$ 时对输出的贡献”，共 $5\times4\times256$ 项，每个字只需 20 次查表和累加。单元测试用随机码流和边界码流比较查表实现与逐位积分实现，两者逐位一致。
+
+\paragraph{包络谱测频。}电机和齿轮的噪声是宽带的，其强度随转动周期起伏，可以写成调幅形式 $p(t)=\bigl[1+m\cos(2\pi f_rt)\bigr]\,n(t)$，$n(t)$ 为载波频段内的噪声，$f_r$ 为转频。经带通滤波、全波整流和低通后，
+\begin{equation}
+\mathrm{E}\bigl[\lvert p(t)\rvert\bigr]=\mathrm{E}\bigl[\lvert n\rvert\bigr]\bigl[1+m\cos(2\pi f_rt)\bigr],
+\end{equation}
+包络的频谱在 $f_r$ 处出现峰值，这就是轴承与齿轮诊断中常用的包络分析\cite{randall2011}。程序在 4 个候选载波频段（200～1000、1000～3000、3000～8000、1000～8000 Hz）上分别处理：4 阶巴特沃斯带通（两级高通与两级低通二阶节串联）、全波整流、截止 200 Hz 的 4 阶低通、按块平均降采样到 1250 Hz，丢弃前 0.25 s 的滤波建立段，再加 Hann 窗并补零到 4 倍长度后做 FFT，在 10～100 Hz 内找峰。
+
+峰值是否显著用“峰值功率与该频段功率中位数之比”判断。纯噪声时每个频点的功率服从指数分布，其中位数为均值的 $\ln2$ 倍，因此某个频点超过中位数 $r$ 倍的概率为 $2^{-r}$。在 $B$ 个独立频点中最大值超过 $r$ 倍的概率约为 $B\cdot2^{-r}$，令其等于 1\%，得到显著性门限
+\begin{equation}
+r=\log_2(100B),\qquad T_{\mathrm{dB}}=\max\bigl(8,\ 10\log_{10}\log_2(100B)\bigr),
+\end{equation}
+$B$ 为搜索频段内的独立频点数乘以候选频段数。对 10 s 记录，$B=90\times10\times4=3600$，门限为 12.7 dB。四个频段中最强峰最突出的一个被选为载波频段，其峰值即声学主频。
+
+\paragraph{与视觉结果的关系。}声学主频与视觉主频之差在容差 $\max\bigl(0.2,\ 2/T,\ 0.02f_v\bigr)$ 之内时判为一致；否则检查二至四次谐波关系，仍不符合时判为不同，并在记录中保留两者。11 月 4 日的记录中，四个载波频段的包络峰都落在 19.93 Hz 附近（表~\ref{tab:acoustic}），3000～8000 Hz 频段最突出（27.2 dB），声学主频 19.928 Hz，与视觉 19.948 Hz 相差 0.020 Hz，容差 0.399 Hz，判为一致。直接低频通路也在 19.94 Hz 处测到峰值，另有 50.02 Hz 的工频干扰。
+
+\begin{table}[htbp]
+\centering
+\caption{2026-11-04 记录的声学分析结果}
+\label{tab:acoustic}
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\tabhead \tabh{载波频段 / Hz} & \tabh{调制深度} & \tabh{包络峰 / Hz} & \tabh{峰值突出度 / dB} & \tabh{是否选用} \\
+\midrule
+200～1000 & 0.431 & 19.934 & 22.3 & \\
+1000～3000 & 0.242 & 19.933 & 26.0 & \\
+3000～8000 & 0.205 & 19.928 & 27.2 & 选用 \\
+1000～8000 & 0.196 & 19.928 & 26.4 & \\
+\midrule
+\multicolumn{5}{@{}l@{}}{音频电平 $-58.0$ dBFS（有效值）/ $-46.8$ dBFS（峰值），无削波；31.25 kHz，312862 个样点} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{双目辅助深度}
+
+双目深度用于给出场景距离和测点附近的深度参考，不参与位移计算。PS 后端在 160×90 分辨率上运行：先按标定参数做立体校正，再对左右图做 5×5 Census 变换\cite{zabih1994}，以汉明距离作为匹配代价，沿两个方向做半全局匹配（SGM）\cite{hirschmuller2008}：
+\begin{equation}
+\begin{aligned}
+L_{\mathbf r}(\mathbf p,d)={}&C(\mathbf p,d)-\min_kL_{\mathbf r}(\mathbf p-\mathbf r,k)\\
+&+\min\Bigl\{L_{\mathbf r}(\mathbf p-\mathbf r,d),\
+L_{\mathbf r}(\mathbf p-\mathbf r,d\pm1)+P_1,\
+\min_kL_{\mathbf r}(\mathbf p-\mathbf r,k)+P_2\Bigr\}.
+\end{aligned}
+\end{equation}
+$P_1$、$P_2$ 分别惩罚 1 像素和更大的视差跳变。各路径代价相加后取最小代价视差（搜索 64 级），经唯一性检验、左右一致性检验和亚像素细化后，由 $Z=fB/d$ 换算深度，深度误差随距离平方增长：$\delta Z=Z^2\delta d/(fB)$。在 160×90 分辨率下等效焦距缩小为全分辨率的 1/8，深度只作为场景参考，约每秒更新一次。
+
+\subsubsection{界面、记录与打印}
+
+本地界面直接绘制在帧缓冲上（1024×600），分为实时、结果、视觉、记录、设备和设置六页（图~\ref{fig:ui}）。实时页叠加显示测量框、测点与参考点，可拖动调整；结果页显示主频、峰峰值、有效值、判级、位移波形与频谱，声学结果以包络谱叠加显示；视觉页提供运动放大和振动能量图，用于寻找振动最强的区域；设备页汇总相机、PL 外设、Nano、打印机、SD 卡、电源与传感器的状态。前面板旋钮和按键与触屏操作等效。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=45.56mm]{\figpath/ui/ui_live_multipoint.png}
+\caption{实时页：12 个测点与 4 个参考点}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=45.56mm]{\figpath/ui/ui_result_acoustic.png}
+\caption{结果页：波形、频谱与声学包络}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=45.56mm]{\figpath/ui/ui_vision.png}
+\caption{视觉页：运动放大与能量图}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=45.56mm]{\figpath/ui/ui_device.png}
+\caption{设备页：外设与电源状态}
+\end{subfigure}
+\caption{本地界面（演示数据）}
+\label{fig:ui}
+\end{figure}
+
+每次测量生成一条 JSON 记录（格式 \code{vision-vibration-record-1}），包含测量编号、UTC 与本地时间、时间来源、相机实测帧率与抖动、丢帧数、测量框与 12 个测点和 4 个参考点的坐标、标定编号与比例、主频与振幅、逐点信号/基线比与谐波有效值、窗口统计、阈值快照与判级、采集质量计数、照明状态，以及完整的声学分析和音频文件名。波形、频谱和音频另存为 CSV 与 WAV。
+
+热敏打印机宽 384 点。打印服务把报告（含波形和频谱缩略图）渲染为 384 点宽的位图，按 ESC/POS 光栅命令分段发送。早期版本出现局部文字被压扁的现象，检查渲染位图比例正常后，问题定位在串口传输与分段打印的衔接；改为每 24 行光栅一段、每段发送后等待 UART 发送 FIFO 排空并间隔 120 ms 后，同一份 720 行的报告打印正常。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=43.73mm]{\figpath/live/scr_meas.jpg}
+\caption{测量中}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=43.73mm]{\figpath/live/scr_result.jpg}
+\caption{结果页：19.95 Hz，12/12，0.209 mm}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=80.00mm]{\figpath/live/scr_receipt.jpg}
+\caption{打印出的测量报告}
+\end{subfigure}
+\caption{2026-11-04 实测时的屏幕与打印输出}
+\label{fig:uilive}
+\end{figure}
+
+\subsubsection{Nano ESP32 固件}
+\label{sec:nano}
+
+Nano 固件基于 Arduino-ESP32，按服务划分模块：与 AX7010 通信的链路层与命令路由、事件存储、PN532 NFC、microSD 文件系统、WAV 解析与 I²S 音频、Wi-Fi 与 NTP、APP 网关、掉电处理，以及 J605 上的调试控制台（UART0，115200 8N1，命令与 USB 口共用）。与 AX7010 的链路使用 UART1，带 RTS/CTS 流控和一根事件中断线。
+
+PS 与 Nano 之间的协议 V1 是二进制帧加 JSON 载荷（表~\ref{tab:frame}）。接收端按流解析，任意分包和粘包都能处理：先找 A5 5A 帧头，长度、版本、类型或 CRC 不合法时丢弃候选帧头的第一个字节继续搜索，半帧 200 ms 超时后重新同步。可靠性靠几层编号保证：双方启动时各生成 boot\_id，AX 握手时分配 session\_id；每个请求带单调递增的 seq，Nano 缓存最近 32 个请求的摘要和响应，超时重发必须使用相同 seq 和相同载荷，同 seq 不同内容返回冲突；语音任务由 AX 生成 job\_id，同一 job\_id 不会播放两次。Nano 产生的 NFC、音频、SD、网络、校时和掉电事件进入至少 32 项的队列，按 boot\_id + event\_id 去重，AX 处理后才确认连续前缀；只要队列非空，中断线保持高电平。
+
+\begin{table}[htbp]
+\centering
+\caption{PS—Nano 协议 V1 帧格式（多字节字段小端）}
+\label{tab:frame}
+\small
+\begin{tabular}{@{}llL{9.6cm}@{}}
+\toprule
+\tabhead \tabh{偏移} & \tabh{长度} & \tabh{内容} \\
+\midrule
+0 & 2 & 帧头 A5 5A \\
+2 & 1 & 版本 1 \\
+3 & 1 & 类型：1 请求，2 响应，3 事件 \\
+4 & 1 & 操作码：HELLO、GET\_STATUS、SET\_NET、GET\_TIME、PLAY\_VOICE、STOP\_VOICE、GET\_SD\_INFO、DRAIN\_EVENTS、ACK\_EVENTS、PREPARE\_POWER\_OFF 等 \\
+5 & 1 & 标志，V1 固定为 0 \\
+6 & 2 & 序号 seq（事件为 0） \\
+8 & 2 & 载荷长度，最大 1024 字节 \\
+10 & $n$ & UTF-8 JSON 对象 \\
+$10+n$ & 2 & CRC-16/CCITT-FALSE（多项式 0x1021，初值 0xFFFF），覆盖偏移 2 起的头部与载荷 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+语音资源为 13 条 16 kHz、16 位单声道 WAV，存放在主载板的 microSD 卡中，包括开机欢迎、开始与完成基线采集、开始测量、测量完成、振动预警、振动报警、打印与存储异常等提示，由 AX 根据事件提交 asset\_id 和音量。播放命令被接受只表示任务入队，播放是否完成以 AUDIO\_DONE 或 AUDIO\_FAILED 事件为准。
+
+\subsubsection{移动端 APP}
+
+APP 的界面用 HTML 与 JavaScript 实现一次，Android（Java）、iOS（Swift）和 Windows（C++）只提供原生外壳和设备发现。手机和电脑可以在同一局域网内直接访问 AX7010 的 HTTP 接口，也可以连接 ESP32 的热点，由 Nano 的网关转发。首次连接需要配对。APP 提供实时位移曲线、开始/停止测量、采集基线、照明控制、结果详情（含三维时频图）、历史记录、测点设置和设备数字孪生视图；测量结束和报警时同步推送（图~\ref{fig:app}）。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=90.00mm]{\figpath/live/app_alarm.jpg}
+\caption{实测报警推送}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=90.00mm]{\figpath/live/app_result.jpg}
+\caption{实测结果详情}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=82.56mm]{\figpath/app/app_twin.jpg}
+\caption{设备数字孪生与爆炸视图}
+\end{subfigure}
+\caption{APP 界面与实测结果}
+\label{fig:app}
+\end{figure}
+
+\FloatBarrier

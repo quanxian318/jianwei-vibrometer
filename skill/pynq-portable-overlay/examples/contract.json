@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "bit": "stream_add.bit",
+  "dma": "axi_dma_0",
+  "ip": "axi_gpio_0",
+  "read_only_offset": 0,
+  "dtype": "uint32",
+  "samples": 16,
+  "reference": "add-one"
+}

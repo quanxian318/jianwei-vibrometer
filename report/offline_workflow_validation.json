@@ -1,0 +1,95 @@
+{
+  "python": "3.10.8 (tags/v3.10.8:aaaf517, Oct 11 2022, 16:50:30) [MSC v.1933 64 bit (AMD64)]",
+  "checks": [
+    {
+      "step": "unit",
+      "args": [
+        "skill/tests/test_skills.py"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "sampling",
+      "args": [
+        "skill/sampling_check/check_sampling.py",
+        "--fs",
+        "45",
+        "--target",
+        "22",
+        "--search-max",
+        "30"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "sampling_rejection",
+      "args": [
+        "skill/sampling_check/check_sampling.py",
+        "--fs",
+        "45",
+        "--target",
+        "30",
+        "--search-max",
+        "30"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "passed": true
+    },
+    {
+      "step": "vivado_report",
+      "args": [
+        "skill/implementation_audit/audit_vivado.py",
+        "--util",
+        "skill/tests/fixtures/utilization.rpt",
+        "--timing",
+        "skill/tests/fixtures/timing.rpt"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "golden_pass",
+      "args": [
+        "skill/golden-compare/compare.py",
+        "skill/golden-compare/examples/reference.csv",
+        "skill/golden-compare/examples/pass.csv"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "golden_difference",
+      "args": [
+        "skill/golden-compare/compare.py",
+        "skill/golden-compare/examples/reference.csv",
+        "skill/golden-compare/examples/fail.csv"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "pynq_contract",
+      "args": [
+        "skill/pynq-portable-overlay/scripts/contract.py",
+        "skill/pynq-portable-overlay/examples/contract.json",
+        "--emit",
+        "D:\\FPGA\\Competition_Docs_20261102\\qa\\offline_skills_v2\\board_smoke.py"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "pynq_generated_syntax",
+      "passed": true
+    }
+  ]
+}

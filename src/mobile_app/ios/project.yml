@@ -1,0 +1,30 @@
+# XcodeGen spec: `xcodegen generate` (in this folder) writes JianweiVibro.xcodeproj.
+# The web app is bundled from ../web as a folder reference.
+name: JianweiVibro
+options:
+  bundleIdPrefix: com.jianwei
+  deploymentTarget:
+    iOS: "14.0"
+settings:
+  base:
+    MARKETING_VERSION: "1.0.5"
+    CURRENT_PROJECT_VERSION: "6"
+targets:
+  JianweiVibro:
+    type: application
+    platform: iOS
+    sources:
+      - path: JianweiVibro
+      - path: ../web
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwei.vibro
+        PRODUCT_NAME: JianweiVibro
+        INFOPLIST_FILE: JianweiVibro/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: NO

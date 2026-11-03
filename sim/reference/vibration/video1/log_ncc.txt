@@ -1,0 +1,11 @@
+tip_upper: init 1 contrast 13.6
+tip_lower: init 1 contrast 24.0
+edge_lower_mid: init 1 contrast 24.1
+edge_upper_mid: init 1 contrast 20.4
+motor_body: init 1 contrast 35.8
+field: valid 1  peak 11.134 Hz fraction 0.2266 median 0.0000
+  line 11.134 Hz  0.2266  harmonic 0
+  line 7.728 Hz  0.1762  harmonic 2
+  line 3.421 Hz  0.0408  harmonic 3
+  line 4.302 Hz  0.0122  harmonic 5
+  line 6.826 Hz  0.0104  harmonic 0

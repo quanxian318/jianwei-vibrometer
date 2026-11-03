@@ -1,0 +1,527 @@
+{
+  "source_repo": "https://github.com/quanxian318/jianwei-visual-vibrometer",
+  "board": "Arduino Nano ESP32 ABX00083",
+  "fqbn": "arduino:esp32:nano_nora:PartitionScheme=default,PinNumbers=default,USBMode=default",
+  "core_version": "2.0.18-20240930.arduino3",
+  "builder": "Arduino IDE 1.8.19 arduino-builder",
+  "compiler": "xtensa-esp32s3-elf-gcc esp-2021r2-patch5-8.4.0",
+  "debug_uart": {
+    "connector": "J605",
+    "peripheral": "UART0 / Serial0",
+    "baud": 115200,
+    "format": "8N1",
+    "flow_control": false,
+    "rx_gpio": 44,
+    "tx_gpio": 43,
+    "pin1": "GND",
+    "pin2": "Nano TX -> adapter RX",
+    "pin3": "Nano RX <- adapter TX"
+  },
+  "firmware_version": "0.2.3",
+  "validation_date": "2026-11-02",
+  "source_commit": "943e68de87c30ecfa2374976315794f1ca67bd85",
+  "source_modified": true,
+  "source_note": "Exact compiled inputs verified against repository and staged copies by SHA256.",
+  "build_result": "passed",
+  "build_summary": [
+    "Sketch uses 973865 bytes (30%) of program storage space. Maximum is 3145728 bytes.",
+    "Global variables use 103276 bytes (31%) of dynamic memory, leaving 224404 bytes for local variables. Maximum is 327680 bytes."
+  ],
+  "image_checksum_and_validation_hash": "valid",
+  "hardware_flashed": true,
+  "hardware_usb_console_tested": true,
+  "hardware_j605_tested": false,
+  "hardware_peripherals_tested": false,
+  "nfc_sd_fault_resolved": false,
+  "host_tests": {
+    "console_io": "passed: 10 scenarios, 400 concurrent log lines",
+    "wav_parser": "passed",
+    "app_gateway": "passed",
+    "nfc_control": "passed 2026-11-02 with current asset table; other unchanged-source regressions reused"
+  },
+  "source_files": [
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/app_config.h",
+      "sha256": "1156f012164f7040cf225bcc9f222c8ef013eb078b63815023fcd16b35fb0603"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/app_gateway.cpp",
+      "sha256": "f84d3232a69f8869b9e0db17d81e8d53a2adf98760af0915d2e2ccc8cf5f7af6"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/app_gateway.h",
+      "sha256": "57327ba96d6721bd239f3c5062bb85674fedcb501cf96b1a8c449cafbc00315a"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/audio_service.cpp",
+      "sha256": "fd77e6946d48a2ba86089e474023be89b92cf80cd65dec9c2238d0b149fdcc59"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/audio_service.h",
+      "sha256": "483d6af8820d2586a3c190f34dd7719a64ad35dea6e9815fd37a9e215a753bf1"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/board_pins.h",
+      "sha256": "13864abdeb1fb6b8f43ab742ab2b313ea909fd020256a74ed0e7909ed068dd60"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/console_io.cpp",
+      "sha256": "eb129cf56c66576fc53d1b276ce2ec31d44291b973f664d83712c100119f41f6"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/console_io.h",
+      "sha256": "f82ea2519b23c63d0c6efc204fbead5ca792f2a6c830d445c7b780c8c6d99612"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/console.cpp",
+      "sha256": "d62aaf6f2e14251a3d83dd0580134bbed91e60fe6630184aa0b467ba2473bedd"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/console.h",
+      "sha256": "168dde03d59ec53d9a25649ff08583af9cd0df05f71720fd6efefaa595be4a1d"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/event_store.cpp",
+      "sha256": "db58afab729b4f086f89cc29d6e49b88ae7516ee9d8efa3e31e4aec18be9394b"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/event_store.h",
+      "sha256": "20ce7355ec018f5b107621e0e677ad655d7b71d3d99b26c0c6710cf59dba0624"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/http_gateway.cpp",
+      "sha256": "b8bb6032a54c6e3354c4a1a782c5dc5b049e2d6fbf700360f248e98edddc9c30"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/http_gateway.h",
+      "sha256": "47e2693fb624ee91f74032b179e8caa0b5d18e47637c84a8bf7e5914d0ac3242"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/link.cpp",
+      "sha256": "cde50cfe395172371131de2524b8330bbbb06ee1ea6bea830148eb124b5ea9ca"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/link.h",
+      "sha256": "d890e69bf65cf93d4bad778664a72d3d30be25835da95d086403c24ac74e1ed4"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/log.cpp",
+      "sha256": "3701c290d526dd2f911d0f7f353541fe22b407290d43961b5d37bffc81d2c954"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/log.h",
+      "sha256": "bc55112f843be6070089563210bf3c9f9e4da7645c2fea8ac54a34612b46d68f"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/net_service.cpp",
+      "sha256": "fb5a9200109d076e972aff8f51f5c8ca5df62ed9eac105ef8884afb4c42ce053"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/net_service.h",
+      "sha256": "64b91de26cd8fbf5d102e977f189480bd87e3a57656121f1e8d2887e543ed240"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/nfc_service.cpp",
+      "sha256": "148c38247e7167e98c18d852123adc3d80d0483a8076d2b7ddff7f32c35cd9eb"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/nfc_service.h",
+      "sha256": "4bf2bb2e935eea53313dcebf69320f82e11bb9ddc6e2480110f2824cac693510"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/power_service.cpp",
+      "sha256": "2a10c5b0433983765397098e2f349a1d125b395edcdef97885d70d0287bd5017"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/power_service.h",
+      "sha256": "6ce346d079eee9cc244bba3f3b9207ecb6a19bb922fd88d6d112e6537b95c131"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/router.cpp",
+      "sha256": "0729740e75f471bf4347bfa4436db5921049fa1af1470279f0ed8dbb4a5058ff"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/router.h",
+      "sha256": "e6d5f75133bc3f05c787bef70d76b450dc995661af84961301190e62b4f06317"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/sd_service.cpp",
+      "sha256": "c8c64540bf84ed8913f0bff62f45085a373df8479fffb7036ec31c5991011421"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/sd_service.h",
+      "sha256": "07fa18ea0ac59b64a99370ddff90b1d98eb424079e850e2ff748c226f9da1196"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/settings.cpp",
+      "sha256": "a7f0cc0163c8b4fb90896a7414054510f5ff724af9a57c03f13fc37b27d58740"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/settings.h",
+      "sha256": "4a3cfbbb171a66a68c8c01ac9c4b69a0fa300cc3beed2d96a601b7c47ddf4425"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/vibmon_nano.ino",
+      "sha256": "16341bc97e9ee87bd9e7059f9c48d2b59cd31392afa1becc4534ae38d1f8fd89"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/wav_parser.cpp",
+      "sha256": "ec0de82628920ddafa4baa525e5e4f6c71e15fa20630e8d84d367e0bd1e578bc"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/vibmon_nano/wav_parser.h",
+      "sha256": "aa45f745d176a5186ebc3464f2c20e73a05ba4c469b0725f3ddd53fbd9080b9e"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/library.properties",
+      "sha256": "e1801928b07d36ea65fcaa6939cb765b47f9c2199d3801d8304926ff6c213c37"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/reference/protocol_reference.py",
+      "sha256": "62cb9e27e478a69724351b79585109bb0cb1c41f2007e6ea190eef3797d5d3a6"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/reference/protocol_vectors.json",
+      "sha256": "268a695e0d92acb31d61aec71fd67a085834759f37492a057f66a5e61cdc26e5"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/src/vibproto.h",
+      "sha256": "cd3cb7fdded671c18bd8be9f362357ab58594a1f2926c76ca249d591ff1a876a"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/src/vp_frame.cpp",
+      "sha256": "8c74edc3271cc34944cf4909f01cd03cc9b8e4eac75d5777b6dc914984fd7907"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/src/vp_frame.h",
+      "sha256": "9d34ad9fc22655ae82d1bc11f8ca2bee0ddc87796ca4ae8d7ba283426569cd60"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/src/vp_json.cpp",
+      "sha256": "4a431da85c40b03bde6aae4f8cccfcb80916c86285988ffc84589966a5642206"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/src/vp_json.h",
+      "sha256": "47ae6c367274ffcde351ea09beb5bcd255512531fec13525bdfebcc456a82a11"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/test/gen_random_vectors.py",
+      "sha256": "330098f233458740037b0f572f7bd652f822eb1893a4bc0e1af69e0071b1ee3b"
+    },
+    {
+      "path": "06_软件与FPGA/shared/vibproto/test/test_vibproto.cpp",
+      "sha256": "07f487d2584d60b8edaa69558503c60dbf7623bc3556c0fcd360ac932211ce40"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "06_软件与FPGA/nano_esp32/bin/partitions.csv",
+      "bytes": 447,
+      "sha256": "d9a17acf0e43d3093c44539482fe2735fc6eee7bad991a6e2fab164fead5baf1"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/bin/vibmon_nano.ino.bin",
+      "bytes": 974224,
+      "sha256": "fc835e5ee70b4f972d535e94c7548b70ac62ceef77107c90fed93ea679e3eb26"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/bin/vibmon_nano.ino.bootloader.bin",
+      "bytes": 15104,
+      "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/bin/vibmon_nano.ino.elf",
+      "bytes": 19568284,
+      "sha256": "50f97ff5c2ad6e8ec0ad38b561af33e07ff8780e1d56ecc815d42c4b009bb17f"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/bin/vibmon_nano.ino.partitions.bin",
+      "bytes": 3072,
+      "sha256": "a8ed437803d579ea4db97d60e6b2eac9fc8a8ffadf6cfdcd2493130b17144e40"
+    }
+  ],
+  "voice_wav_included": true,
+  "voice_files": [
+    {
+      "asset": "measure_done",
+      "seconds": 3.13,
+      "sha256": "57c01bfe7233bd09c36647d736cf5cd4251b906bc4e939de5e1856ec137b2244"
+    },
+    {
+      "asset": "vibration_warn",
+      "seconds": 4.577,
+      "sha256": "d6b07a21b440c3a3315c7629365b1de4a2d205bf38e8e6604e43118c044c66c4"
+    },
+    {
+      "asset": "vibration_alarm",
+      "seconds": 3.164,
+      "sha256": "e9c60883e089ab9313f543d32ce61e04be3362aa47b0626dab8e96df1a408dd3"
+    },
+    {
+      "asset": "print_failed",
+      "seconds": 4.315,
+      "sha256": "4c99f52a14bd84140055fec4468329b27232e4f4d99cff247a1e2afc8d692094"
+    },
+    {
+      "asset": "storage_error",
+      "seconds": 3.665,
+      "sha256": "ea9720697e69f5ee2c45300eb4796d524d0864d928e9415b73415bfaa2ee1dd1"
+    },
+    {
+      "asset": "baseline_done",
+      "seconds": 3.557,
+      "sha256": "3e4875c22335f8ea83598d2137aff2a411fb471b6eb9a47eae9ab1fbbc97d1ca"
+    },
+    {
+      "asset": "welcome",
+      "seconds": 2.608,
+      "sha256": "a2cdbd3f9942a6e800d9bd8d486bf5db66a42f09248eeb7f1a72344a5e85e3ba"
+    },
+    {
+      "asset": "baseline_start",
+      "seconds": 5.171,
+      "sha256": "d9fe526f3b76522b8afe621ed7667c09b60daa54eae20428741c64c97240a5b5"
+    },
+    {
+      "asset": "baseline_failed",
+      "seconds": 4.308,
+      "sha256": "eba61d1385e24f91d0fe507eaee8e393d70d0839cbc3ab550feb62448cf50935"
+    },
+    {
+      "asset": "measure_start",
+      "seconds": 3.573,
+      "sha256": "41a38286887aad29976640c41aa1c2783932016af9cb44e6a5eda1d712854692"
+    },
+    {
+      "asset": "measure_failed",
+      "seconds": 3.739,
+      "sha256": "88fb59103c14a5648f5fce03ba4e61e37e7204dabb7b36458d3e246b1f5b7040"
+    },
+    {
+      "asset": "calibration_done",
+      "seconds": 3.335,
+      "sha256": "d24c02e0f2eb6b4d5f850d394aaad241a9718dfd3597da95102a8261ffae96e4"
+    },
+    {
+      "asset": "print_sent",
+      "seconds": 4.068,
+      "sha256": "c0eb53eb4ae01c856ae4581baad57097df8a7c89ed5c9d662c36ed67da0a0132"
+    }
+  ],
+  "voice_selected": "3 清甜灵动 / 度清影 per=4196",
+  "voice_synthesis_record": "06_软件与FPGA/nano_esp32/sd_card/语音合成记录.json",
+  "sd_card_file_readback_verified": true,
+  "sd_card_note": "All thirteen WAVs copied or preserved on VIBMON_SD FAT32 card, read back with matching SHA256, then safely ejected; board playback not tested.",
+  "ps_baseline_call": "Local source changed to baseline_done; not built or deployed to AX7010 in this round.",
+  "previous_firmware_flash_verification": {
+    "date": "2026-11-02",
+    "firmware": "0.2.2",
+    "commit": "943e68de87c30ecfa2374976315794f1ca67bd85",
+    "device_serial": "7C0C5F54D5EC",
+    "port": "COM18",
+    "firmware_sha256": "f46055c7e7ca87284158ed36a96b814d402fde751595ac9e4186f2685b538906",
+    "bytes": 973792,
+    "upload_exit_code": 0,
+    "upload_result": "Download done. Done!",
+    "runtime_verified": true,
+    "runtime_note": "USB ping/pong and status version 0.2.2 verified; nfc off/on and spi command replies verified, NFC restored enabled. Peripheral readiness not verified.",
+    "observed_status": {
+      "version": "0.2.2",
+      "boot_id": "90f9dab4605dce0b",
+      "session": {
+        "session_active": false,
+        "session_id": null,
+        "requests": 0,
+        "replays": 0,
+        "bad_session": 0,
+        "seq_conflicts": 0
+      },
+      "link": {
+        "baud": 115200,
+        "flow_control": true,
+        "rx_frames": 0,
+        "crc_errors": 0,
+        "header_errors": 0,
+        "json_errors": 0,
+        "partial_timeouts": 0,
+        "uart_errors": 0,
+        "tx_drops": 0
+      },
+      "wifi": {
+        "state": "OFF",
+        "ssid": null,
+        "attempts": 0,
+        "ap": {
+          "enabled": true,
+          "ssid": "VIBMON-D5EC",
+          "ip": "192.168.4.1",
+          "clients": 0
+        }
+      },
+      "time_valid": false,
+      "sd": {
+        "present": true,
+        "mounted": false
+      },
+      "nfc": {
+        "enabled": true,
+        "ready": false,
+        "firmware": null,
+        "tag_present": false,
+        "uid": null,
+        "errors": 0
+      },
+      "power": {
+        "power_fail": true,
+        "power_off_prepared": false
+      },
+      "events": {
+        "last_event_id": 5,
+        "acked_through": 0,
+        "pending": 5
+      },
+      "gateway": {
+        "requests": 0,
+        "published": 0,
+        "forwarded": 0,
+        "timeouts": 0,
+        "topics": 0,
+        "clients": 0
+      }
+    },
+    "hardware_j605_tested": false,
+    "peripherals_tested": false
+  },
+  "test_sources": [
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/console_stubs/Arduino.h",
+      "sha256": "21f3aa0646029c5a9b49cd19a8f39dbd51a5f59cebda3b03c36de8cace899f02"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/console_stubs/freertos/FreeRTOS.h",
+      "sha256": "bb4c1c4b0b305801f87e8ead73c4ac4516785293f3a3496c061b7f2ae24aa356"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/console_stubs/freertos/semphr.h",
+      "sha256": "cb74cb15322cf3b9e7559fd94dc0d4f9b58e5688c5cfa75f975633f0c11942e6"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/nfc_stubs/Arduino.h",
+      "sha256": "fb7868d3319cf3d9b391abba0165ed744949b28272db2d3c36b0160be129baf6"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/nfc_stubs/SPI.h",
+      "sha256": "203dd845669b059871389409d9b299b18f56e7235cb1ca408fdf707fb8102df8"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/test_app_gateway.cpp",
+      "sha256": "e7dcafef71f319e5ccaad941e507b5a67cff28d387acfeb21829f52dcf0573b3"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/test_console_io.cpp",
+      "sha256": "af79e99a6e6ea2f55c35b14c172f57f64ce9851137ce1ee4f5e36bce95eb6c4a"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/test_nfc_control.cpp",
+      "sha256": "a2ac55177a4d6058e7cb568a348343916f89007713449400180abdce8e6adf1f"
+    },
+    {
+      "path": "06_软件与FPGA/nano_esp32/test/test_wav_parser.cpp",
+      "sha256": "5d23acc045609e4f8c40cbfdc6f2ddc46aa21d4edfd2df7f1dccdc9beccf9863"
+    }
+  ],
+  "hardware_nfc_control_command_tested": false,
+  "voice_extensions": {
+    "new_assets": [
+      "welcome",
+      "baseline_start",
+      "baseline_failed",
+      "measure_start",
+      "measure_failed",
+      "calibration_done",
+      "print_sent"
+    ],
+    "automatic_triggers_integrated": false,
+    "note": "Resources only; pre-capture announcements must finish before measurement/acoustic capture."
+  },
+  "flash_verification": {
+    "date": "2026-11-02",
+    "commit": "01cce38e35e05bd1bf3777bbbf51b66596fd7702",
+    "firmware": "0.2.3",
+    "device_serial": "7C0C5F54D5EC",
+    "port": "COM18",
+    "bytes": 974224,
+    "firmware_sha256": "fc835e5ee70b4f972d535e94c7548b70ac62ceef77107c90fed93ea679e3eb26",
+    "upload_exit_code": 0,
+    "upload_result": "Download done. Done!",
+    "runtime_verified": true,
+    "runtime_note": "USB ping/pong and status version 0.2.3 confirmed; SD card was connected to the PC during this test. Peripheral and audio output acceptance pending.",
+    "observed_status": {
+      "version": "0.2.3",
+      "boot_id": "7af4fddfef11a157",
+      "session": {
+        "session_active": false,
+        "session_id": null,
+        "requests": 0,
+        "replays": 0,
+        "bad_session": 0,
+        "seq_conflicts": 0
+      },
+      "link": {
+        "baud": 115200,
+        "flow_control": true,
+        "rx_frames": 0,
+        "crc_errors": 0,
+        "header_errors": 0,
+        "json_errors": 0,
+        "partial_timeouts": 0,
+        "uart_errors": 0,
+        "tx_drops": 0
+      },
+      "wifi": {
+        "state": "OFF",
+        "ssid": null,
+        "attempts": 0,
+        "ap": {
+          "enabled": true,
+          "ssid": "VIBMON-D5EC",
+          "ip": "192.168.4.1",
+          "clients": 0
+        }
+      },
+      "time_valid": false,
+      "sd": {
+        "present": true,
+        "mounted": false
+      },
+      "nfc": {
+        "enabled": true,
+        "ready": false,
+        "firmware": null,
+        "tag_present": false,
+        "uid": null,
+        "errors": 0
+      },
+      "power": {
+        "power_fail": true,
+        "power_off_prepared": false
+      },
+      "events": {
+        "last_event_id": 5,
+        "acked_through": 0,
+        "pending": 5
+      },
+      "gateway": {
+        "requests": 0,
+        "published": 0,
+        "forwarded": 0,
+        "timeouts": 0,
+        "topics": 0,
+        "clients": 0
+      }
+    },
+    "hardware_j605_tested": false,
+    "peripherals_tested": false
+  },
+  "sd_card_verification": "05_验证资料/Nano固件构建/sd_card_readback.json"
+}

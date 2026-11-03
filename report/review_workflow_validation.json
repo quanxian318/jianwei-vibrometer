@@ -1,0 +1,232 @@
+{
+  "python": "3.10.8 (tags/v3.10.8:aaaf517, Oct 11 2022, 16:50:30) [MSC v.1933 64 bit (AMD64)]",
+  "checks": [
+    {
+      "step": "unit",
+      "args": [
+        "skill/tests/test_skills.py"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "sampling",
+      "args": [
+        "skill/sampling_check/check_sampling.py",
+        "--fs",
+        "45",
+        "--target",
+        "22",
+        "--search-max",
+        "30"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "sampling_rejection",
+      "args": [
+        "skill/sampling_check/check_sampling.py",
+        "--fs",
+        "45",
+        "--target",
+        "30",
+        "--search-max",
+        "30"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "passed": true
+    },
+    {
+      "step": "vivado_report",
+      "args": [
+        "skill/implementation_audit/audit_vivado.py",
+        "--util",
+        "skill/tests/fixtures/utilization.rpt",
+        "--timing",
+        "skill/tests/fixtures/timing.rpt"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "golden_pass",
+      "args": [
+        "skill/golden-compare/compare.py",
+        "skill/golden-compare/examples/reference.csv",
+        "skill/golden-compare/examples/pass.csv"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "golden_difference",
+      "args": [
+        "skill/golden-compare/compare.py",
+        "skill/golden-compare/examples/reference.csv",
+        "skill/golden-compare/examples/fail.csv"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "pynq_contract",
+      "args": [
+        "skill/pynq-portable-overlay/scripts/contract.py",
+        "skill/pynq-portable-overlay/examples/contract.json",
+        "--emit",
+        "D:\\FPGA\\Competition_Docs_20261102\\qa\\skills_v4_run\\board_smoke.py"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "interface-contract_match",
+      "args": [
+        "skill/compare_records.py",
+        "interface-contract",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\interface-contract\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\interface-contract\\match.json"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "interface-contract_mismatch",
+      "args": [
+        "skill/compare_records.py",
+        "interface-contract",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\interface-contract\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\interface-contract\\mismatch.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "interface-contract_invalid",
+      "args": [
+        "skill/compare_records.py",
+        "interface-contract",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\interface-contract\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\qa\\skills_v4_run\\interface-contract-invalid.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "passed": true
+    },
+    {
+      "step": "optimization-baseline_match",
+      "args": [
+        "skill/compare_records.py",
+        "optimization-baseline",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\optimization-baseline\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\optimization-baseline\\match.json"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "optimization-baseline_mismatch",
+      "args": [
+        "skill/compare_records.py",
+        "optimization-baseline",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\optimization-baseline\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\optimization-baseline\\mismatch.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "optimization-baseline_invalid",
+      "args": [
+        "skill/compare_records.py",
+        "optimization-baseline",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\optimization-baseline\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\qa\\skills_v4_run\\optimization-baseline-invalid.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "passed": true
+    },
+    {
+      "step": "reproduction-binding_match",
+      "args": [
+        "skill/compare_records.py",
+        "reproduction-binding",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\reproduction-binding\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\reproduction-binding\\match.json"
+      ],
+      "outcome": "accepted",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true
+    },
+    {
+      "step": "reproduction-binding_mismatch",
+      "args": [
+        "skill/compare_records.py",
+        "reproduction-binding",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\reproduction-binding\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\reproduction-binding\\mismatch.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "reproduction-binding_invalid",
+      "args": [
+        "skill/compare_records.py",
+        "reproduction-binding",
+        "D:\\FPGA\\Competition_Docs_20261102\\consolidated_amd_skills_v4\\skill\\reproduction-binding\\reference.json",
+        "D:\\FPGA\\Competition_Docs_20261102\\qa\\skills_v4_run\\reproduction-binding-invalid.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "passed": true
+    },
+    {
+      "step": "project_scope_rejection",
+      "args": [
+        "skill/compare_records.py",
+        "optimization-baseline",
+        "report/review-cases/baseline.json",
+        "report/review-cases/candidate.json"
+      ],
+      "outcome": "expected_rejection",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true
+    },
+    {
+      "step": "pynq_generated_syntax",
+      "passed": true
+    }
+  ]
+}

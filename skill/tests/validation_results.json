@@ -1,0 +1,27 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows",
+  "automated_tests": 10,
+  "status": "passed",
+  "checks": [
+    "sampling boundary and former cutoff",
+    "actual report resource/slack/coverage parsing",
+    "manifest integrity and tamper rejection",
+    "unsafe path rejection",
+    "ASCII filename check"
+  ],
+  "current_project_manifest": {
+    "verified_files": 465,
+    "status": "passed"
+  },
+  "cli_tests": {
+    "45fps_22hz": "exit 0; near-Nyquist flag true",
+    "45fps_30hz": "exit 2"
+  },
+  "limits": [
+    "No new board deployment or hardware validation in this document task",
+    "Prompt templates have no cross-team success-rate study",
+    "PYNQ portability not verified",
+    "Original full chat export remains a submission attachment to add"
+  ]
+}

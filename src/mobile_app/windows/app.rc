@@ -1,0 +1,32 @@
+// Icon (IDI_APPLICATION is what the webview window class loads), version
+// information and the application manifest.
+#include <winver.h>
+#include "version.h"
+
+32512 ICON "build/app.ico"
+1 24 "app.manifest"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION VER_MAJOR, VER_MINOR, VER_PATCH, 0
+PRODUCTVERSION VER_MAJOR, VER_MINOR, VER_PATCH, 0
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080404b0"
+    BEGIN
+      VALUE "CompanyName", "Jianwei"
+      VALUE "FileDescription", "见微测振"
+      VALUE "FileVersion", VER_STRING
+      VALUE "InternalName", "JianweiVibro"
+      VALUE "OriginalFilename", "JianweiVibro.exe"
+      VALUE "ProductName", "见微测振"
+      VALUE "ProductVersion", VER_STRING
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0804, 1200
+  END
+END

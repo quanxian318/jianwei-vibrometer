@@ -1,0 +1,42 @@
+{
+  "resources": {
+    "lut": {
+      "used": 8945.0,
+      "available": 17600.0,
+      "percent": 50.82
+    },
+    "ff": {
+      "used": 14420.0,
+      "available": 35200.0,
+      "percent": 40.97
+    },
+    "slice": {
+      "used": 4017.0,
+      "available": 4400.0,
+      "percent": 91.3
+    },
+    "bram": {
+      "used": 30.5,
+      "available": 60.0,
+      "percent": 50.83
+    },
+    "dsp": {
+      "used": 0.0,
+      "available": 80.0,
+      "percent": 0.0
+    }
+  },
+  "wns_ns": 0.756,
+  "whs_ns": 0.028,
+  "wpws_ns": 0.333,
+  "constrained_paths_pass": true,
+  "listed_coverage_checks_clear": false,
+  "coverage_checks": {
+    "no_clock": 592,
+    "unconstrained_internal_endpoints": 1132,
+    "no_input_delay": 24,
+    "no_output_delay": 10,
+    "generated_clocks": 1
+  },
+  "note": "Positive slack does not establish complete timing constraints or CDC signoff."
+}

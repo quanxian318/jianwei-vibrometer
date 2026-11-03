@@ -1,0 +1,78 @@
+{
+  "device_id": "jianwei-ax7010",
+  "camera": {
+    "source": "pl_vdma",
+    "pl_vdma": {
+      "fps": 45,
+      "left_camera": 1
+    }
+  },
+  "measurement": {
+    "duration_s": 10,
+    "roi_width_px": 256,
+    "roi_height_px": 192,
+    "method": "multipoint",
+    "multipoint": {
+      "max_points": 12,
+      "grid_cols": 4,
+      "grid_rows": 3,
+      "baseline_dir": "/root/vibmon/baselines"
+    },
+    "tracker": "lk",
+    "calibration_file": "/root/vibmon/calibration.json"
+  },
+  "vision": {
+    "enabled": true,
+    "low_hz": 0.5,
+    "high_hz": 2,
+    "gain": 20
+  },
+  "stereo": {
+    "work_width": 256,
+    "pl_search_ranges": 2,
+    "work_height": 144,
+    "enabled": true,
+    "calibration_file": "/root/vibmon_cam/an5642_stereo_nominal.json",
+    "pl_core_base": "0x43C20000",
+    "pl_dma_base": "0x40400000",
+    "pl_buffer_base": "0x1F800000",
+    "pl_buffer_size": "0x100000",
+    "max_skew_ms": 15,
+    "refine_lk": false,
+    "pl_vertical_check": true
+  },
+  "acoustic": {
+    "enabled": true
+  },
+  "sensors": {
+    "imu": {
+      "enabled": false
+    },
+    "adxl345": {
+      "enabled": false
+    },
+    "tof": {
+      "enabled": false
+    },
+    "sht40": {
+      "enabled": false
+    }
+  },
+  "printer": {
+    "enabled": false
+  },
+  "voice": {
+    "enabled": false
+  },
+  "storage": {
+    "records_dir": "/root/vibmon/records",
+    "settings_file": "/root/vibmon/settings_an5642.json"
+  },
+  "ui": {
+    "enabled": true,
+    "display": "pl_vdma",
+    "touch_device": "auto"
+  },
+  "control_socket": "/tmp/vibmon.sock",
+  "poweroff_on_shutdown": false
+}

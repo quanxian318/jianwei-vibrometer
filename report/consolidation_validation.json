@@ -1,0 +1,51 @@
+[
+  {
+    "args": [
+      "consolidated_amd_skills\\skill\\tests\\test_skills.py"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.019s\n\nOK\n"
+  },
+  {
+    "args": [
+      "consolidated_amd_skills\\skill\\golden-compare\\compare.py",
+      "consolidated_amd_skills\\skill\\golden-compare\\examples\\reference.csv",
+      "consolidated_amd_skills\\skill\\golden-compare\\examples\\pass.csv"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"reference_count\": 3, \"actual_count\": 3, \"difference_count\": 0, \"differences\": []}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "consolidated_amd_skills\\skill\\golden-compare\\compare.py",
+      "consolidated_amd_skills\\skill\\golden-compare\\examples\\reference.csv",
+      "consolidated_amd_skills\\skill\\golden-compare\\examples\\fail.csv"
+    ],
+    "exit_code": 1,
+    "stdout": "{\"reference_count\": 3, \"actual_count\": 2, \"difference_count\": 2, \"differences\": [{\"case_id\": \"case_a\", \"index\": 1, \"expected\": 7, \"actual\": 9}, {\"case_id\": \"case_b\", \"index\": 0, \"expected\": 0, \"actual\": null}]}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "consolidated_amd_skills\\skill\\golden-compare\\compare.py",
+      "consolidated_amd_skills\\skill\\golden-compare\\examples\\reference.csv",
+      "consolidated_amd_skills\\skill\\golden-compare\\compare.py"
+    ],
+    "exit_code": 2,
+    "stdout": "{\"error\": \"consolidated_amd_skills\\\\skill\\\\golden-compare\\\\compare.py: expected case_id,index,value\"}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "consolidated_amd_skills\\skill\\pynq-portable-overlay\\scripts\\contract.py",
+      "consolidated_amd_skills\\skill\\pynq-portable-overlay\\examples\\contract.json",
+      "--emit",
+      "qa\\consolidated_board_smoke.py"
+    ],
+    "exit_code": 0,
+    "stdout": "Contract OK\n",
+    "stderr": ""
+  }
+]

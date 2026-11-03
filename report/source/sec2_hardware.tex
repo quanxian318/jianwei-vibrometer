@@ -1,0 +1,506 @@
+% ----------------------------------------------------------------------
+\subsection{硬件系统介绍}
+% ----------------------------------------------------------------------
+
+\subsubsection{硬件整体介绍}
+
+整机硬件分为计算平台、自研电路和外设模块三层（表~\ref{tab:hwlist}）。AX7010 与 AN5642 直接对插，相机通过开发板的扩展口接入 PL；主载板通过 40 针排线连接 AX7010 的 J11 扩展口，承担 12 V 供电分配、外设接口和负载驱动；前面板通过 10 针线缆接到主载板，安装在顶盖上。AX7010 由主载板的 5 V 独立输出经 USB-A 线供电，不经过 40 针排线取电。
+
+\begin{table}[htbp]
+\centering
+\caption{整机硬件组成}
+\label{tab:hwlist}
+\small
+\begin{tabularx}{\linewidth}{@{}L{2.5cm}L{4.1cm}L{3.2cm}Y@{}}
+\toprule
+\tabhead \tabh{部件} & \tabh{型号} & \tabh{接口} & \tabh{作用} \\
+\midrule
+核心板 & ALINX AX7010（XC7Z010-1CLG400，512 MB DDR3） & — & PL 视频与外设时序，PS 运行 Linux \\
+双目相机 & ALINX AN5642（2×OV5640，500 万像素） & 扩展口 DVP & 测振图像（相机 1），双目深度 \\
+主载板 & 自研，100 mm×100 mm & J801 40 针 & 电源树、监测、RTC、IO 扩展、负载驱动、外设接口 \\
+前面板 & 自研，60 mm×40 mm & J502↔J101 10 针 & 旋钮编码器、按键、5 颗 WS2812 状态灯 \\
+协处理器 & Arduino Nano ESP32（ABX00083） & J604/J606 插座 & NFC、microSD 语音、Wi-Fi/NTP、APP 网关 \\
+显示 & 7 英寸 1024×600 触摸屏 & HDMI + USB & 本地界面与触控 \\
+打印机 & EM5820H 热敏打印机（12 V） & J401，UART + CTS & 测量报告打印 \\
+麦克风 & MP34DT01 PDM 模块 & J706 & 声学辅助测频 \\
+NFC & PN532 V3（SPI 模式） & J602 & 测点卡片识别 \\
+语音 & MAX98357A I²S 功放 + 喇叭 & J601 & 中文语音提示 \\
+传感器接口 & LSM6DSV、ADXL345、VL53L1X、SHT40 & J702/J703/J701/J704 & 相机姿态、参考振动、测距、温湿度 \\
+负载 & 补光灯、十字激光、三色报警灯、蜂鸣器、风扇 & J301/J304/J302 & 照明、对准、声光报警、散热 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=58.31mm]{\figpath/photo/ax7010.jpg}
+\caption{AX7010 开发板与 AN5642 双目相机}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=58.31mm]{\figpath/photo/bringup_wiring.jpg}
+\caption{装壳前的整机联调}
+\end{subfigure}
+\caption{计算平台与联调接线}
+\label{fig:ax7010}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.28627\linewidth}\centering\vspace{0pt}
+\includegraphics[height=61.83mm]{\figpath/photo/carrier_front.jpg}
+\caption{主载板正面}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.38746\linewidth}\centering\vspace{0pt}
+\includegraphics[height=61.83mm]{\figpath/photo/carrier_back.jpg}
+\caption{主载板背面}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.28627\linewidth}\centering\vspace{0pt}
+\includegraphics[height=61.83mm]{\figpath/photo/front_panel.jpg}
+\caption{前面板}
+\end{subfigure}
+\caption{自研电路板实物}
+\label{fig:boards}
+\end{figure}
+
+\subsubsection{机械设计介绍}
+
+外壳由底壳、顶盖和一组 M2 垫柱三个打印件组成（图~\ref{fig:cad}）。底壳外形 322 mm×361 mm×181 mm，前部做成斜面，AX7010 与相机支架整体下倾约 25°，使相机在设备放在桌面时自然看向前下方的被测物；斜面上开有两个镜头孔、两侧补光灯孔和十字激光孔。底壳两侧开有电源与线缆出口、风扇通风孔，打印机装在壳内并配出纸门。顶盖开有 7 英寸屏幕窗口、前面板与 NFC 模块安装位、四个金属按键孔和三色报警灯支架槽，报警灯安装区局部加厚到 9 mm。报警灯支架通过四个 7 mm×18 mm 的长圆槽固定，名义孔距 30 mm×65 mm，长槽为外购支架的孔距误差留出调节余量。
+
+主载板、前面板和各传感器模块用 M2 垫柱固定在壳体凸台上。主载板四角安装孔孔距 90 mm×90 mm，前面板孔距 50 mm×30 mm。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48016\linewidth}\centering\vspace{0pt}
+\includegraphics[height=66.19mm]{\figpath/cad/shell.jpg}
+\caption{打印件装配（底壳 + 顶盖）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.47984\linewidth}\centering\vspace{0pt}
+\includegraphics[height=66.19mm]{\figpath/cad/installed.jpg}
+\caption{整机装配预估（含屏幕、前面板、补光与相机）}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.46183\linewidth}\centering\vspace{0pt}
+\includegraphics[height=69.11mm]{\figpath/cad/shell_stl.png}
+\caption{底壳打印模型：斜置相机支架、固定凸台与侧面开口}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49817\linewidth}\centering\vspace{0pt}
+\includegraphics[height=69.11mm]{\figpath/cad/lid_stl.png}
+\caption{顶盖打印模型：屏幕窗、按键孔与报警灯支架槽}
+\end{subfigure}
+\caption{V17 外壳三维模型}
+\label{fig:cad}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.34562\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.64mm]{\figpath/photo/interior_lit.jpg}
+\caption{壳内装配（上电状态）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.61438\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.64mm]{\figpath/photo/lid_ui.jpg}
+\caption{顶盖：屏幕、前面板、NFC、报警灯与功能按键}
+\end{subfigure}
+\caption{外壳装配实物}
+\label{fig:enclosure}
+\end{figure}
+
+\paragraph{振动试验台。}实测使用的激振装置由直流减速电机、偏心配重、贴散斑的铝片和带孔光学底板组成，电机转速由调速器设定（图~\ref{fig:rig}）。偏心质量 $m$、偏心距 $r$ 在转速 $n$（r/min）下产生的离心激振力为
+\begin{equation}
+\omega=\frac{2\pi n}{60},\qquad F_0=m r\omega^{2},
+\end{equation}
+其方向随转子旋转，在铝片法向的分量按 $F_0\cos\omega t$ 变化，因此铝片主要以一倍转频振动。实测主频 19.948 Hz 对应带载转速约 1197 r/min。铝片的响应幅值还取决于固定方式、连接刚度与阻尼，所以每次试验都同时记录转速与机位。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.41174\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.02mm]{\figpath/photo/test_rig.jpg}
+\caption{减速电机、偏心配重与散斑铝片}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.54826\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.02mm]{\figpath/live/full_voice.jpg}
+\caption{测量布置}
+\end{subfigure}
+\caption{振动试验台}
+\label{fig:rig}
+\end{figure}
+
+\paragraph{散斑尺寸。}跟踪精度取决于模板内的灰度梯度能量。散斑点太小，成像后不足两个像素，会产生混叠并在亚像素插值时引入周期性误差；点太大，25×25 模板内只有少数几个斑点，梯度集中在少量边缘上，结构张量的条件数变差。经验上散斑点在图像中占 3～5 个像素较合适。按本次标定的 0.203 mm/像素，0.8 mm 档的散斑约为 3.9 像素。为适应不同工作距离，我们制作了 0.5、0.8、1.2、2 mm 四档 600 dpi 打印图样。
+
+\subsubsection{电路各模块介绍}
+
+主载板原理图共 8 页：电源输入与监测、电源转换与分配、补光与负载驱动、跨域接口与打印通信、屏幕与前面板接口、Nano 与辅助外设、传感器与扩展接口、板内管理与主控连接；前面板原理图 1 页。图~\ref{fig:powertree} 是由原理图和网表整理出的电源树。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[blk=extc,minimum width=2.2cm] (in) at (0,0) {12 V/5 A 适配器\\J101 DC5525};
+\node[blk=ownc,minimum width=2.4cm] (prot) at (3.1,0) {F101 6.3 A 保险\\SW101 总开关\\SMBJ13A + 470 µF};
+\node[blk=ownc,minimum width=2.2cm] (ina) at (6.2,0) {INA226\\5 mΩ 采样};
+\node[font=\footnotesize\bfseries,text=navy] at (8.1,0.35) {12V\_MAIN};
+\draw[line width=1.4pt,navy] (7.6,-4.6) -- (7.6,4.6);
+% bucks
+\node[blk=ownc,minimum width=2.5cm] (b1) at (9.9,3.9) {U201 TPS5430\\→ 5V\_AX};
+\node[blk=ownc,minimum width=2.5cm] (b2) at (9.9,2.6) {U202 TPS5430\\→ 5V\_LCD};
+\node[blk=ownc,minimum width=2.5cm] (b3) at (9.9,1.3) {U203 TPS5430\\→ 5V\_AUX};
+\node[blk=ownc,minimum width=2.5cm] (f1) at (9.9,0.0) {F201 0.5 A\\→ NANO\_VIN};
+\node[blk=ownc,minimum width=2.5cm] (f2) at (9.9,-1.3) {F301/F302 1.1 A\\低边 MOS};
+\node[blk=ownc,minimum width=2.5cm] (f3) at (9.9,-2.6) {F303 2.5 A\\AO4407A 软启动};
+\node[blk=ownc,minimum width=2.5cm] (f4) at (9.9,-3.9) {F304 1.1 A\\→ 12V\_ALM};
+% loads
+\node[blk=extc,minimum width=2.9cm] (l1) at (13.4,3.9) {AX7010（J201 USB-A）};
+\node[blk=extc,minimum width=2.9cm] (l2) at (13.4,2.6) {触摸屏（J501，F501 2 A）};
+\node[blk=ownc,minimum width=2.9cm] (l3) at (13.4,1.3) {逻辑、WS2812、功放\\栅极驱动};
+\node[blk=espc,minimum width=2.9cm] (l4) at (13.4,0.0) {Nano ESP32 VIN};
+\node[blk=extc,minimum width=2.9cm] (l5) at (13.4,-1.3) {补光灯 J301\\十字激光 J304};
+\node[blk=extc,minimum width=2.9cm] (l6) at (13.4,-2.6) {打印机 12V\_PRN};
+\node[blk=extc,minimum width=2.9cm] (l7) at (13.4,-3.9) {报警灯、蜂鸣器、风扇};
+% LDOs from 5V_AUX
+\node[blk=ownc,minimum width=2.6cm] (ldo1) at (16.9,2.0) {U204 TLV1117-3.3\\→ 3V3\_D};
+\node[blk=ownc,minimum width=2.6cm] (ldo2) at (16.9,0.6) {U205 TPS7A2033\\→ 3V3\_SENS};
+\node[lbl,align=left,anchor=west] at (15.75,3.25) {AX\_3V3：AX7010 板载 3.3 V\\经 J801-39/40 与磁珠引入};
+\draw[arr] (in) -- (prot);
+\draw[arr] (prot) -- node[above,lbl]{12V\_PROT} (ina);
+\draw[arr] (ina) -- (7.6,0);
+\foreach \n in {b1,b2,b3,f1,f2,f3,f4} {\draw[arr] (7.6,0 |- \n) -- (\n.west);}
+\draw[arr] (b1) -- (l1);
+\draw[arr] (b2) -- (l2);
+\draw[arr] (b3) -- (l3);
+\draw[arr] (f1) -- (l4);
+\draw[arr] (f2) -- (l5);
+\draw[arr] (f3) -- (l6);
+\draw[arr] (f4) -- (l7);
+\draw[arr] (l3.east) -- ++(0.25,0) |- (ldo1.west);
+\draw[arr] (l3.east) -- ++(0.25,0) |- (ldo2.west);
+\node[lbl,anchor=north] at (16.9,0.0) {EN 由 AX\_3V3 延时控制};
+\end{tikzpicture}}
+\caption{主载板电源树}
+\label{fig:powertree}
+\end{figure}
+
+\paragraph{电源输入与监测（图~\ref{fig:sch1}）。}12 V 适配器从 J101 输入，经 6.3 A 保险 F101 和 J102 外接的总开关 SW101 后成为 12V\_PROTECTED。SMBJ13A 瞬态抑制二极管吸收插拔和感性负载关断时的尖峰，470 µF 电解与 10 µF、100 nF 陶瓷电容分别承担低频储能和高频去耦。
+
+功率监测用 INA226\cite{ina226}，5 mΩ 采样电阻 RS101 串在 12V\_PROTECTED 与 12V\_MAIN 之间，地址引脚全部接地，I²C 地址为 0x40。取电流分辨率 $I_{\mathrm{LSB}}=0.25\,\mathrm{mA}$，校准寄存器按
+\begin{equation}
+\mathrm{CAL}=\frac{0.00512}{I_{\mathrm{LSB}}\,R_{\mathrm{shunt}}}=\frac{0.00512}{0.25\times10^{-3}\times5\times10^{-3}}=4096 ,
+\end{equation}
+功率分辨率为 $25I_{\mathrm{LSB}}=6.25\,\mathrm{mW}$。INA226 采样电压满量程为 81.92 mV，对应 16.4 A，远大于保险额定电流；5 A 时采样电压 25 mV，电阻功耗只有 0.125 W。实测整机约 9.3 W 时母线电流约 0.78 A。
+
+掉电预警由 TLV3011 比较器完成\cite{tlv3011}。TLV3011 内置 1.242 V 基准（第 5 脚），基准直接接反相输入，同相输入取自 12V\_MAIN 的分压 R102/R103（100 kΩ/12.7 kΩ），R104（1 MΩ）从开漏输出反馈到同相端形成迟滞，R101 上拉到 3V3\_D。设输出高电平 $V_{OH}\approx3.28\,\mathrm{V}$、基准 $V_R=1.242\,\mathrm{V}$，同相端节点电流平衡给出下降阈值
+\begin{equation}
+V_{\downarrow}=R_{102}\left[V_R\left(\frac{1}{R_{102}}+\frac{1}{R_{103}}+\frac{1}{R_{104}}\right)-\frac{V_{OH}}{R_{104}}\right]\approx10.82\,\mathrm{V},
+\end{equation}
+输出拉低后反馈端接地，上升阈值为 $V_{\uparrow}=R_{102}V_R\left(1/R_{102}+1/R_{103}+1/R_{104}\right)\approx11.15\,\mathrm{V}$，迟滞约 0.33 V，避免母线在阈值附近抖动时反复触发。C106（1 nF）与分压网络构成约 11 µs 的滤波。PFAIL\_N 同时送到 Nano（经 1 kΩ）和经缓冲后送到 FPGA，PL 收到后直接关断补光输出，PS 和 Nano 停止新的打印、写卡和语音任务。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=67.36mm]{\figpath/sch/pwr_in.png}
+\caption{输入保护}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.44497\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.07mm]{\figpath/sch/ina226.png}
+\caption{INA226 功率监测}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.51503\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.07mm]{\figpath/sch/pfail.png}
+\caption{TLV3011 掉电预警}
+\end{subfigure}
+\caption{原理图第 1 页：电源输入与监测}
+\label{fig:sch1}
+\end{figure}
+
+\paragraph{电源转换与分配（图~\ref{fig:sch2}）。}三路 5 V 由三片相同的 TPS5430 降压变换器产生，分别供 AX7010（5V\_AX）、触摸屏（5V\_LCD）和板上逻辑与小功率负载（5V\_AUX）。三路独立的好处是屏幕背光和打印、补光等负载的突变不会直接拉低 AX7010 的供电。TPS5430 开关频率固定为 500 kHz\cite{tps5430}，内部基准 1.221 V，反馈分压 $R_{201}=10\,\mathrm{k\Omega}$、$R_{202}=3.24\,\mathrm{k\Omega}$，输出电压
+\begin{equation}
+V_{\mathrm{out}}=1.221\,\mathrm{V}\times\left(1+\frac{R_{201}}{R_{202}}\right)=4.99\,\mathrm{V}.
+\end{equation}
+电感 15 µH 时的纹波电流
+\begin{equation}
+\Delta I_L=\frac{V_{\mathrm{out}}\,(V_{\mathrm{in}}-V_{\mathrm{out}})}{V_{\mathrm{in}}\,L\,f_{\mathrm{sw}}}=\frac{4.99\times7.01}{12\times15\,\mu\mathrm{H}\times500\,\mathrm{kHz}}\approx0.39\,\mathrm{A},
+\end{equation}
+约为 3 A 额定电流的 13\%，电感峰值电流留有充足余量；SK54B 肖特基二极管提供续流通路，10 nF 自举电容驱动上管。
+
+5V\_AUX 再经两只 LDO 分成两路 3.3 V：TLV1117LV33 输出 3V3\_D，供 Nano 一侧的缓冲器、SD 卡和比较器；TPS7A2033 输出 3V3\_SENS，供 IMU、加速度计、ToF、温湿度和麦克风。TPS7A20 是低噪声 LDO，传感器电源与数字电源分开，可减小数字开关噪声对加速度计和麦克风的影响。TPS7A20 的使能端由 AX\_3V3 经 R207（100 kΩ）和 C225（1 µF）控制，时间常数 0.1 s，保证传感器在 FPGA 的 IO 供电建立之后才上电；BAT54 在 AX\_3V3 掉电时迅速泄放使能电容，避免传感器经 IO 线向未上电的 FPGA Bank 倒灌电流。AX7010 板载 3.3 V 经 BLM18AG601 磁珠和 10 µF/100 nF 滤波后作为 AX\_3V3，用于 I²C 上拉和与 FPGA 同电源域的器件。Nano 的 VIN 直接取 12V\_MAIN，经 0.5 A 自恢复保险。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=68.57mm]{\figpath/sch/buck.png}
+\caption{TPS5430 降压（三路相同，图为 5V\_AX）}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=110.00mm]{\figpath/sch/ldo.png}
+\caption{USB 供电口、Nano 供电、两路 LDO 与 AX\_3V3 滤波}
+\end{subfigure}
+\caption{原理图第 2 页：电源转换与分配}
+\label{fig:sch2}
+\end{figure}
+
+\paragraph{补光与负载驱动（图~\ref{fig:sch3}）。}两路补光（LED1 照明、LED2 十字激光）采用相同的低边驱动：FPGA 的 PWM 信号经 100 Ω 进入 UCC27517 栅极驱动器的同相输入，驱动器输出经 10 Ω 栅极电阻驱动 AOD4184A N 沟道 MOSFET，负载正端经 1.1 A 自恢复保险接 12V\_MAIN，SK54B 跨接在负载两端吸收线缆电感的关断尖峰。UCC27517 的反相输入接机壳开关 SW301 控制的 LED\_EN，开关断开时 LED\_EN 被上拉到 5 V，驱动器输出被硬件强制为低，无论 FPGA 输出什么，灯都不会亮，这是独立于软件的物理联锁。2.2 kΩ 下拉和 100 kΩ 栅极下拉保证 FPGA 配置期间 MOSFET 可靠关断。2N7002 把 5 V 的 LED\_EN 状态转换为 3.3 V 的 LIGHT\_OK，供软件读取。
+
+补光采用 20 kHz PWM，每个周期为 50 µs。较高的调光频率有助于降低可听噪声；曝光覆盖多个 PWM 周期时，相机的积分过程可进一步减小照明纹波。
+
+打印机电源用 P 沟道 AO4407A 做高边开关。PRN\_PWR\_EN 经 AO3400A 拉低 AO4407A 栅极，栅源之间并联 R311（100 kΩ）、C310（2.2 µF）和 12 V 稳压管。导通后栅源电压为 $-12\times100/(100+47)\approx-8.2\,\mathrm{V}$，栅压建立的时间常数
+\begin{equation}
+\tau_{\mathrm{on}}=(R_{311}\parallel R_{312})\,C_{310}\approx32\,\mathrm{k\Omega}\times2.2\,\mu\mathrm{F}\approx70\,\mathrm{ms},
+\end{equation}
+该 RC 网络减缓栅压变化，用于抑制打印机上电时的冲击电流。三色报警灯、蜂鸣器和风扇由 TCA9555 输出经 AO3400A 低边开关驱动，感性负载（蜂鸣器、风扇）并联 SS14 续流二极管，公共 12 V 经 1.1 A 保险 F304 供电。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.43024\linewidth}\centering\vspace{0pt}
+\includegraphics[height=57.77mm]{\figpath/sch/led_drv.png}
+\caption{补光低边驱动（LED1，LED2 相同）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.52976\linewidth}\centering\vspace{0pt}
+\includegraphics[height=57.77mm]{\figpath/sch/prn_pwr.png}
+\caption{打印机电源高边软启动开关}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.43981\linewidth}\centering\vspace{0pt}
+\includegraphics[height=65.02mm]{\figpath/sch/alarm.png}
+\caption{报警灯、蜂鸣器与风扇驱动}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.52019\linewidth}\centering\vspace{0pt}
+\includegraphics[height=65.02mm]{\figpath/sch/light_ok.png}
+\caption{LIGHT\_OK 电平转换}
+\end{subfigure}
+\caption{原理图第 3 页：补光与负载驱动}
+\label{fig:sch3}
+\end{figure}
+
+\paragraph{跨域接口与打印通信（图~\ref{fig:sch4}）。}主载板上同时存在两个 3.3 V 电源域：AX\_3V3 来自 AX7010，3V3\_D 来自载板自身。AX7010 未上电或排线未插好时，Nano 一侧仍可能有电，若直接相连，Nano 的输出会经 FPGA 引脚的 ESD 二极管倒灌，既可能损坏 IO，也会让 FPGA 处于异常的半上电状态。因此从 Nano 和打印机进入 FPGA 的信号（Nano TX、RTS、IRQ，打印机 RX、CTS，掉电预警和转速）都经过一片由 AX\_3V3 供电的 74LVC244A。该器件支持部分掉电（$I_{\mathrm{off}}$），VCC 为 0 时输入输出均为高阻，隔断了倒灌路径；输出端串 1 kΩ 排阻限流。100 kΩ 上下拉确定复位期间的空闲电平：UART 线空闲为高，IRQ 默认低，打印机 CTS 默认高（即“未就绪”），打印机没上电时 FPGA 不会向它发送数据。
+
+反方向，FPGA 发往打印机的 TX 经一片由 3V3\_D 供电、带输出使能的 SN74LVC1G125，使能端由 TCA9555 的 PRN\_COM\_EN 经 AO3400A 控制。打印机断电时 TX 保持高阻，避免经打印机 RX 引脚给其内部电路寄生供电。J401 为 5 针 PH2.0 接口，依次为 12V\_PRN、CTS、TX、RX 和地。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.57947\linewidth}\centering\vspace{0pt}
+\includegraphics[height=110.00mm]{\figpath/sch/xbuf.png}
+\caption{74LVC244A 跨电源域缓冲与默认电平}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.38053\linewidth}\centering\vspace{0pt}
+\includegraphics[height=110.00mm]{\figpath/sch/prn_tx.png}
+\caption{打印机 TX 使能与 J401}
+\end{subfigure}
+\caption{原理图第 4 页：跨域接口与打印通信}
+\label{fig:sch4}
+\end{figure}
+
+\paragraph{屏幕与前面板接口（图~\ref{fig:sch5}）。}触摸屏由 5V\_LCD 经 2 A 自恢复保险和 USB-A 口 J501 供电。WS2812 的数据输入高电平门限为 $0.7V_{DD}=3.5\,\mathrm{V}$，FPGA 的 3.3 V 输出不满足，因此用 5 V 供电的 SN74AHCT1G125 做电平转换：AHCT 系列输入为 TTL 门限，$V_{IH}=2.0\,\mathrm{V}$，3.3 V 可以可靠驱动，输出摆幅达到 5 V；330 Ω 串联电阻抑制排线上的反射。编码器 A/B 相经 2.2 kΩ 上拉、1 kΩ/10 nF 低通后进入施密特触发缓冲器 SN74LVC2G17，低通时间常数 $\tau=10\,\mu\mathrm{s}$（截止约 15.9 kHz），滤掉触点抖动的窄脉冲，施密特迟滞把缓慢的 RC 边沿整形为干净的数字边沿；按键和编码器按压各有 1 kΩ/10 nF 低通，PL 中再做同步与去抖。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.49063\linewidth}\centering\vspace{0pt}
+\includegraphics[height=39.74mm]{\figpath/sch/ws_shift.png}
+\caption{WS2812 数据电平转换}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.46937\linewidth}\centering\vspace{0pt}
+\includegraphics[height=39.74mm]{\figpath/sch/lcd_usb.png}
+\caption{触摸屏供电口}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=95.00mm]{\figpath/sch/enc.png}
+\caption{编码器与按键调理}
+\end{subfigure}
+\caption{原理图第 5 页：屏幕与前面板接口}
+\label{fig:sch5}
+\end{figure}
+
+\paragraph{Nano 与辅助外设（图~\ref{fig:sch6}）。}Nano ESP32 插在 J604/J606 两个 15 针插座上，J605 引出其 UART0 作调试口，AO3400A 允许 FPGA 经 TCA9555 远程复位 Nano。microSD 卡与 PN532 NFC 模块共用 Nano 的一组 SPI，SCLK、MOSI 直接并联（各串 330 Ω），而两个器件的 MISO 经 SN74LVC2G125 双路缓冲后才汇到总线，每一路的使能端就是该器件自己的片选。这样即使某个器件在取消选中后没有完全释放 MISO，也不会与另一个器件冲突，任何时刻只有被选中的器件驱动总线。片选线用 10 kΩ 上拉到 3V3\_D，Nano 复位和启动期间两个器件都保持未选中。
+
+语音输出用 MAX98357A I²S D 类功放\cite{max98357}。SD\_MODE 引脚由 AMP\_EN 经 R617（510 kΩ）驱动，与芯片内部约 100 kΩ 下拉分压，AMP\_EN 为高时
+\begin{equation}
+V_{\mathrm{SD\_MODE}}=3.3\,\mathrm{V}\times\frac{100}{510+100}\approx0.54\,\mathrm{V},
+\end{equation}
+落在 0.16～0.77 V 区间，芯片输出左右声道的平均值；AMP\_EN 为低时电压低于 0.16 V，功放关断。GAIN\_SLOT 悬空，增益为 9 dB。语音文件为 16 kHz、16 位单声道 WAV，Nano 以 32 位时隙输出双声道相同数据，BCLK 为 $16\,\mathrm{kHz}\times2\times32=1.024\,\mathrm{MHz}$。功放电源端并联 100 µF、10 µF 和 100 nF，吸收 D 类输出的脉冲电流。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.54117\linewidth}\centering\vspace{0pt}
+\includegraphics[height=56.94mm]{\figpath/sch/spi_sd.png}
+\caption{MISO 片选缓冲与 microSD}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.41883\linewidth}\centering\vspace{0pt}
+\includegraphics[height=56.94mm]{\figpath/sch/audio.png}
+\caption{MAX98357A 语音功放}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.69408\linewidth}\centering\vspace{0pt}
+\includegraphics[height=57.62mm]{\figpath/sch/nano.png}
+\caption{Nano ESP32 插座}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.26592\linewidth}\centering\vspace{0pt}
+\includegraphics[height=57.62mm]{\figpath/sch/nfc.png}
+\caption{PN532 接口}
+\end{subfigure}
+\caption{原理图第 6 页：Nano 与辅助外设}
+\label{fig:sch6}
+\end{figure}
+
+\paragraph{传感器与扩展接口（图~\ref{fig:sch7}）。}LSM6DSV（相机姿态）和 ADXL345（参考振动）共用 FPGA 的一组 SPI，SCLK、MOSI 串 33 Ω 匹配，MISO 串 1 kΩ 限流；两者的中断和数据就绪信号经 1 kΩ 排阻直接进入 FPGA，便于以硬件时间戳与视频帧对齐。VL53L1X 测距和 SHT40 温湿度挂在 I²C1，J706 原为 I²C2，现复用为 MP34DT01 的 PDM 时钟和数据。两路 I²C 用 4.7 kΩ 上拉到 3V3\_SENS，按 50 pF 总线电容估计上升时间 $t_r\approx0.847RC\approx0.2\,\mu\mathrm{s}$，满足 400 kHz 快速模式的 0.3 µs 要求。PDM 数据线保留了上拉，麦克风缺失或采样相位选错时读到全 1，软件据此判断“线路卡死”。ToF 的 XSHUT 由 AO3400A 开漏控制；J705 的转速输入经 10 kΩ 上拉到 3.3 V、1 kΩ/100 pF 滤波后再经 74LVC244A 缓冲。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.52007\linewidth}\centering\vspace{0pt}
+\includegraphics[height=60.52mm]{\figpath/sch/spi_sens.png}
+\caption{SPI 传感器（IMU、加速度计）}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.43993\linewidth}\centering\vspace{0pt}
+\includegraphics[height=60.52mm]{\figpath/sch/tach.png}
+\caption{转速输入调理}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.48743\linewidth}\centering\vspace{0pt}
+\includegraphics[height=26.35mm]{\figpath/sch/i2c_sens.png}
+\caption{温湿度、J706 麦克风与 I²C 上拉}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.47257\linewidth}\centering\vspace{0pt}
+\includegraphics[height=26.35mm]{\figpath/sch/tof.png}
+\caption{ToF 接口与关断控制}
+\end{subfigure}
+\caption{原理图第 7 页：传感器与扩展接口}
+\label{fig:sch7}
+\end{figure}
+
+\paragraph{板内管理与主控连接（图~\ref{fig:sch8}）。}TCA9555 IO 扩展器（I²C0，地址 0x20）集中管理所有慢速开关量，端口分配见表~\ref{tab:tca}。TCA9555 上电时所有端口默认为输入（高阻），各 MOSFET 栅极的 1 kΩ 下拉使负载在软件接管之前全部处于关断状态。DS3231 实时时钟由 CR1220 电池维持走时，1 Hz 方波接到 FPGA，用于记录时间的秒级对齐；采样间隔仍以 Linux 单调时钟为准。J801 是与 AX7010 J11 对接的 40 针接口，信号与 FPGA 引脚的对应见表~\ref{tab:j801}。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.47419\linewidth}\centering\vspace{0pt}
+\includegraphics[height=65.07mm]{\figpath/sch/tca.png}
+\caption{TCA9555 IO 扩展}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48581\linewidth}\centering\vspace{0pt}
+\includegraphics[height=65.07mm]{\figpath/sch/j801.png}
+\caption{J801 主控接口}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=95.00mm]{\figpath/sch/rtc.png}
+\caption{DS3231 实时时钟、I²C0 上拉与调试口}
+\end{subfigure}
+\caption{原理图第 8 页：板内管理与主控连接}
+\label{fig:sch8}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{TCA9555 端口分配}
+\label{tab:tca}
+\small
+\begin{tabular}{@{}llll@{\hspace{2em}}llll@{}}
+\toprule
+\tabhead \tabh{端口} & \tabh{网络} & \tabh{方向} & \tabh{用途} & \tabh{端口} & \tabh{网络} & \tabh{方向} & \tabh{用途} \\
+\midrule
+P00 & LIGHT\_OK & 入 & 补光允许状态 & P10 & ALM\_R & 出 & 红灯 \\
+P04 & TOF\_DISABLE & 出 & ToF 关断 & P11 & ALM\_Y & 出 & 黄灯 \\
+P05 & ESP\_RESET & 出 & 复位 Nano & P12 & ALM\_G & 出 & 绿灯 \\
+P06 & PRN\_PWR\_EN & 出 & 打印机电源 & P13 & BUZZ & 出 & 蜂鸣器 \\
+P07 & PRN\_COM\_EN & 出 & 打印机 TX 使能 & P15 & FAN & 出 & 风扇 \\
+INT\# & EXP\_INT\_N & 出 & 输入变化中断 & P16 & INA\_ALERT & 入 & 功率告警 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{J801（AX7010 J11）引脚与 FPGA 封装脚对应}
+\label{tab:j801}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rllc@{\hspace{1.6em}}rllc@{\hspace{1.6em}}rllc@{}}
+\toprule
+\tabhead \tabh{针} & \tabh{网络} & \tabh{脚} & \tabh{向} & \tabh{针} & \tabh{网络} & \tabh{脚} & \tabh{向} & \tabh{针} & \tabh{网络} & \tabh{脚} & \tabh{向} \\
+\midrule
+3 & LED1\_PWM & F17 & 出 & 15 & TACH\_IN & K18 & 入 & 27 & ADXL\_CS & E19 & 出 \\
+4 & LED2\_PWM & F16 & 出 & 16 & ENC\_SW & K17 & 入 & 28 & ADXL\_DRDY & E18 & 入 \\
+5 & FP\_KEY & F20 & 入 & 17 & ENC\_A & J19 & 入 & 29 & IMU\_CS & G18 & 出 \\
+6 & WS\_DATA & F19 & 出 & 18 & ENC\_B & K19 & 入 & 30 & IMU\_INT1 & G17 & 入 \\
+7 & TOF\_INT & G20 & 入 & 19 & ESP\_TXD & H20 & 出 & 31 & IMU\_INT2 & H17 & 入 \\
+8 & RTC\_1HZ & G19 & 入 & 20 & ESP\_RXD & J20 & 入 & 32 & PDM\_CLK & H16 & 出 \\
+9 & AX\_PFAIL\_N & H18 & 入 & 21 & ESP\_RTS & L17 & 出 & 33 & PDM\_DAT & G15 & 入 \\
+10 & EXP\_INT\_N & J18 & 入 & 22 & ESP\_CTS & L16 & 入 & 34 & SPI\_MISO & H15 & 入 \\
+11 & I2C0\_SCL & L20 & 双 & 23 & ESP\_IRQ & M18 & 入 & 35 & SPI\_SCLK & J14 & 出 \\
+12 & I2C0\_SDA & L19 & 双 & 24 & PRN\_TXD & M17 & 出 & 36 & SPI\_MOSI & K14 & 出 \\
+13 & I2C1\_SCL & M20 & 双 & 25 & PRN\_RXD & D20 & 入 & 1/37/38 & GND & — & — \\
+14 & I2C1\_SDA & M19 & 双 & 26 & PRN\_CTS & D19 & 入 & 39/40 & AX\_3V3 & — & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{前面板（图~\ref{fig:schfp}）。}前面板通过 10 针 GH1.25 线缆连接主载板 J502，板上有 5 颗 WS2812B 串联状态灯、EC11 旋转编码器（带按压）和一个轻触按键 K101。每颗 WS2812 并联 100 nF 去耦，入口处 100 µF 电容承担 5 颗灯同时点亮时约 0.3 A 的峰值电流；数据入口 10 kΩ 下拉保证线缆断开时灯不会随机点亮。WS2812 的数据速率为 800 kbit/s，5 颗灯共 120 位，一次刷新约 150 µs。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.44007\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.32mm]{\figpath/sch/fp_conn.png}
+\caption{J101 板间接口}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.20050\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.32mm]{\figpath/sch/fp_ws.png}
+\caption{WS2812 串联}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31943\linewidth}\centering\vspace{0pt}
+\includegraphics[height=74.32mm]{\figpath/sch/fp_input.png}
+\caption{按键与编码器}
+\end{subfigure}
+\caption{前面板原理图}
+\label{fig:schfp}
+\end{figure}
+
+\paragraph{PCB 设计。}主载板外形 100 mm×100 mm，背面丝印印有 J801 的完整引脚表和全部连接器的针序，便于装配和排查；两板布线见图~\ref{fig:pcb}。前面板 60 mm×40 mm，编码器和灯珠位置与顶盖开孔对应。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=55.07mm]{\figpath/pcb/main_layout.jpg}
+\caption{主载板布线}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=55.07mm]{\figpath/pcb/panel_layout.jpg}
+\caption{前面板布线与尺寸}
+\end{subfigure}
+\caption{PCB 设计}
+\label{fig:pcb}
+\end{figure}
+
+
+主载板将电源转换集中在左侧，Nano ESP32 插座位于上方，J801 主控接口沿右侧布置，打印机、触摸屏和前面板接口分布在板边。器件布局与三维装配预览见图~\ref{fig:pcb3dmain}。前面板正面布置五路状态灯、编码器和按键，背面标明 J101 针序，方便通过线束连接主载板（图~\ref{fig:pcb3dpanel}）。
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.50723\linewidth}\centering\vspace{0pt}
+\includegraphics[height=75.19mm,trim=95bp 85bp 150bp 72.5bp,clip]{\figpath/pcb/carrier_3d_front.png}
+\caption{正面：元器件与板边接口}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.45277\linewidth}\centering\vspace{0pt}
+\includegraphics[height=75.19mm,trim=40bp 30bp 70bp 30bp,clip]{\figpath/pcb/carrier_3d_back.png}
+\caption{背面：J801 与外设接口针序}
+\end{subfigure}
+\caption{主载板三维视图}
+\label{fig:pcb3dmain}
+\end{figure}
+
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.47311\linewidth}\centering\vspace{0pt}
+\includegraphics[height=52.10mm,trim=82.5bp 62.5bp 122.5bp 50bp,clip]{\figpath/pcb/panel_3d_front.png}
+\caption{正面：状态灯、按键与编码器}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48689\linewidth}\centering\vspace{0pt}
+\includegraphics[height=52.10mm,trim=97.5bp 92.5bp 112.5bp 75bp,clip]{\figpath/pcb/panel_3d_back.png}
+\caption{背面：J101 针序与纪念丝印}
+\end{subfigure}
+\caption{前面板三维视图}
+\label{fig:pcb3dpanel}
+\end{figure}
+
+\FloatBarrier

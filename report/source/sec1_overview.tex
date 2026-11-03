@@ -1,0 +1,169 @@
+% ======================================================================
+\section{作品概述}
+% ======================================================================
+
+\subsection{选题背景与意义}
+
+旋转机械、泵阀、风机和传动机构在出现松动、不对中、轴承磨损或叶片损伤时，振动通常比温度、电流等量更早发生变化。故障早期的振动幅度往往只有零点几毫米甚至更小，人在现场很难看出来；若不及时处理，松动会加剧冲击，磨损会扩大间隙，最终可能导致停机、部件飞出或结构疲劳断裂。因此，持续观察振动的频率和幅值，是设备状态监测中最常用、也最有效的手段之一\cite{iso20816}。
+
+目前工程上主要有三类测振方式，各有明显的局限（表~\ref{tab:methods}）。压电或 MEMS 加速度计需要用螺栓、磁座或胶粘固定在被测部位，每个测点占用一路采集通道并要单独布线；对薄板、叶片这类轻质结构，传感器自身的附加质量还会改变被测件的动态特性。激光多普勒测振仪可以非接触测量，精度很高，但一束激光只对准一个点，扫描式设备要逐点移动光斑，多点扫描还需要专用光学和运动控制组件。基于高速相机的数字图像相关（DIC）和运动放大方法可以一次覆盖整片区域\cite{sutton2009,chen2015}，但多依赖高速相机和离线工作站（甚至可以从视频中恢复声音\cite{davis2014}），难以直接放到现场长期运行。
+
+\begin{table}[htbp]
+\centering
+\caption{常见测振方式与本作品的对比}
+\label{tab:methods}
+\small
+\begin{tabularx}{\linewidth}{@{}L{2.4cm}L{2.3cm}L{2.5cm}YL{2.4cm}@{}}
+\toprule
+\tabhead \tabh{方式} & \tabh{是否接触} & \tabh{同时测点数} & \tabh{主要限制} & \tabh{部署成本} \\
+\midrule
+加速度计 & 接触，需固定 & 每通道 1 点 & 逐点安装布线；附加质量影响轻质结构 & 单点低，多点随通道数增长 \\
+激光多普勒测振仪 & 非接触 & 1 点（扫描式逐点） & 价格高；对准与反光条件要求严格 & 很高 \\
+高速相机 DIC & 非接触 & 整个视场 & 依赖高速相机与离线计算，现场难以常驻 & 高 \\
+\textbf{见微（本作品）} & \textbf{非接触} & \textbf{最多 12 点 + 4 个参考点} & 受相机帧率限制，频率上限约为帧率的一半 & \textbf{低（嵌入式 SoC）} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+我们的思路是把“相机看振动”这件事做成一台能放在现场的嵌入式仪器：在被测表面贴一块散斑纹理，相机从几十厘米外拍摄，设备在本地完成多点亚像素跟踪、频谱分析和与停机状态的比较，超过阈值就在现场亮灯、鸣响、语音提示并打印报告，同时把结果推送到手机和电脑。整套方案不需要在机器上布线，一台设备可以同时看多个测点，成本以开发板和自制电路为主。
+
+视频前端的数据量决定了这件事必须软硬件协同完成。AN5642 双目模块的每路 OV5640 输出 1280×720 图像，帧率配置为 45 帧/s，按 BGR888 存储时每帧约 2.76 MB，单路约 124 MB/s，两路合计约 249 MB/s；与此同时还要以 1024×600 刷新 HDMI 触摸屏。若完全由 ARM 处理器搬运像素，CPU 时间几乎会被拷贝耗尽。Zynq-7000 恰好提供了 PL 与 PS 共享 DDR 的结构\cite{ug585}：像素级的时序和搬运交给 PL 与 VDMA\cite{pg020}，测量算法、界面和数据管理留在 PS 上用 C++ 实现，便于反复修改和调试。
+
+\subsection{功能与特性}
+
+见微的使用流程很简单：在屏幕或 APP 上用一个矩形框选定测点区域（默认 4 列 3 行共 12 个测点），再在不随设备振动的背景上放置 4 个参考点；电机停机时采集约 15 s 停机基线；启动电机后点击“开始测量”，约 10 s 后得到结果。设备的主要功能如下：
+
+\begin{itemize}
+\item \textbf{多点非接触测振：}最多 12 个测点同时做亚像素位移跟踪，4 个背景参考点扣除相机自身的抖动；输出主频、代表测点的峰峰值和有效值，以及逐点的信号/基线比。
+\item \textbf{停机基线防误报：}每个测点、每个频点保存停机时的频谱包络，运行时只有超过基线 3 倍的分量才算振动信号，减少环境光闪烁和相机晃动带来的误报。
+\item \textbf{声学独立核对：}PL 接收 MP34DT01 PDM 麦克风的原始位流，PS 抽取为 31.25 kHz 音频并做包络谱分析，仅凭声音给出另一条主频估计，与视觉结果交叉核对。
+\item \textbf{现场报警与记录：}三色报警灯、蜂鸣器和中文语音分级提示；热敏打印机输出带波形的测量报告；每次测量保存完整 JSON 记录（含 12 个测点、标定、采集质量和声学分析）。
+\item \textbf{多端交互：}7 英寸触摸屏提供本地交互，前面板集成旋钮、按键和状态灯；Android、iOS 与 Windows 共用一套 APP，可在局域网直连设备或经 ESP32 热点访问；NFC 卡片可绑定测点编号。
+\item \textbf{辅助感知：}PS 端低分辨率双目匹配给出场景深度参考；十字激光辅助对准；预留 IMU、参考加速度计、ToF 测距、温湿度和转速接口。
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.54826\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.02mm]{\figpath/live/full_alarm.jpg}
+\caption{2026-11-04 板端实测现场：左侧为减速电机带动的散斑铝片，右侧为见微整机，报警灯已点亮}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.41174\linewidth}\centering\vspace{0pt}
+\includegraphics[height=50.02mm]{\figpath/photo/device_lit.jpg}
+\caption{整机前视：双目相机居中，两侧为补光灯，下方十字激光用于对准}
+\end{subfigure}
+\caption{见微整机与实测场景}
+\label{fig:scene}
+\end{figure}
+
+\subsection{应用领域}
+
+见微面向“能看见、但不方便贴传感器”的振动观测场景：实验室和教学中的电机、薄板、悬臂梁振动演示；产线上小型电机、风机、泵的巡检式趋势监测；轻质结构（风扇叶片、薄壁罩壳、PCB 板件）的非接触测量；以及需要同时比较多个位置振动差异的场合，例如判断振动从哪个部位传来。由于只需在被测面贴散斑纹理、在背景中保留静止参考，见微也适合临时布点的现场排查。
+
+当前版本的频率上限受 45 帧/s 的采样率限制，约为 22.5 Hz，适合 1350 r/min 以下的一倍转频观测；更高频率的振动需要更高帧率的相机。
+
+\subsection{主要技术特点}
+
+\paragraph{按带宽与时序划分软硬件。}PL 只做“必须准时”的事：两路相机的像素接收与帧缓存、HDMI 时序、2 MHz PDM 时钟与采样、20 kHz 补光 PWM 与心跳看门狗、打印串口的 CTS 流控。PS 做“需要灵活修改”的事：跟踪、频谱、判定、界面和记录。ESP32 只承担辅助外设，不参与测振结论。
+
+\paragraph{面向现场的鲁棒判定。}跟踪采用逆组合 Lucas–Kanade 方法，模板梯度和 Hessian 只算一次；每帧给出相关系数、结构张量条件数等质量指标。背景参考点用中位数加 0.25 像素内点平均估计相机平移；分析窗用帧序号和时间戳检查丢帧和抖动，只在缺帧比例不超过 5\% 时重采样；判定以逐点停机基线包络为门限。
+
+\paragraph{声、像两条独立链路。}视觉测得的是位移，声学测得的是机器噪声随转动周期的调制，两者物理来源不同。两条链路给出一致的主频，比任何一条单独给出的结果更可信；不一致时，系统会标注谐波关系或差异，提示检查。
+
+\paragraph{结果可追溯。}每次测量记录相机实测帧率、丢帧、跟踪质量、标定编号、阈值快照和声学分析，支持结果回看、报告打印和多端查看。
+
+\subsection{主要性能指标}
+
+表~\ref{tab:perf} 的实测数值来自 2026-11-04 的板端测量记录 \code{jianwei-ax7010-20261104-020520}，资源与时序来自 Vivado 2025.2 实现报告。
+
+\begin{table}[htbp]
+\centering
+\caption{主要性能指标}
+\label{tab:perf}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.6cm}L{4.6cm}Y@{}}
+\toprule
+\tabhead \tabh{项目} & \tabh{指标} & \tabh{说明} \\
+\midrule
+图像输入 & 双路 OV5640，1280×720 & AN5642 模块，测振使用相机 1 \\
+采样率 & 45.048 帧/s，抖动 0.42 ms & 由帧序号与单调时钟时间戳实测 \\
+测点数量 & 最多 12 个测点 + 4 个参考点 & 默认 4 列 3 行，模板 25×25 像素 \\
+频率范围 & 0.5 Hz～22.5 Hz & 搜索上限 30 Hz，受奈奎斯特频率约束 \\
+频率分辨率 & 窗口频点间隔 0.352 Hz & 128 帧窗，峰值插值后取 11 窗中位数 \\
+主频一致性 & 视觉 19.948 Hz，声学 19.928 Hz & 差 0.020 Hz，约 0.10\% \\
+位移结果 & 峰峰值 0.209 mm，有效值 0.070 mm & 试验尺标 0.2031 mm/像素 \\
+位移噪声 & 约 0.005～0.010 像素（约 1～2 µm） & 由停机基线包络与信号/基线比推算，见 \ref{sec:noise} 节 \\
+有效性 & 12/12 测点，11/11 窗通过 & 逐点信号/基线比 36～95，门限 3 \\
+PL 资源 & LUT 50.8\%，FF 41.0\%，BRAM 50.8\% & XC7Z010，Vivado 2025.2 实现后 \\
+时序 & WNS +0.756 ns，WHS +0.028 ns & 已约束路径全部满足 \\
+声学通道 & 2 MHz PDM → 31.25 kHz PCM & 滤波器计算响应：通带波动 ±0.003 dB \\
+整机功耗 & 约 9.3 W（12 V 输入） & 板载 INA226 读数，测量时补光 60\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{主要创新点}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{一台相机同时测多个点，不接触、不布线。}在 Zynq-7010 这样资源有限的器件上实现 12 点亚像素跟踪与逐点频谱判定，并把采集、分析、报警、打印和移动端推送集成在一台独立设备中。
+\item \textbf{背景参考点与停机基线组合的现场判定方法。}用多个静止参考点的稳健平移估计扣除相机抖动，再以逐点、逐频点的停机频谱包络作为门限，抑制环境光闪烁和设备晃动带来的误报；判定只依赖本次机位的数据，不需要事先知道转速。
+\item \textbf{PL 接收 PDM 麦克风，用声音独立核对振动频率。}PL 只保留 2 MHz 时钟、相位采样、FIFO 与时间戳，抽取滤波放到 PS 并与参考模型逐位一致；声学包络谱给出与视觉无关的主频估计，实测两者相差 0.1\%。
+\item \textbf{资源驱动的软硬件划分与可追溯的优化过程。}把双目深度从 PL 计算核迁到 PS 辅助路径，释放约 5000 个 LUT 和 11 块 BRAM，换取视频、声学与外设链路的稳定；资源配置随整机功能逐步调整。
+\item \textbf{自研载板、前面板与外壳。}主载板集成 12 V 电源树、功率监测、掉电预警、RTC、IO 扩展、跨电源域缓冲和全部外设接口；外壳将相机支架下倾约 25°，集成补光、激光、打印机与报警灯。
+\end{enumerate}
+
+\subsection{设计流程}
+
+项目从 2026 年 9 月下旬选题开始，按“需求与约束—架构划分—电路与 PL—PS 算法—外设联调—整机装配—板端实测”的顺序推进，各阶段之间多次回溯（图~\ref{fig:timeline}）。每一轮修改都先固定版本和输入，再按单元测试、主机集成、ARM 交叉编译、必要的 Vivado 实现、板端运行和现场确认逐层验证；发现问题时先划清是采集、传输、计算还是显示环节，再只改变一个变量复测（图~\ref{fig:flow}）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[line width=1.6pt,navy] (0.2,0) -- (15.4,0);
+\foreach \x/\d/\t/\c [count=\i] in {
+  0.6/9 月下旬/{选题与\\需求分析}/navy,
+  2.45/10-19/{两块电路板\\原理图定稿}/amber,
+  4.3/10-20/{PCB 投板}/amber,
+  6.15/10-21/{PL 双目核与\\LK 累加核验证}/axred,
+  8.0/10-22/{PL、PS 与 ESP32\\分工定稿}/navy,
+  9.85/10-25/{程序冻结\\多点核接入}/navy,
+  11.7/10-31/{Nano 0.2.1\\报警标定}/espc!55!black,
+  13.55/11-02/{Nano 0.2.3\\13 条语音}/espc!55!black,
+  15.0/11-04/{整机\\板端实测}/axred}{
+  \fill[\c] (\x,0) circle (3.2pt);
+  \ifodd\i
+    \node[above=3pt,font=\footnotesize\bfseries,text=\c] at (\x,0) {\d};
+    \node[below=4pt,align=center,font=\footnotesize\linespread{1.05}\selectfont] at (\x,0) {\t};
+  \else
+    \node[below=3pt,font=\footnotesize\bfseries,text=\c] at (\x,0) {\d};
+    \node[above=4pt,align=center,font=\footnotesize\linespread{1.05}\selectfont] at (\x,0) {\t};
+  \fi
+}
+\end{tikzpicture}
+\caption{开发时间线}
+\label{fig:timeline}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+\node[blk=psc,minimum width=2.6cm] (req) at (0,0) {需求与约束\\验收条件};
+\node[blk=psc,minimum width=2.6cm] (ev) at (3.5,0) {证据采集\\源码、日志、读数};
+\node[blk=psc,minimum width=2.6cm] (hy) at (7,0) {可证伪的假设\\划清环节};
+\node[blk=psc,minimum width=2.6cm] (fix) at (10.5,0) {最小修改\\只改一个变量};
+\node[blk=ownc,minimum width=13.1cm] (ver) at (5.25,-1.7) {分层验证：单元测试 → 主机集成 → 交叉编译 → Vivado 实现 → 板端运行 → 现场确认};
+\node[blk=espc,minimum width=2.6cm] (rec) at (1.75,-3.4) {结果回写\\版本、证据、未决项};
+\node[blk=espc,minimum width=2.6cm] (sk) at (8.75,-3.4) {经验提炼\\技能包};
+\draw[arr] (req) -- (ev);
+\draw[arr] (ev) -- (hy);
+\draw[arr] (hy) -- (fix);
+\draw[arr] (fix) -- (fix |- ver.north);
+\draw[arr,dashed] (ev |- ver.north) -- node[right,lbl]{未通过} (ev);
+\draw[arr] (rec |- ver.south) -- (rec);
+\draw[arr] (rec) -- node[above,lbl]{重复出现的方法} (sk);
+\end{tikzpicture}
+\caption{每一轮迭代的证据闭环}
+\label{fig:flow}
+\end{figure}
+
+\FloatBarrier

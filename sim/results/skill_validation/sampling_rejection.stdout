@@ -1,0 +1,11 @@
+{
+  "fs_hz": 45.0,
+  "target_hz": 30.0,
+  "nyquist_hz": 22.5,
+  "configured_search_max_hz": 30.0,
+  "legacy_search_max_hz": 20.25,
+  "legacy_excludes_target": true,
+  "necessary_checks_passed": false,
+  "close_to_nyquist": true,
+  "note": "Passing is necessary, not proof of correct frequency, tracking or amplitude."
+}

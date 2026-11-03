@@ -1,0 +1,19 @@
+{
+  "id": "an5642-nominal-20261022-dist1000",
+  "note": "Nominal AN5642 values, not a checkerboard calibration: 3.6 mm lens (ALINX spec) on 2.8 um output pixels of the 1280x720 mode (2x2 subsampled 2560x1440 window) gives f = 1286 px; 40 mm baseline (ALINX spec). Right principal point (618, 390) from patch matching on one static pair: rows 30 px lower, far background with 27-30 px disparity, i.e. about 22 px of lens-centring offset assuming the room background at about 10 m. Refine on site with a target at a known distance (vision page, distance correction, or vibmonctl stereo_distance), or replace with pc_sim/stereo_calibrate.py output.",
+  "image_size": [1280,720],
+  "rms_px": 0,
+  "baseline_mm": 40.0,
+  "left": {
+    "K": [1286.0,0,640.0,0,1286.0,360.0,0,0,1],
+    "D": [0,0,0,0,0],
+    "R": [1,0,0,0,1,0,0,0,1],
+    "P": [1286.0,0,640.0,0,0,1286.0,360.0,0,0,0,1,0]
+  },
+  "right": {
+    "K": [1286.0,0,637.9826666666668,0,1286.0,390.0,0,0,1],
+    "D": [0,0,0,0,0],
+    "R": [1,0,0,0,1,0,0,0,1],
+    "P": [1286.0,0,640.0,-51440.0,0,1286.0,360.0,0,0,0,1,0]
+  }
+}

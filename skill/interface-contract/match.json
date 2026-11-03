@@ -1,0 +1,7 @@
+{
+  "build": "board-a",
+  "bus": "HP1",
+  "base": "0x43c20000",
+  "width": 32,
+  "irq": "none"
+}

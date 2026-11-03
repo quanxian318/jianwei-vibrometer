@@ -1,0 +1,43 @@
+== sd_tone_1200w.txt
+PASS pdm_mic: 1200 words, overflow freeze and gap, kill, both phases
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/audio/sim/tb_pdm_mic.v:268: $finish called at 24052750000 (1ps)
+== synthetic.txt
+case 0 ok: 32x32 ox 10 oy 8 ax 0 ay 0, 1029 cycles
+case 1 ok: 32x32 ox 5 oy 7 ax 255 ay 255, 1029 cycles
+case 2 ok: 32x32 ox 13 oy 8 ax 73 ay 43, 1029 cycles
+case 3 ok: 32x32 ox 11 oy 11 ax 54 ay 29, 1029 cycles
+case 4 ok: 32x32 ox 6 oy 0 ax 0 ay 0, 1029 cycles
+case 5 ok: 32x32 ox 10 oy 12 ax 255 ay 255, 1029 cycles
+case 6 ok: 32x32 ox 3 oy 11 ax 83 ay 218, 1029 cycles
+case 7 ok: 32x32 ox 1 oy 0 ax 58 ay 198, 1029 cycles
+lk_accum: all 8 cases bit-exact
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/displacement/sim/tb_lk_accum.v:88: $finish called at 341235000 (1ps)
+== video1_motor.txt
+case 0 ok: 32x32 ox 9 oy 11 ax 0 ay 0, 1029 cycles
+case 1 ok: 32x32 ox 16 oy 12 ax 255 ay 255, 1029 cycles
+case 2 ok: 32x32 ox 0 oy 16 ax 73 ay 43, 1029 cycles
+case 3 ok: 32x32 ox 7 oy 5 ax 54 ay 29, 1029 cycles
+case 4 ok: 32x32 ox 18 oy 9 ax 0 ay 0, 1029 cycles
+case 5 ok: 32x32 ox 13 oy 8 ax 255 ay 255, 1029 cycles
+case 6 ok: 32x32 ox 4 oy 0 ax 83 ay 218, 1029 cycles
+case 7 ok: 32x32 ox 16 oy 15 ax 58 ay 198, 1029 cycles
+lk_accum: all 8 cases bit-exact
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/displacement/sim/tb_lk_accum.v:88: $finish called at 372595000 (1ps)
+== cones_crop.txt
+sgm_core: 112x48 bit-exact, 2933 valid, 360711 cycles (67.1 per pixel)
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_sgm_core.v:83: $finish called at 3607135000 (1ps)
+stereo_core: 112x48 gray in -> disparity bit-exact, 2933 valid, 360941 cycles (67.1 per pixel)
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_stereo_core.v:76: $finish called at 3609435000 (1ps)
+frame 0: 361041 cycles (67.2 per pixel)
+frame 1: 361044 cycles (67.2 per pixel)
+stereo_axi: 112x48, 2 frames bit-exact through AXI-Lite + AXI-Stream with random stalls
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_stereo_axi.v:132: $finish called at 7222145000 (1ps)
+== synthetic_step.txt
+sgm_core: 96x40 bit-exact, 2067 valid, 257783 cycles (67.1 per pixel)
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_sgm_core.v:83: $finish called at 2577855000 (1ps)
+stereo_core: 96x40 gray in -> disparity bit-exact, 2067 valid, 257981 cycles (67.2 per pixel)
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_stereo_core.v:76: $finish called at 2579835000 (1ps)
+frame 0: 258066 cycles (67.2 per pixel)
+frame 1: 258080 cycles (67.2 per pixel)
+stereo_axi: 96x40, 2 frames bit-exact through AXI-Lite + AXI-Stream with random stalls
+/mnt/d/codex/见微_AX7010视觉测振仪/11_竞赛提交/jianwei-vibrometer/src/ax7010/pl/stereo/sim/tb_stereo_axi.v:132: $finish called at 5162755000 (1ps)

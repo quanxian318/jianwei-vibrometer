@@ -1,0 +1,95 @@
+[
+  {
+    "skill": "interface-contract",
+    "sample": "match.json",
+    "exit_code": 0,
+    "result": {
+      "mode": "interface-contract",
+      "differences": {}
+    }
+  },
+  {
+    "skill": "interface-contract",
+    "sample": "mismatch.json",
+    "exit_code": 1,
+    "result": {
+      "mode": "interface-contract",
+      "differences": {
+        "bus": {
+          "reference": "HP1",
+          "observed": "HP2"
+        }
+      }
+    }
+  },
+  {
+    "skill": "interface-contract",
+    "sample": "../README.md",
+    "exit_code": 2,
+    "result": {
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  },
+  {
+    "skill": "optimization-baseline",
+    "sample": "match.json",
+    "exit_code": 0,
+    "result": {
+      "mode": "optimization-baseline",
+      "differences": {}
+    }
+  },
+  {
+    "skill": "optimization-baseline",
+    "sample": "mismatch.json",
+    "exit_code": 1,
+    "result": {
+      "mode": "optimization-baseline",
+      "differences": {
+        "scope": {
+          "reference": "capture-and-depth",
+          "observed": "capture-only"
+        }
+      }
+    }
+  },
+  {
+    "skill": "optimization-baseline",
+    "sample": "../README.md",
+    "exit_code": 2,
+    "result": {
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  },
+  {
+    "skill": "reproduction-binding",
+    "sample": "match.json",
+    "exit_code": 0,
+    "result": {
+      "mode": "reproduction-binding",
+      "differences": {}
+    }
+  },
+  {
+    "skill": "reproduction-binding",
+    "sample": "mismatch.json",
+    "exit_code": 1,
+    "result": {
+      "mode": "reproduction-binding",
+      "differences": {
+        "revision": {
+          "reference": "example-a",
+          "observed": "example-b"
+        }
+      }
+    }
+  },
+  {
+    "skill": "reproduction-binding",
+    "sample": "../README.md",
+    "exit_code": 2,
+    "result": {
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    }
+  }
+]

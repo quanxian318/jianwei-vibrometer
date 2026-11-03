@@ -1,0 +1,1 @@
+{"reference_count": 3, "actual_count": 2, "difference_count": 2, "differences": [{"case_id": "case_a", "index": 1, "expected": 7, "actual": 9}, {"case_id": "case_b", "index": 0, "expected": 0, "actual": null}]}

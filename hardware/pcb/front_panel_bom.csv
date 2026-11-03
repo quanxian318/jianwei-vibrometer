@@ -1,0 +1,16 @@
+所属板件,原理图页,位号,型号或数值,设计数值,封装或规格,品牌,立创编号,用途与连接,装配状态,数量,商城链接,商城现货显示,库存核对时间
+前面板小板,01,R101,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,第一颗 WS2812 DIN 下拉,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+前面板小板,01,C101,EEEFK1C101P,100µF/16V，±20%，电解,"SMD,D6.3xL5.8mm",Panasonic,C128532,前面板 5V 入口,装配,1,https://item.szlcsc.com/139817.html,4525,2026-10-15T04:50:25Z
+前面板小板,01,C102,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,WS2812 第 1 颗旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+前面板小板,01,C103,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,WS2812 第 2 颗旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+前面板小板,01,C104,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,WS2812 第 3 颗旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+前面板小板,01,C105,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,WS2812 第 4 颗旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+前面板小板,01,C106,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,WS2812 第 5 颗旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+前面板小板,01,HL101,WS2812B-V6,WS2812B（锁定同一具体版本）,SMD5050-4P,Worldsemi,C52917433,状态灯 1,装配,1,https://item.szlcsc.com/55827424.html,42K+,2026-10-15T04:51:26Z
+前面板小板,01,HL102,WS2812B-V6,WS2812B（锁定同一具体版本）,SMD5050-4P,Worldsemi,C52917433,状态灯 2,装配,1,https://item.szlcsc.com/55827424.html,42K+,2026-10-15T04:51:26Z
+前面板小板,01,HL103,WS2812B-V6,WS2812B（锁定同一具体版本）,SMD5050-4P,Worldsemi,C52917433,状态灯 3,装配,1,https://item.szlcsc.com/55827424.html,42K+,2026-10-15T04:51:26Z
+前面板小板,01,HL104,WS2812B-V6,WS2812B（锁定同一具体版本）,SMD5050-4P,Worldsemi,C52917433,状态灯 4,装配,1,https://item.szlcsc.com/55827424.html,42K+,2026-10-15T04:51:26Z
+前面板小板,01,HL105,WS2812B-V6,WS2812B（锁定同一具体版本）,SMD5050-4P,Worldsemi,C52917433,状态灯 5,装配,1,https://item.szlcsc.com/55827424.html,42K+,2026-10-15T04:51:26Z
+前面板小板,01,ENC101,EC11E15244B2,30定位/15脉冲，20mm平轴，带按压,TH,Alps Alpine,C470754,旋钮,装配,1,https://item.szlcsc.com/476834.html,4110,2026-10-15T04:49:54Z
+前面板小板,01,K101,TS-1187A-B-A-B,轻触按钮,"SMD-4P,5.1x5.1mm",XKB,C318884,静音/关机请求,装配,1,https://item.szlcsc.com/299976.html,54K+,2026-10-15T04:49:57Z
+前面板小板,01,J101,SM10B-GHS-TB,GH1.25mm 10P卧贴；主载板J502配对座,"SMD,P=1.25mm,10P",JST,C2683602,前面板输入，1对1连接主载板J502；按板间接口表接线,装配,1,https://item.szlcsc.com/2780581.html,212,2026-10-15T04:47:51Z

@@ -1,0 +1,394 @@
+{
+  "schema": "vision-vibration-record-1",
+  "measurement_id": "jianwei-ax7010-20261104-020520",
+  "device_id": "jianwei-ax7010",
+  "point_id": null,
+  "point_name": null,
+  "nfc_uid_hex": null,
+  "start_utc": "2026-11-03T18:05:10.598Z",
+  "start_local": "2026-11-04 02:05:10",
+  "time_valid": true,
+  "time_source": "rtc",
+  "timezone_offset_min": 480,
+  "monotonic_clock": {
+    "source": "CLOCK_MONOTONIC",
+    "unit": "ns",
+    "start": 6138845600142
+  },
+  "camera": {
+    "source": "AN5642 PL/VDMA camera 1",
+    "width": 1280,
+    "height": 720,
+    "fps_nominal": 45.0,
+    "fps_measured": 45.047739050296336,
+    "fps_received": 45.047739050296336,
+    "drop_fraction": 0.0,
+    "gap_resampled": false,
+    "frame_interval_jitter_ms": 0.41698684784520695,
+    "exposure_us": null,
+    "frames": 452,
+    "frames_dropped": 0
+  },
+  "roi": {
+    "x": 197,
+    "y": 235,
+    "w": 256,
+    "h": 124
+  },
+  "calibration": {
+    "id": "trial-ruler-y-20261031-layout-1e158a24",
+    "axis": "y",
+    "mm_per_pixel": 0.20308513971015377,
+    "working_distance_mm": null
+  },
+  "result": {
+    "valid": true,
+    "reason": null,
+    "unit": "mm",
+    "dominant_frequency_hz": 19.94757843017578,
+    "displacement_peak_to_peak_px": 1.0293538621823655,
+    "displacement_rms_px": 0.34506617139854434,
+    "spectral_peak_px": 0.019898041693210647,
+    "displacement_peak_to_peak_mm": 0.20904647291249207,
+    "displacement_rms_mm": 0.07007781162772124,
+    "spectral_peak_mm": 0.0040409965772241485,
+    "definitions": "peak_to_peak and rms of the linearly detrended displacement; spectral_peak is the 0-peak amplitude at the dominant frequency (Hann window, coherent gain corrected, single-sided)",
+    "window": "hann",
+    "tracker": "multipoint",
+    "peak_snr": 15.72411241320962,
+    "peak_clear": true,
+    "background_reference": {
+      "used": false
+    },
+    "field_spectrum": {
+      "valid": false,
+      "reason": "",
+      "peak_hz": null,
+      "fraction": 0.0,
+      "resolution_hz": 0.0,
+      "lines": [],
+      "definition": "whole-field brightness spectral lines; frequency indicator only, no displacement unit"
+    },
+    "method": "multipoint",
+    "multipoint": {
+      "core": "AX7010_Vibration_Linux_20261021 (third_party/axvibration)",
+      "layout_hash": "a745235b",
+      "baseline_file": "/root/vibmon/baselines/a745235b-20261104-020450.vbb",
+      "unit": "projected_pixel_rms",
+      "frequency_hz": 19.94757843017578,
+      "frequency_min_hz": 19.850719451904297,
+      "frequency_max_hz": 19.963943481445312,
+      "sample_rate_hz": 45.04452133178711,
+      "windows": 11,
+      "signal_windows": 11,
+      "below_baseline_windows": 0,
+      "rejected_windows": 0,
+      "baseline_mismatch_windows": 0,
+      "passed_points": 12,
+      "points": [
+        {
+          "x": 229.0,
+          "y": 255.6666717529297,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 81.09040069580078,
+          "rms_px": 0.39328378438949585
+        },
+        {
+          "x": 293.0,
+          "y": 255.6666717529297,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 94.9939956665039,
+          "rms_px": 0.35236164927482605
+        },
+        {
+          "x": 357.0,
+          "y": 255.6666717529297,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 67.3142318725586,
+          "rms_px": 0.2999524772167206
+        },
+        {
+          "x": 421.0,
+          "y": 255.6666717529297,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 59.70595169067383,
+          "rms_px": 0.2620938718318939
+        },
+        {
+          "x": 229.0,
+          "y": 297.0,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 75.6181411743164,
+          "rms_px": 0.4273620545864105
+        },
+        {
+          "x": 293.0,
+          "y": 297.0,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 62.2798957824707,
+          "rms_px": 0.3782479465007782
+        },
+        {
+          "x": 357.0,
+          "y": 297.0,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 60.650390625,
+          "rms_px": 0.33964332938194275
+        },
+        {
+          "x": 421.0,
+          "y": 297.0,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 36.25402069091797,
+          "rms_px": 0.26368463039398193
+        },
+        {
+          "x": 229.0,
+          "y": 338.3333435058594,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 65.02749633789062,
+          "rms_px": 0.45636287331581116
+        },
+        {
+          "x": 293.0,
+          "y": 338.3333435058594,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 67.88519287109375,
+          "rms_px": 0.38750186562538147
+        },
+        {
+          "x": 357.0,
+          "y": 338.3333435058594,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 54.12839126586914,
+          "rms_px": 0.3354837894439697
+        },
+        {
+          "x": 421.0,
+          "y": 338.3333435058594,
+          "valid": true,
+          "above_baseline": true,
+          "gate_ratio": 37.28191375732422,
+          "rms_px": 0.3013322055339813
+        }
+      ],
+      "references": [
+        {
+          "x": 266.0,
+          "y": 494.0
+        },
+        {
+          "x": 298.0,
+          "y": 494.0
+        },
+        {
+          "x": 266.0,
+          "y": 526.0
+        },
+        {
+          "x": 298.0,
+          "y": 526.0
+        }
+      ],
+      "waveform_point": 1,
+      "waveform_valid": true,
+      "waveform_reason": null,
+      "definition": "team multi-point core: 25x25 templates, background translation removed, 128-frame windows gated against a motor-off baseline (3x); rms_px is the 2D image-plane harmonic RMS, not mm; the waveform and spectrum files and the px metrics above describe waveform_point (null when its waveform failed the checks: waveform_reason)"
+    },
+    "level": "alarm",
+    "thresholds": {
+      "unit": "mm",
+      "warn_peak_to_peak": 0.01,
+      "alarm_peak_to_peak": 0.02
+    },
+    "waveform_file": "waveform.csv",
+    "spectrum_file": "spectrum.csv"
+  },
+  "quality": {
+    "bad_frames": 0,
+    "search_edge_hits": 0,
+    "unconverged_frames": 0,
+    "saturated_frames": 0,
+    "min_ncc": 1.0
+  },
+  "lighting": {
+    "on": true,
+    "percent": 60.0
+  },
+  "laser_projector": {
+    "on": false,
+    "switched_off_for_capture": false
+  },
+  "reference": {
+    "model": "ADXL345",
+    "available": false,
+    "valid": false,
+    "timing_validated": false,
+    "reason": "sampling_timing_unqualified",
+    "samples": 0,
+    "timestamp_source": null,
+    "file": null
+  },
+  "camera_imu": {
+    "model": "LSM6DSV",
+    "timing_validated": false,
+    "samples": 0,
+    "file": null
+  },
+  "acoustic": {
+    "model": "MP34DT01",
+    "available": true,
+    "valid": true,
+    "reason": null,
+    "source": "pl pdm_mic 0x44030000",
+    "lr": "GND",
+    "pdm_clock_hz": 2000000.6595294455,
+    "sample_rate_hz": 31250.010305147585,
+    "filter": {
+      "chain": "CIC order 5 /32, 63-tap FIR /2, 16-bit PCM (PDM full scale = +/-32768)",
+      "delay_ms": 0.53475,
+      "times": "sample times are at the microphone: production time minus this delay"
+    },
+    "window": {
+      "first_index": 26950464,
+      "samples": 312862,
+      "start_offset_ms": 0.010287,
+      "definition": "the video capture window; offset of the first sample from the first frame"
+    },
+    "level": {
+      "rms_dbfs": -57.98672302198901,
+      "peak_dbfs": -46.787173518080735,
+      "dc_fraction": 0.0004764787111235345,
+      "clip_fraction": 0.0,
+      "unit": "dBFS, full-scale sine = 0 dBFS; not a sound pressure level"
+    },
+    "analysis_band_hz": [
+      10.0,
+      100.0
+    ],
+    "carrier_band_hz": [
+      3000.0,
+      8000.0
+    ],
+    "carrier_bands": [
+      {
+        "low_hz": 200.0,
+        "high_hz": 1000.0,
+        "modulation": 0.43098716645666696,
+        "peak_hz": 19.93431106522103,
+        "prominence_db": 22.27112343134707
+      },
+      {
+        "low_hz": 1000.0,
+        "high_hz": 3000.0,
+        "modulation": 0.24186995161750915,
+        "peak_hz": 19.933153386295437,
+        "prominence_db": 25.96259646835334
+      },
+      {
+        "low_hz": 3000.0,
+        "high_hz": 8000.0,
+        "modulation": 0.20470046700352762,
+        "peak_hz": 19.927651315460515,
+        "prominence_db": 27.186464925059312
+      },
+      {
+        "low_hz": 1000.0,
+        "high_hz": 8000.0,
+        "modulation": 0.1955750987668853,
+        "peak_hz": 19.928231500139823,
+        "prominence_db": 26.37590606112711
+      }
+    ],
+    "envelope_modulation": 0.20470046700352762,
+    "envelope_peaks": [
+      {
+        "hz": 19.927651315460515,
+        "prominence_db": 27.186464925059312
+      },
+      {
+        "hz": 45.84388745178412,
+        "prominence_db": 19.447990230229298
+      },
+      {
+        "hz": 91.69192230924749,
+        "prominence_db": 16.790033518164947
+      },
+      {
+        "hz": 25.927951448122254,
+        "prominence_db": 15.703346907904754
+      },
+      {
+        "hz": 15.27829087895389,
+        "prominence_db": 15.494569757527659
+      }
+    ],
+    "direct_peaks": [
+      {
+        "hz": 50.022152019800934,
+        "prominence_db": 31.541734257639703
+      },
+      {
+        "hz": 84.04531239869843,
+        "prominence_db": 30.414431333327464
+      },
+      {
+        "hz": 19.937597906230472,
+        "prominence_db": 28.930669993736814
+      },
+      {
+        "hz": 29.420408185825334,
+        "prominence_db": 17.563750550051147
+      },
+      {
+        "hz": 51.91361434700355,
+        "prominence_db": 15.13642847820469
+      }
+    ],
+    "tone": {
+      "hz": 251.32906094465233,
+      "prominence_db": 22.358884095452186
+    },
+    "visual": {
+      "relation": "agree",
+      "visual_hz": 19.94757843017578,
+      "acoustic_hz": 19.927651315460515,
+      "difference_hz": -0.01992711471526576,
+      "tolerance_hz": 0.39895156860351566,
+      "harmonic": 0,
+      "definition": "envelope peak against the camera's dominant frequency, estimated independently"
+    },
+    "spectrum_file": "acoustic_spectrum.csv",
+    "wav_file": "acoustic.wav",
+    "wav_rate_note": "WAV header rate is the measured rate rounded to 1 Hz; use sample_rate_hz",
+    "conditions": {
+      "fan_on": false,
+      "buzzer": false,
+      "voice_prompts_held": 0
+    },
+    "note": "acoustic corroboration of the frequency only: no displacement, velocity or sound pressure level"
+  },
+  "environment": {
+    "temperature_c": null,
+    "humidity_percent": null,
+    "distance_mm": null,
+    "valid": false
+  },
+  "versions": {
+    "app": "0.2.0",
+    "pl": "",
+    "nano": "0.2.3",
+    "hardware": "2026-10-20"
+  }
+}

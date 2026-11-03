@@ -1,0 +1,11 @@
+build*/
+__pycache__/
+*.pyc
+*.o
+*.a
+*.elf
+*.jou
+*.log
+.dart_tool/
+.gradle/
+node_modules/

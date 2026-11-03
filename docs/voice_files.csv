@@ -1,0 +1,14 @@
+asset_id,文件相对路径,用途,格式,状态,播报内容,时长秒,音色
+baseline_done,voice/baseline_done.wav,停机基线采集完成,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待PS部署及听音实测,停机基线已采集，请开始测量。,3.557,度清影 / 清甜灵动
+measure_done,voice/measure_done.wav,测量完成,PCM16LE mono 16000Hz,已合成并完成格式及卡上哈希校验，板端待测,测量完成了，您可以查看结果。,3.13,度清影 / 清甜灵动
+vibration_warn,voice/vibration_warn.wav,振动预警,PCM16LE mono 16000Hz,已合成并完成格式及卡上哈希校验，板端待测,检测到振动偏大，请留意设备状态。,4.577,度清影 / 清甜灵动
+vibration_alarm,voice/vibration_alarm.wav,振动报警,PCM16LE mono 16000Hz,已合成并完成格式及卡上哈希校验，板端待测,振动异常，请及时检查设备。,3.164,度清影 / 清甜灵动
+print_failed,voice/print_failed.wav,打印失败,PCM16LE mono 16000Hz,已合成并完成格式及卡上哈希校验，板端待测,这次没有打印成功，请检查打印机和纸张。,4.315,度清影 / 清甜灵动
+storage_error,voice/storage_error.wav,存储异常,PCM16LE mono 16000Hz,已合成并完成格式及卡上哈希校验，板端待测,存储卡出现异常，请检查一下。,3.665,度清影 / 清甜灵动
+welcome,voice/welcome.wav,开机欢迎,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,欢迎使用见微测振仪。,2.608,度清影 / 清甜灵动
+baseline_start,voice/baseline_start.wav,基线采集提示,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,正在采集停机基线，请保持被测物静止。,5.171,度清影 / 清甜灵动
+baseline_failed,voice/baseline_failed.wav,基线采集失败,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,基线采集未完成，请检查画面后重试。,4.308,度清影 / 清甜灵动
+measure_start,voice/measure_start.wav,开始测量提示,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,开始测量，请保持相机稳定。,3.573,度清影 / 清甜灵动
+measure_failed,voice/measure_failed.wav,测量未完成,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,这次测量未完成，请检查画面后重试。,3.739,度清影 / 清甜灵动
+calibration_done,voice/calibration_done.wav,标定已保存,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,标定已保存，可以开始测量。,3.335,度清影 / 清甜灵动
+print_sent,voice/print_sent.wav,打印指令已发送,PCM16LE mono 16000Hz,0.2.3已烧录且卡上校验通过；待自动触发接入及听音实测,打印指令已发送，请查看打印结果。,4.068,度清影 / 清甜灵动

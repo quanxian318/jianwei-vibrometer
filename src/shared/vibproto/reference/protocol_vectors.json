@@ -1,0 +1,60 @@
+[
+  {
+    "name": "hello_request",
+    "kind": 1,
+    "opcode": 1,
+    "seq": 1,
+    "payload": {
+      "session_id": "test-session",
+      "protocol": 1,
+      "ax_version": "dev"
+    },
+    "hex": "a5 5a 01 01 01 00 01 00 3d 00 7b 22 73 65 73 73 69 6f 6e 5f 69 64 22 3a 22 74 65 73 74 2d 73 65 73 73 69 6f 6e 22 2c 22 70 72 6f 74 6f 63 6f 6c 22 3a 31 2c 22 61 78 5f 76 65 72 73 69 6f 6e 22 3a 22 64 65 76 22 7d 9d 81"
+  },
+  {
+    "name": "hello_response",
+    "kind": 2,
+    "opcode": 1,
+    "seq": 1,
+    "payload": {
+      "session_id": "test-session",
+      "ok": true,
+      "code": "OK",
+      "data": {
+        "nano_boot_id": "boot-test",
+        "protocol": 1
+      }
+    },
+    "hex": "a5 5a 01 02 01 00 01 00 64 00 7b 22 73 65 73 73 69 6f 6e 5f 69 64 22 3a 22 74 65 73 74 2d 73 65 73 73 69 6f 6e 22 2c 22 6f 6b 22 3a 74 72 75 65 2c 22 63 6f 64 65 22 3a 22 4f 4b 22 2c 22 64 61 74 61 22 3a 7b 22 6e 61 6e 6f 5f 62 6f 6f 74 5f 69 64 22 3a 22 62 6f 6f 74 2d 74 65 73 74 22 2c 22 70 72 6f 74 6f 63 6f 6c 22 3a 31 7d 7d 4b d9"
+  },
+  {
+    "name": "nfc_event",
+    "kind": 3,
+    "opcode": 64,
+    "seq": 0,
+    "payload": {
+      "nano_boot_id": "boot-test",
+      "event_id": 1,
+      "event_type": "NFC_TAG",
+      "uptime_ms": 2000,
+      "data": {
+        "uid": "00112233",
+        "uid_len": 4
+      }
+    },
+    "hex": "a5 5a 01 03 40 00 00 00 77 00 7b 22 6e 61 6e 6f 5f 62 6f 6f 74 5f 69 64 22 3a 22 62 6f 6f 74 2d 74 65 73 74 22 2c 22 65 76 65 6e 74 5f 69 64 22 3a 31 2c 22 65 76 65 6e 74 5f 74 79 70 65 22 3a 22 4e 46 43 5f 54 41 47 22 2c 22 75 70 74 69 6d 65 5f 6d 73 22 3a 32 30 30 30 2c 22 64 61 74 61 22 3a 7b 22 75 69 64 22 3a 22 30 30 31 31 32 32 33 33 22 2c 22 75 69 64 5f 6c 65 6e 22 3a 34 7d 7d 1b e8"
+  },
+  {
+    "name": "unicode_request",
+    "kind": 1,
+    "opcode": 32,
+    "seq": 2,
+    "payload": {
+      "session_id": "test-session",
+      "job_id": "voice-1",
+      "asset_id": "measure_done",
+      "volume": 20
+    },
+    "hex": "a5 5a 01 01 20 00 02 00 56 00 7b 22 73 65 73 73 69 6f 6e 5f 69 64 22 3a 22 74 65 73 74 2d 73 65 73 73 69 6f 6e 22 2c 22 6a 6f 62 5f 69 64 22 3a 22 76 6f 69 63 65 2d 31 22 2c 22 61 73 73 65 74 5f 69 64 22 3a 22 6d 65 61 73 75 72 65 5f 64 6f 6e 65 22 2c 22 76 6f 6c 75 6d 65 22 3a 32 30 7d 9f 98"
+  }
+]

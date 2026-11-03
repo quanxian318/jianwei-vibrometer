@@ -1,0 +1,1 @@
+{"mode": "interface-contract", "differences": {"bus": {"reference": "HP1", "observed": "HP2"}}}

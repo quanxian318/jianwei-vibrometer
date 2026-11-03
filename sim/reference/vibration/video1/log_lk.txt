@@ -1,0 +1,11 @@
+tip_upper: init 1 status 0 contrast 13.6 isotropy 0.202 sigma/noise x 0.0070 y 0.0155 px
+tip_lower: init 0 status 3 contrast 24.0 isotropy 0.089 sigma/noise x 0.0000 y 0.0000 px
+edge_lower_mid: init 1 status 0 contrast 24.1 isotropy 0.136 sigma/noise x 0.0105 y 0.0040 px
+edge_upper_mid: init 1 status 0 contrast 20.4 isotropy 0.077 sigma/noise x 0.0120 y 0.0034 px
+motor_body: init 1 status 0 contrast 35.8 isotropy 0.199 sigma/noise x 0.0021 y 0.0047 px
+field: valid 1  peak 11.134 Hz fraction 0.2266 median 0.0000
+  line 11.134 Hz  0.2266  harmonic 0
+  line 7.728 Hz  0.1762  harmonic 2
+  line 3.421 Hz  0.0408  harmonic 3
+  line 4.302 Hz  0.0122  harmonic 5
+  line 6.826 Hz  0.0104  harmonic 0

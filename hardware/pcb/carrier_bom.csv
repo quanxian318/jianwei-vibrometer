@@ -1,0 +1,246 @@
+所属板件,原理图页,位号,型号或数值,设计数值,封装或规格,品牌,立创编号,用途与连接,装配状态,数量,商城链接,商城现货显示,库存核对时间
+主载板,01,U101,INA226AIDGSR,INA226AIDGSR,VSSOP-10,TI,C49851,总电流与功率监测,装配,1,https://item.szlcsc.com/50860.html,30K+,2026-10-15T04:37:01Z
+主载板,01,U102,TLV3011BIDBVR,TLV3011BIDBVR,SOT-23-6,TI,C20345920,掉电检测,装配,1,https://item.szlcsc.com/21671448.html,36,2026-10-15T04:39:25Z
+主载板,02,U201,TPS5430DDAR,TPS5430DDAR,SOIC-8-EP,TI,C9864,5V_AX,装配,1,https://item.szlcsc.com/10396.html,164K+,2026-10-15T04:39:25Z
+主载板,02,U202,TPS5430DDAR,TPS5430DDAR,SOIC-8-EP,TI,C9864,5V_LCD,装配,1,https://item.szlcsc.com/10396.html,164K+,2026-10-15T04:39:25Z
+主载板,02,U203,TPS5430DDAR,TPS5430DDAR,SOIC-8-EP,TI,C9864,5V_AUX,装配,1,https://item.szlcsc.com/10396.html,164K+,2026-10-15T04:39:25Z
+主载板,02,U204,TLV1117LV33DCYR,TLV1117LV33DCYR,SOT-223,TI,C15578,3V3_D,装配,1,https://item.szlcsc.com/16257.html,1031,2026-10-15T04:56:07Z
+主载板,02,U205,TPS7A2033PDBVR,TPS7A2033PDBVR,SOT-23-5,TI,C2862740,3V3_SENS,装配,1,https://item.szlcsc.com/3067417.html,156K+,2026-10-15T04:40:29Z
+主载板,04,U401,"74LVC244APW,118","74LVC244APW,118 / Nexperia",TSSOP-20,Nexperia,C6079,跨域接收缓冲,装配,1,https://item.szlcsc.com/6545.html,26K+,2026-10-15T04:40:30Z
+主载板,03,U301,UCC27517DBVR,UCC27517DBVR,SOT-23-5,TI,C99395,补光 LED1 栅极驱动,装配,1,https://item.szlcsc.com/100609.html,41K+,2026-10-15T04:40:31Z
+主载板,04,U402,SN74LVC1G125DBVR,SN74LVC1G125DBVR,SOT-23-5,TI,C23654,打印发送缓冲,装配,1,https://item.szlcsc.com/24390.html,46K+,2026-10-15T04:40:33Z
+主载板,05,U501,SN74LVC2G17DBVR,SN74LVC2G17DBVR,SOT-23-6,TI,C10429,EC11 A/B 施密特缓冲,装配,1,https://item.szlcsc.com/10972.html,27K+,2026-10-15T04:40:34Z
+主载板,05,U502,SN74AHCT1G125DBVR,SN74AHCT1G125DBVR,SOT-23-5,TI,C7484,WS2812 电平转换,装配,1,https://item.szlcsc.com/7961.html,24K+,2026-10-15T04:40:35Z
+主载板,06,U601,SN74LVC2G125DCUT,SN74LVC2G125DCUR,VSSOP-8,TI,C2675813,SD 与 PN532 MISO 选通,装配,1,https://item.szlcsc.com/2767729.html,20,2026-10-15T04:41:03Z
+主载板,06,U602,MAX98357AETE+T,MAX98357AETE+T,TQFN-16-EP(3x3),ADI/MAXIM,C910544,语音功放,装配,1,https://item.szlcsc.com/978950.html,26K+,2026-10-15T04:40:45Z
+主载板,08,U801,TCA9555PWR,TCA9555PWR,TSSOP-24,TI,C465732,慢速 IO 管理,装配,1,https://item.szlcsc.com/470950.html,34K+,2026-10-15T04:40:46Z
+主载板,08,U802,DS3231SN#T&R,DS3231SN#,SOIC-16-300mil,ADI/MAXIM,C9866,RTC,装配,1,https://item.szlcsc.com/10398.html,606,2026-10-15T04:40:47Z
+主载板,03,U302,UCC27517DBVR,UCC27517DBVR,SOT-23-5,TI,C99395,补光 LED2 栅极驱动,装配,1,https://item.szlcsc.com/100609.html,41K+,2026-10-15T04:40:31Z
+主载板,03,Q301,AOD4184A,AOD4184A / AOS,TO-252,AOS,C99124,补光 LED1,装配,1,https://item.szlcsc.com/100337.html,22K+,2026-10-15T04:40:48Z
+主载板,03,Q302,AO4407A,AO4407A / AOS,SOIC-8,AOS,C16072,打印机高边开关,装配,1,https://item.szlcsc.com/16754.html,15K+,2026-10-15T04:40:49Z
+主载板,03,Q303,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,打印电源Gate下拉控制；1=G、2=S接GND、3=D接R312,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,03,Q304,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,红色报警灯,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,03,Q305,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,黄色报警灯,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,04,Q401,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,打印发送/OE控制；1=G、2=S接GND、3=D接U402 /OE,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,07,Q701,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,TOF XSHUT开漏控制；1=G、2=S接GND、3=D接J701-6,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,06,Q601,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,Nano RESET开漏控制；1=G、2=S接GND、3=D接Nano RST,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,03,Q306,2N7002,2N7002,SOT-23,CJ,C8545,LIGHT_OK 状态转换,装配,1,https://item.szlcsc.com/9040.html,1KK+,2026-10-15T04:41:04Z
+主载板,03,Q307,AOD4184A,AOD4184A / AOS,TO-252,AOS,C99124,补光 LED2,装配,1,https://item.szlcsc.com/100337.html,22K+,2026-10-15T04:40:48Z
+主载板,03,Q308,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,绿色报警灯,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,03,Q309,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,蜂鸣器,装配,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,03,Q310,AO3400A,AO3400A / AOS,SOT-23,AOS,C20917,可选风扇,可选,1,https://item.szlcsc.com/21629.html,185K+,2026-10-15T04:40:50Z
+主载板,01,D101,SMBJ13A,SMBJ13A / PTTC(聚鼎)，单向TVS,SMB(DO-214AA)；PCB：SMB_L4.6-W3.6-LS5.3-RD,PTTC(聚鼎),C163651,输入 TVS,装配,1,,未重新核实现货；型号依据2026-10-19网表,
+主载板,02,D201,SK54B-LTP,5A/40V肖特基，SMB,SMB,MCC,C669018,5V_AX 续流,装配,1,https://item.szlcsc.com/699077.html,14K+,2026-10-15T04:40:52Z
+主载板,02,D202,SK54B-LTP,5A/40V肖特基，SMB,SMB,MCC,C669018,5V_LCD 续流,装配,1,https://item.szlcsc.com/699077.html,14K+,2026-10-15T04:40:52Z
+主载板,02,D203,SK54B-LTP,5A/40V肖特基，SMB,SMB,MCC,C669018,5V_AUX 续流,装配,1,https://item.szlcsc.com/699077.html,14K+,2026-10-15T04:40:52Z
+主载板,03,D301,SK54B-LTP,5A/40V肖特基，SMB,SMB,MCC,C669018,LED1 续流,装配,1,https://item.szlcsc.com/699077.html,14K+,2026-10-15T04:40:52Z
+主载板,03,D302,SK54B-LTP,5A/40V肖特基，SMB,SMB,MCC,C669018,LED2 续流,装配,1,https://item.szlcsc.com/699077.html,14K+,2026-10-15T04:40:52Z
+主载板,03,D303,SS14,SS14,SMA,onsemi,C83852,蜂鸣器续流；阳极Q309 Drain，阴极12V_ALM/J302-1,装配,1,https://item.szlcsc.com/85019.html,97K+,2026-10-15T04:41:07Z
+主载板,03,D304,SS14,SS14,SMA,onsemi,C83852,可选风扇续流；阳极Q310 Drain，阴极12V_ALM/J302-1,可选,1,https://item.szlcsc.com/85019.html,97K+,2026-10-15T04:41:07Z
+主载板,02,D204,"BAT54,215",BAT54（单二极管）,SOT-23,Nexperia,C85084,EN 阳极 / AX_3V3 阴极,装配,1,https://item.szlcsc.com/86256.html,72K+,2026-10-15T04:41:11Z
+主载板,03,DZ301,BZT52C12-TP,BZT52C12,SOD-123,MCC,C668891,Q302 VGS 钳位,装配,1,https://item.szlcsc.com/698950.html,41K+,2026-10-15T04:41:12Z
+主载板,02,L201,SRP1038A-150M,15µH/±20%，Irms6.25A，Isat10A，DCR≤45mΩ，带引线框,"SMD,11x10mm",Bourns,C780183,5V_AX,装配,1,https://item.szlcsc.com/832150.html,880,2026-10-15T04:41:13Z
+主载板,02,L202,SRP1038A-150M,15µH/±20%，Irms6.25A，Isat10A，DCR≤45mΩ，带引线框,"SMD,11x10mm",Bourns,C780183,5V_LCD,装配,1,https://item.szlcsc.com/832150.html,880,2026-10-15T04:41:13Z
+主载板,02,L203,SRP1038A-150M,15µH/±20%，Irms6.25A，Isat10A，DCR≤45mΩ，带引线框,"SMD,11x10mm",Bourns,C780183,5V_AUX,装配,1,https://item.szlcsc.com/832150.html,880,2026-10-15T04:41:13Z
+主载板,01,F101,SCT1032T6.3A250V,6.3A 慢断；SCT1032 专用焊盘；无需底座,"SMD,10.3x3.3mm",SETfuse,C19712567,主路,装配,1,https://item.szlcsc.com/55974676.html,130,2026-10-15T04:46:42Z
+主载板,02,F201,MF-MSMF050/40X-2,Ihold=0.5A，Itrip=1A，Vmax=40V；1812 PTC,1812,Bourns,C913244,Nano VIN,装配,1,https://item.szlcsc.com/983465.html,未核实国内实时库存,
+主载板,03,F301,MF-MSMF110/24X-2,Ihold=1.1A，Itrip=2.2A，Vmax=24V；1812 PTC,1812,Bourns,C210835,LED1,装配,1,https://item.szlcsc.com/211713.html,9295,2026-10-15T04:45:37Z
+主载板,03,F302,MF-MSMF110/24X-2,Ihold=1.1A，Itrip=2.2A，Vmax=24V；1812 PTC,1812,Bourns,C210835,LED2,装配,1,https://item.szlcsc.com/211713.html,9295,2026-10-15T04:45:37Z
+主载板,03,F303,MF-MSMF250/16X-2,Ihold=2.5A，Itrip=5A，Vmax=16V；1812 PTC，打印脉冲实测,1812,Bourns,C210838,打印机,装配,1,https://item.szlcsc.com/211716.html,10K+,2026-10-15T04:52:23Z
+主载板,05,F501,1812L200/16DR,Ihold=2A，Itrip=3.5A，Vmax=16V；1812 PTC,1812,Littelfuse,C439873,屏幕,装配,1,https://item.szlcsc.com/439021.html,3750,2026-10-15T04:52:25Z
+主载板,03,F304,MF-MSMF110/24X-2,Ihold=1.1A，Itrip=2.2A，Vmax=24V；1812 PTC,1812,Bourns,C210835,12V_MAIN→12V_ALM（J302-1）,装配,1,https://item.szlcsc.com/211713.html,9295,2026-10-15T04:45:37Z
+主载板,01,R101,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,PFAIL_N 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,01,R102,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,12V_MAIN 到 PFAIL 分压点,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,01,R103,RC0603FR-0712K7L,12.7kΩ / 1%,0603,Yageo,C185374,PFAIL 分压点到 GND,装配,1,https://item.szlcsc.com/196779.html,11K+,2026-10-15T04:46:07Z
+主载板,01,R104,RC0603FR-071ML,1MΩ / 1%,0603,Yageo,C105578,PFAIL OUT 正反馈到 IN+,装配,1,https://item.szlcsc.com/106793.html,171K,2026-10-15T04:46:08Z
+主载板,01,R105,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,PFAIL 到 Nano A6,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,02,R201,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,5V_AX 反馈上臂,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,02,R202,0603WAF3241T5E,3.24kΩ / 1%,0603,Uniroyal,C22994,5V_AX 反馈下臂,装配,1,https://item.szlcsc.com/23721.html,251K+,2026-10-15T04:46:34Z
+主载板,02,R203,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,5V_LCD 反馈上臂,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,02,R204,0603WAF3241T5E,3.24kΩ / 1%,0603,Uniroyal,C22994,5V_LCD 反馈下臂,装配,1,https://item.szlcsc.com/23721.html,251K+,2026-10-15T04:46:34Z
+主载板,02,R205,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,5V_AUX 反馈上臂,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,02,R206,0603WAF3241T5E,3.24kΩ / 1%,0603,Uniroyal,C22994,5V_AUX 反馈下臂,装配,1,https://item.szlcsc.com/23721.html,251K+,2026-10-15T04:46:34Z
+主载板,02,R207,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,AX_3V3 到 U205 EN,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,02,R208,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,AX_3V3 电源指示灯限流,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,03,R301,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,LED1 PWM 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R302,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,LED1 IN+ 下拉,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,03,R303,RC0603FR-0710RL,10Ω / 1%,0603,Yageo,C109318,Q301 Gate 串阻,装配,1,https://item.szlcsc.com/110539.html,5KK+,2026-10-15T04:46:17Z
+主载板,03,R304,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Q301 Gate–Source 下拉,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,03,R305,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,LED2 PWM 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R306,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,LED2 IN+ 下拉,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,03,R307,RC0603FR-0710RL,10Ω / 1%,0603,Yageo,C109318,Q307 Gate 串阻,装配,1,https://item.szlcsc.com/110539.html,5KK+,2026-10-15T04:46:17Z
+主载板,03,R308,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Q307 Gate–Source 下拉,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,03,R309,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,LED_EN 上拉 5V_AUX,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,03,R310,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,LIGHT_OK 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,03,R311,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Q302 Gate–Source 上拉；100kΩ,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,03,R312,RC0603FR-0747KL,47kΩ / 1%,0603,Yageo,C105579,Q302 Gate 到 Q303 Drain,装配,1,https://item.szlcsc.com/106794.html,129K+,2026-10-15T04:46:27Z
+主载板,03,R313,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q303 Gate 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R314,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 PRN_PWR_EN 输出对地下拉；在R313之前,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,03,R315,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q304 Gate 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R316,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 ALM_R 输出对地下拉；在R315之前,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,03,R317,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q305 Gate 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R318,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 ALM_Y 输出对地下拉；在R317之前,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,03,R319,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q308 Gate 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R320,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 ALM_G 输出对地下拉；在R319之前,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,03,R321,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q309 Gate 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R322,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 BUZZ 输出对地下拉；在R321之前,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,03,R323,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,Q310 Gate 串阻,可选,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,03,R324,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,U801 FAN 输出对地下拉；在R323之前,可选,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,04,R401,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Nano D2/U401-2 上拉 3V3_D,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,04,R402,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Nano D4/U401-4 上拉 3V3_D,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,04,R403,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,Nano D6/U401-6 下拉 GND,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,04,R404,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,HOST_RX/U401-8 上拉 3V3_D,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,04,R405,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,CTS/U401-11 上拉 3V3_D,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,07,R701,RC0603FR-07100KL,100kΩ / 1%,0603,Yageo,C14675,TACH/U401-13 常装下拉 GND,装配,1,https://item.szlcsc.com/15343.html,8KK+,2026-10-15T04:46:06Z
+主载板,07,R702,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,TACH 开集电极可选上拉 3V3_D,可选,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,07,R703,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,J705 SIG 到 U401-13 串阻,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,04,R406,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,FPGA ESP_TXD 到 Nano D3,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,04,R407,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,FPGA ESP_RTS 到 Nano D5,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,04,R408,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,U402 A 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,04,R409,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,U402 /OE 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,04,R410,RC0603FR-07100RL,100Ω / 1%,0603,Yageo,C105588,U402 Y 到 J401-3 串阻,装配,1,https://item.szlcsc.com/106804.html,2KK+,2026-10-15T04:46:16Z
+主载板,04,R411,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,Q401 Gate 下拉,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,07,R704,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,Q701 Gate 下拉,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,06,R601,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,Q601 Gate 下拉,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,05,R501,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,EC11 A 上拉 AX_3V3,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,05,R502,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,EC11 B 上拉 AX_3V3,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,05,R503,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,ENC_SW 上拉 AX_3V3,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,05,R504,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,前面板K101 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,05,R505,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,EC11 A 输入 RC 串阻,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,05,R506,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,EC11 B 输入 RC 串阻,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,05,R507,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,ENC_SW 输入 RC 串阻,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,05,R508,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,前面板K101 输入 RC 串阻,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,05,R509,RC0603FR-072K2L,2.2kΩ / 1%,0603,Yageo,C114662,U502 A 下拉,装配,1,https://item.szlcsc.com/115906.html,2KK+,2026-10-15T04:46:14Z
+主载板,05,R510,RC0603FR-07330RL,330Ω / 1%,0603,Yageo,C105881,U502 Y 到面板 WS DIN,装配,1,https://item.szlcsc.com/107096.html,608K+,2026-10-15T04:46:28Z
+主载板,06,R602,RC0603FR-07330RL,330Ω / 1%,0603,Yageo,C105881,Nano MOSI 到 SD/PN532,装配,1,https://item.szlcsc.com/107096.html,608K+,2026-10-15T04:46:28Z
+主载板,06,R603,RC0603FR-07330RL,330Ω / 1%,0603,Yageo,C105881,U601 MISO_BUS 到 Nano D12,装配,1,https://item.szlcsc.com/107096.html,608K+,2026-10-15T04:46:28Z
+主载板,06,R604,RC0603FR-07330RL,330Ω / 1%,0603,Yageo,C105881,Nano SCLK 到 SD/PN532,装配,1,https://item.szlcsc.com/107096.html,608K+,2026-10-15T04:46:28Z
+主载板,06,R605,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,SD_CS 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R606,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,PN_CS 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R607,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,SD DAT2 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R608,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,SD DAT0 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R609,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,SD DAT1 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R610,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,SD_CD 上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R611,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,PN_IRQ 上拉 3V3_D（模块已有则不装）,可选,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R612,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,PN_IRQ 到 Nano A0,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,06,R613,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,PN MISO 防悬空上拉 3V3_D,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,06,R614,RC0603FR-0733RL,33Ω / 1%,0603,Yageo,C108661,I2S BCLK 串阻,装配,1,https://item.szlcsc.com/109880.html,559K+,2026-10-15T04:46:31Z
+主载板,06,R615,RC0603FR-0733RL,33Ω / 1%,0603,Yageo,C108661,I2S LRCLK 串阻,装配,1,https://item.szlcsc.com/109880.html,559K+,2026-10-15T04:46:31Z
+主载板,06,R616,RC0603FR-0733RL,33Ω / 1%,0603,Yageo,C108661,I2S DIN 串阻,装配,1,https://item.szlcsc.com/109880.html,559K+,2026-10-15T04:46:31Z
+主载板,06,R617,RC0603FR-07510KL,510kΩ / 1%,0603,Yageo,C114066,Nano AMP_EN 到 U602 SD_MODE,装配,1,https://item.szlcsc.com/115305.html,108K+,2026-10-15T04:46:32Z
+主载板,07,R705,RC0603FR-0733RL,33Ω / 1%,0603,Yageo,C108661,FPGA 传感器 SPI SCLK 串阻,装配,1,https://item.szlcsc.com/109880.html,559K+,2026-10-15T04:46:31Z
+主载板,07,R706,RC0603FR-0733RL,33Ω / 1%,0603,Yageo,C108661,FPGA 传感器 SPI MOSI 串阻,装配,1,https://item.szlcsc.com/109880.html,559K+,2026-10-15T04:46:31Z
+主载板,07,R707,RC0603FR-071KL,1kΩ / 1%,0603,Yageo,C22548,传感器 SPI MISO 到 FPGA,装配,1,https://item.szlcsc.com/23274.html,10KK+,2026-10-15T04:46:10Z
+主载板,08,R801,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C0 SCL 上拉 AX_3V3,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,08,R802,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C0 SDA 上拉 AX_3V3,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,07,R708,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C1 SCL 上拉 3V3_SENS,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,07,R709,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C1 SDA 上拉 3V3_SENS,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,07,R710,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C2 SCL 上拉 3V3_SENS,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,07,R711,RC0603FR-074K7L,4.7kΩ / 1%,0603,Yageo,C99782,I2C2 SDA 上拉 3V3_SENS,装配,1,https://item.szlcsc.com/100996.html,8KK+,2026-10-15T04:46:33Z
+主载板,08,R803,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,TCA /INT 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,01,R106,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,INA ALERT 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,08,R804,RC0603FR-0710KL,10kΩ / 1%,0603,Yageo,C98220,RTC SQW 上拉 AX_3V3,装配,1,https://item.szlcsc.com/99429.html,4KK+,2026-10-15T04:45:27Z
+主载板,01,RS101,WSLP25125L000FEA,5mΩ/1%/3W；二端电阻，两焊端各引出独立Kelvin采样线,2512,Vishay,C844913,主路 Kelvin 采样,装配,1,https://item.szlcsc.com/904487.html,595,2026-10-15T04:49:17Z
+主载板,04,RN401,YC164-FR-071KL,4×1kΩ / 独立型 / 1%,0603x4,Yageo,C110021,每个通道独立；U401 输出 18/16/14/12 串阻,装配,1,https://item.szlcsc.com/111242.html,148K+,2026-10-15T04:47:43Z
+主载板,04,RN402,YC164-FR-071KL,4×1kΩ / 独立型 / 1%,0603x4,Yageo,C110021,U401输出9/7/5及IMU_INT1各经独立1kΩ；U401-5为PFAIL_BUF_N，串阻后AX_PFAIL_N接J801-9,装配,1,https://item.szlcsc.com/111242.html,148K+,2026-10-15T04:47:43Z
+主载板,05,RN501,YC164-FR-071KL,4×1kΩ / 独立型 / 1%,0603x4,Yageo,C110021,每个通道独立；EC11 A/B、IMU_INT2、ADXL_DRDY 串阻,装配,1,https://item.szlcsc.com/111242.html,148K+,2026-10-15T04:47:43Z
+主载板,01,C101,EEUFR1V471,470µF/35V，±20%，低阻抗电解,"D10xL16mm,P=5mm",Panasonic,C178715,主输入储能,装配,1,https://item.szlcsc.com/190108.html,5,2026-10-15T04:49:37Z
+主载板,01,C102,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,主输入旁路,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,01,C103,CC0603KRX7R9BB104,100nF/50V，±10%，X7R,0603,YAGEO(国巨),C14663,主输入高频旁路,装配,1,https://item.szlcsc.com/15331.html,未重新核实现货；型号依据2026-10-19网表,
+主载板,02,C201,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,5V_AX BOOT–PH,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,02,C202,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_AX VIN 输入一,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C203,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_AX VIN 输入二,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C204,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_AX VIN 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C205,10TPB220ML,220µF/10V，±20%，ESR 40mΩ，POSCAP,2917,Panasonic,C347545,5V_AX 输出主电容,装配,1,https://item.szlcsc.com/324225.html,270,2026-10-15T04:45:26Z
+主载板,02,C206,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_AX 输出高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C207,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,5V_LCD BOOT–PH,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,02,C208,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_LCD VIN 输入一,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C209,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_LCD VIN 输入二,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C210,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_LCD VIN 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C211,10TPB220ML,220µF/10V，±20%，ESR 40mΩ，POSCAP,2917,Panasonic,C347545,5V_LCD 输出主电容,装配,1,https://item.szlcsc.com/324225.html,270,2026-10-15T04:45:26Z
+主载板,02,C212,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_LCD 输出高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C213,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,5V_AUX BOOT–PH,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,02,C214,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_AUX VIN 输入一,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C215,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,5V_AUX VIN 输入二,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C216,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_AUX VIN 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C217,10TPB220ML,220µF/10V，±20%，ESR 40mΩ，POSCAP,2917,Panasonic,C347545,5V_AUX 输出主电容,装配,1,https://item.szlcsc.com/324225.html,270,2026-10-15T04:45:26Z
+主载板,02,C218,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,5V_AUX 输出高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,01,C104,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,INA226 VS 去耦,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,01,C105,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,TLV3011B VCC 去耦,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,01,C106,CL10C102JB8NNNC,1nF/50V，±5%，C0G,0603,Samsung,C163508,PFAIL 分压滤波,装配,1,https://item.szlcsc.com/174890.html,447K+,2026-10-15T04:47:10Z
+主载板,02,C219,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,AX_3V3 磁珠后,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C220,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,AX_3V3 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,02,C221,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,U204 输入,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C222,CL31B226KPHNNNE,22µF/10V，±10%，X7R,1206,Samsung,C87996,U204 输出,装配,1,https://item.szlcsc.com/89174.html,93K+,2026-10-15T04:47:37Z
+主载板,02,C223,CL31B225KAHNNNE,2.2µF/25V，±10%，X7R,1206,Samsung,C170102,U205 输入,装配,1,https://item.szlcsc.com/181487.html,32K+,2026-10-15T04:47:13Z
+主载板,02,C224,CL31B225KAHNNNE,2.2µF/25V，±10%，X7R,1206,Samsung,C170102,U205 输出，有效≥1µF,装配,1,https://item.szlcsc.com/181487.html,32K+,2026-10-15T04:47:13Z
+主载板,02,C225,CL21B105KAFNNNE,1µF/25V，±10%，X7R,0805,Samsung,C116352,U205 EN 延时,装配,1,https://item.szlcsc.com/117606.html,238K+,2026-10-15T04:47:15Z
+主载板,02,C226,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,Nano VIN,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,02,C227,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,Nano VIN 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C301,CL21B105KAFNNNE,1µF/25V，±10%，X7R,0805,Samsung,C116352,U301 VDD,装配,1,https://item.szlcsc.com/117606.html,238K+,2026-10-15T04:47:15Z
+主载板,03,C302,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U301 VDD 高频,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C303,CL21B105KAFNNNE,1µF/25V，±10%，X7R,0805,Samsung,C116352,U302 VDD,装配,1,https://item.szlcsc.com/117606.html,238K+,2026-10-15T04:47:15Z
+主载板,03,C304,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U302 VDD 高频,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C305,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,LED_EN 去抖,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C306,EEUFR1V471,470µF/35V，±20%，低阻抗电解,"D10xL16mm,P=5mm",Panasonic,C178715,打印接口储能，保留,装配,1,https://item.szlcsc.com/190108.html,5,2026-10-15T04:49:37Z
+主载板,03,C307,CL21B105KAFNNNE,1µF/25V，±10%，X7R,0805,Samsung,C116352,打印接口旁路,装配,1,https://item.szlcsc.com/117606.html,238K+,2026-10-15T04:47:15Z
+主载板,03,C308,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,打印接口高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C309,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,Q302 Gate–Drain 米勒电容，必装,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,04,C401,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U401 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,04,C402,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U402 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,05,C501,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U501 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,05,C502,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U502 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,06,C601,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U601 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,05,C503,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,EC11 A RC,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,05,C504,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,EC11 B RC,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,05,C505,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,ENC_SW RC,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,05,C506,CL10B103KB8NNNC,10nF/50V，±10%，X7R,0603,Samsung,C1589,前面板K101 RC,装配,1,https://item.szlcsc.com/1941.html,1KK+,2026-10-15T04:47:09Z
+主载板,06,C602,CL31B226KPHNNNE,22µF/10V，±10%，X7R,1206,Samsung,C87996,SD VDD 储能,装配,1,https://item.szlcsc.com/89174.html,93K+,2026-10-15T04:47:37Z
+主载板,06,C603,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,SD VDD 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,06,C604,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,PN532 5V 接口旁路,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,06,C605,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,PN532 5V 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,06,C606,CL31B106KBHNNNE,10µF/50V，±10%，X7R,1206,Samsung,C89632,U602 5V 输入,装配,1,https://item.szlcsc.com/90812.html,44K+,2026-10-15T04:47:06Z
+主载板,06,C607,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,U602 5V 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,06,C608,EEEFK1C101P,100µF/16V，±20%，电解,"SMD,D6.3xL5.8mm",Panasonic,C128532,U602 可选储能,可选,1,https://item.szlcsc.com/139817.html,4525,2026-10-15T04:50:25Z
+主载板,07,C701,CL21B475KPFNNNE,4.7µF/10V，±10%，X7R,0805,Samsung,C87998,TOF 接口供电,装配,1,https://item.szlcsc.com/89176.html,41K+,2026-10-15T04:47:39Z
+主载板,07,C702,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,TOF 接口高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,07,C703,CL21B475KPFNNNE,4.7µF/10V，±10%，X7R,0805,Samsung,C87998,IMU 接口供电,装配,1,https://item.szlcsc.com/89176.html,41K+,2026-10-15T04:47:39Z
+主载板,07,C704,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,IMU 接口高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,07,C705,CL21B475KPFNNNE,4.7µF/10V，±10%，X7R,0805,Samsung,C87998,ADXL/SPI 扩展接口供电,装配,1,https://item.szlcsc.com/89176.html,41K+,2026-10-15T04:47:39Z
+主载板,07,C706,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,ADXL/SPI 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,07,C707,CL21B475KPFNNNE,4.7µF/10V，±10%，X7R,0805,Samsung,C87998,SHT40 接口供电,装配,1,https://item.szlcsc.com/89176.html,41K+,2026-10-15T04:47:39Z
+主载板,07,C708,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,SHT40 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,07,C709,CL21B475KPFNNNE,4.7µF/10V，±10%，X7R,0805,Samsung,C87998,I2C2 接口供电,装配,1,https://item.szlcsc.com/89176.html,41K+,2026-10-15T04:47:39Z
+主载板,07,C710,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,I2C2 高频旁路,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,07,C711,CL10C101JB8NNNC,100pF/50V，±5%，C0G,0603,Samsung,C14858,转速输入滤波,装配,1,https://item.szlcsc.com/15530.html,149K+,2026-10-15T04:47:16Z
+主载板,08,C801,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,TCA9555 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,08,C802,CL10B104KB8NNNC,100nF/50V，±10%，X7R,0603,Samsung,C1591,DS3231 VCC,装配,1,https://item.szlcsc.com/1943.html,2000,2026-10-15T04:47:08Z
+主载板,03,C310,CL31B225KAHNNNE,2.2µF/25V，±10%，X7R,1206,Samsung,C170102,Q302 Gate–Source，必装；有效容量≥1.2µF,装配,1,https://item.szlcsc.com/181487.html,32K+,2026-10-15T04:47:13Z
+主载板,01,J101,PJ-002BH,DC 5.5×2.5mm ≥5A,"TH,right-angle",CUI/Same Sky,C22359705,12V 输入,装配,1,https://item.szlcsc.com/23802178.html,5,2026-10-15T04:48:26Z
+主载板,01,J102,JL128-50802G01,JL128-50802G01 / 5.08mm 2P,"TH,P=5.08mm,2P",JILN,C415422,总开关,装配,1,https://item.szlcsc.com/407830.html,710,2026-10-15T04:56:06Z
+主载板,02,J201,U-A-24DD-Y-14,USB-A母座4P，卧式90°弯插，电源触点3A,USB-A-TH_U-A-24DD-Y-14,韩国韩荣,C2689985,AX7010专用5V输出；1=5V_AX、4/外壳5=GND，2/3不接；USB-A转DC5521直通线,装配,1,https://item.szlcsc.com/2798006.html,未重新核实现货；型号依据2026-10-19网表,
+主载板,05,J501,U-A-24DD-Y-14,USB-A母座4P，卧式90°弯插，电源触点3A,USB-A-TH_U-A-24DD-Y-14,韩国韩荣,C2689985,LCD Power Only；1经F501接5V_LCD，4/外壳5=GND，2/3不接,装配,1,https://item.szlcsc.com/2798006.html,未重新核实现货；型号依据2026-10-19网表,
+主载板,08,J801,DC3-2.54-40PAS,2×20 牛角座,"TH,P=2.54mm,2x20P",ZHOURI,C5156665,AX7010 J11,装配,1,https://item.szlcsc.com/5790765.html,735,2026-10-15T04:51:06Z
+主载板,03,J301,JL128-50802G01,5.08mm 2P,"TH,P=5.08mm,2P",JILN,C415422,侧面12V灯带输出：约0.6m、9W；1正、2低边开关负端,装配,1,https://item.szlcsc.com/407830.html,710,2026-10-15T04:56:06Z
+主载板,03,J302,DB128V-5.08-6P-GN-S,5.08mm 6P,"TH,P=5.08mm,6P",DORABO,C2915642,12V_ALM/R−/Y−/G−/BZ−/FAN−；12V_ALM为F304输出,装配,1,https://item.szlcsc.com/3209398.html,38K+,2026-10-15T04:52:41Z
+主载板,05,J502,SM10B-GHS-TB,GH1.25 10P 卧贴,"SMD,P=1.25mm,10P",JST,C2683602,前面板,装配,1,https://item.szlcsc.com/2780581.html,212,2026-10-15T04:47:51Z
+主载板,04,J401,S5B-PH-K-S(LF)(SN),PH2.0 5P 卧插,"TH,P=2mm,5P",JST,C157923,打印 VIN/CTS/TX/RX/GND,装配,1,https://item.szlcsc.com/169271.html,60K+,2026-10-15T04:48:06Z
+主载板,07,J701,SM06B-GHS-TB(LF)(SN),GH1.25 6P 卧贴,"SMD,P=1.25mm,6P",JST,C133065,TOF,装配,1,https://item.szlcsc.com/144367.html,14K+,2026-10-15T04:47:55Z
+主载板,07,J702,WAFER-GH1.25-8PWB,GH1.25 8P 卧贴，1A,CONN-SMD_8P-P1.25_XUNPU-WAFER-GH1.25-8PWB,XUNPU(讯普),C3029383,IMU,装配,1,https://jlcpcb.com/partdetail/XUNPU-WAFER_GH1_258PWB/C3029383,"嘉立创贴装库存15,784；可下单14,534（快照）",2026-10-17T17:56:47.485406+00:00
+主载板,07,J703,WAFER-GH1.25-8PWB,GH1.25 8P 卧贴，1A,CONN-SMD_8P-P1.25_XUNPU-WAFER-GH1.25-8PWB,XUNPU(讯普),C3029383,ADXL/SPI 扩展,装配,1,https://jlcpcb.com/partdetail/XUNPU-WAFER_GH1_258PWB/C3029383,"嘉立创贴装库存15,784；可下单14,534（快照）",2026-10-17T17:56:47.485406+00:00
+主载板,07,J704,SM04B-GHS-TB(LF)(SN),GH1.25 4P 卧贴,"SMD,P=1.25mm,4P",JST,C189895,SHT40,装配,1,https://item.szlcsc.com/207060.html,15K+,2026-10-15T04:51:32Z
+主载板,06,J601,SM02B-GHS-TB(LF)(SN),GH1.25 2P 卧贴,"SMD,P=1.25mm,2P",JST,C189893,扬声器,装配,1,https://item.szlcsc.com/207058.html,33K+,2026-10-15T04:48:04Z
+主载板,06,J602,WAFER-GH1.25-8PWB,GH1.25 8P 卧贴，1A,CONN-SMD_8P-P1.25_XUNPU-WAFER-GH1.25-8PWB,XUNPU(讯普),C3029383,PN532,装配,1,https://jlcpcb.com/partdetail/XUNPU-WAFER_GH1_258PWB/C3029383,"嘉立创贴装库存15,784；可下单14,534（快照）",2026-10-17T17:56:47.485406+00:00
+主载板,06,J603,DM3AT-SF-PEJM5,Micro SD 卡座带 CD,SMD,Hirose,C114218,SD,装配,1,https://item.szlcsc.com/115458.html,17K+,2026-10-15T04:56:09Z
+主载板,06,J604,PM254-1-15-Z-8.5,1×15 母座,"TH,P=2.54mm,1x15P",HCTL,C2897378,Nano左排JP1；元件面USB朝上，1=D13、15=VIN；详见Nano插座针序.csv,装配,1,https://item.szlcsc.com/3142383.html,294,2026-10-15T04:51:11Z
+主载板,06,J605,PZ254V-11-03P,1×3 排针,"TH,P=2.54mm,1x3P",XFCN,C2937625,Nano调试串口；1=GND、2=NANO_TX(D1)、3=NANO_RX(D0),装配,1,https://item.szlcsc.com/3293280.html,812K+,2026-10-15T04:52:15Z
+主载板,06,J606,PM254-1-15-Z-8.5,1×15 母座,"TH,P=2.54mm,1x15P",HCTL,C2897378,Nano右排JP2；元件面USB朝上，1=D12、15=D1/TX；详见Nano插座针序.csv,装配,1,https://item.szlcsc.com/3142383.html,294,2026-10-15T04:51:11Z
+主载板,07,J705,SM03B-GHS-TB(LF)(SN),GH1.25 3P 卧贴,"SMD,P=1.25mm,3P",JST,C514175,可选转速,装配,1,https://item.szlcsc.com/529631.html,8180,2026-10-15T04:56:35Z
+主载板,03,J304,JL128-50802G01,5.08mm 2P,"TH,P=5.08mm,2P",JILN,C415422,左右12V/1W成品小灯并联输出：共2W、同步控制；1正、2低边开关负端,装配,1,https://item.szlcsc.com/407830.html,710,2026-10-15T04:56:06Z
+主载板,08,J802,PZ254V-11-04P,1×4 排针,"TH,P=2.54mm,1x4P",XFCN,C2691448,I2C0 调试,装配,1,https://item.szlcsc.com/2801085.html,802K+,2026-10-15T04:52:17Z
+主载板,07,J706,SM04B-GHS-TB(LF)(SN),GH1.25 4P 卧贴,"SMD,P=1.25mm,4P",JST,C189895,I2C2 扩展,装配,1,https://item.szlcsc.com/207060.html,15K+,2026-10-15T04:51:32Z
+主载板,03,J305,SM02B-GHS-TB(LF)(SN),GH1.25 2P 卧贴,"SMD,P=1.25mm,2P",JST,C189893,补光自锁按钮,装配,1,https://item.szlcsc.com/207058.html,33K+,2026-10-15T04:48:04Z
+主载板,03,J306,SM02B-GHS-TB(LF)(SN),GH1.25 2P卧贴，1A/50V,CONN-SMD_SM02B-GHS-TB-LF-SN,JST,C189893,机壳按钮指示灯辅助接口；1=5V_AUX、2=GND，3/4机械固定脚接GND；灯脚与开关触点分开,装配,1,https://item.szlcsc.com/207058.html,未重新核实现货；型号依据2026-10-19网表,
+主载板,02,FB201,BLM18AG601SN1D,600Ω@100MHz，500mA，DCR≤0.38Ω；50mA时压降≤19mV,0603,Murata,C19330,AX_3V3 电源磁珠,装配,1,https://item.szlcsc.com/20038.html,778K+,2026-10-15T04:49:28Z
+主载板,08,BT801,KH-BS1220-2-SMT,CR1220 电池座,SMD,Kinghelm,C5365932,RTC VBAT，不充电,装配,1,https://item.szlcsc.com/6198200.html,2405,2026-10-15T04:50:32Z
+主载板,02,HL201,LTST-C190KGKT,绿色 LED,0603,LiteOn,C125094,AX_3V3 电源指示,装配,1,https://item.szlcsc.com/136370.html,94K+,2026-10-15T04:50:59Z

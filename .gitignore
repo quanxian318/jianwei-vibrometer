@@ -1,0 +1,7 @@
+.build/
+__pycache__/
+*.pyc
+*.vcd
+*.wdb
+node_modules/
+build/vivado/build/

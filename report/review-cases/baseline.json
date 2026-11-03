@@ -1,0 +1,8 @@
+{
+  "device": "xc7z010",
+  "input": "vector-set-a",
+  "scope": "capture-with-pl-depth",
+  "clock_mhz": 40,
+  "tool": "2025.2",
+  "unit": "lut"
+}
