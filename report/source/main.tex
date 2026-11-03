@@ -119,13 +119,10 @@
 \begin{titlepage}
 \newgeometry{left=20mm,right=20mm,top=22mm,bottom=20mm}
 \thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]
-  \fill[navy] (current page.north west) rectangle ([yshift=-11mm]current page.north east);
-  \fill[amber] ([yshift=-11mm]current page.north west) rectangle ([yshift=-12.6mm]current page.north east);
-\end{tikzpicture}
-\vspace*{8mm}
-{\sffamily\color{mute}\small 2026 全国大学生嵌入式芯片与系统设计竞赛\quad FPGA 创新设计赛道（AMD）\quad 自主选题赛道 初级组\par}
-\vspace{14mm}
+\noindent\makebox[\linewidth][c]{\includegraphics[width=65mm]{\figpath/template_mark.png}}\par
+\vspace{1mm}
+\noindent{\color{mute}\rule{\linewidth}{0.35pt}}\par
+\vspace{11mm}
 \setlength{\parindent}{0pt}
 {\sffamily\bfseries\color{navy}\fontsize{46}{52}\selectfont 见微\par}
 \vspace{4mm}

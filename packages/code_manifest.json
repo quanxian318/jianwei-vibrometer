@@ -185,7 +185,7 @@
   "jianwei-vibrometer/report/source/figures/ui/ui_live_multipoint.png": "e1684d5ba5de374306cf655499dd72401d9f7f8a1276234216d97110235e77a0",
   "jianwei-vibrometer/report/source/figures/ui/ui_result_acoustic.png": "9ff2bce93aeb652dc9135cf3424390240585b17dba43c79ec32d0db6b2212d4e",
   "jianwei-vibrometer/report/source/figures/ui/ui_vision.png": "e80c2a6dbaefb60e21555aaf4f9f4a6e7d331acd9d5d1698a1ce4680d6ea8782",
-  "jianwei-vibrometer/report/source/main.tex": "65324c97ff30fb3a863fd4e17cc25d0f188353e03865b0448fb4e61498c8d37c",
+  "jianwei-vibrometer/report/source/main.tex": "bd45c95a77fd46b5fdf1d3e1a7bf36c39070e0c16892dc648568b1dcf236b05c",
   "jianwei-vibrometer/report/source/sec0_abstract.tex": "df2dd3b137bd51649158dd814e2b18417feec4f77296398d1cca1054a63c35d5",
   "jianwei-vibrometer/report/source/sec1_overview.tex": "27fb2110ffd9c894b6ea9cc7c49d396d151b2aebeb4c1a5b65ffc6204a3291f4",
   "jianwei-vibrometer/report/source/sec2_hardware.tex": "aa79b58947c5536cc37663426e3c1f9c5f41f6ac06c75ce6c92c5560f71b6df4",
@@ -755,5 +755,6 @@
   "jianwei-vibrometer/src/shared/vibproto/src/vp_json.h": "47ae6c367274ffcde351ea09beb5bcd255512531fec13525bdfebcc456a82a11",
   "jianwei-vibrometer/src/shared/vibproto/test/gen_random_vectors.py": "330098f233458740037b0f572f7bd652f822eb1893a4bc0e1af69e0071b1ee3b",
   "jianwei-vibrometer/src/shared/vibproto/test/test_vibproto.cpp": "07f487d2584d60b8edaa69558503c60dbf7623bc3556c0fcd360ac932211ce40",
-  "jianwei-vibrometer/THIRD_PARTY_NOTICES.md": "59df3f25a3958ef77f6f4070f6f4f1c9ecb81f86ae578add7f30f8c4933bca2b"
+  "jianwei-vibrometer/THIRD_PARTY_NOTICES.md": "59df3f25a3958ef77f6f4070f6f4f1c9ecb81f86ae578add7f30f8c4933bca2b",
+  "jianwei-vibrometer/report/source/figures/template_mark.png": "787db8fa20de80a88e406e5eb8bc8c3076d71592635851045bb8a8cbfb4aaadc"
 }
