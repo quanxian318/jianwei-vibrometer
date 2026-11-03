@@ -62,40 +62,46 @@ PL 的块设计如图~\ref{fig:bd} 所示。两路 OV5640 采集 IP 输出 AXI4-
 \centering
 \resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[x=1cm,y=1cm]
-\node[blk=psc,minimum width=2.4cm,minimum height=5.4cm] (ps7) at (0,2.6) {Zynq PS7\\\\M\_AXI\_GP0\\\\S\_AXI\_HP0\\\\UART0/I²C（EMIO）\\\\FCLK 100/125/40 MHz\\\\IRQ\_F2P};
-\node[blk=extc,minimum width=2.2cm] (ic1) at (3.4,4.6) {AXI 外设互联};
-\node[blk=extc,minimum width=2.2cm] (ic2) at (3.4,0.6) {AXI 存储互联};
-\node[blk=plc,minimum width=2.6cm] (cam0) at (6.9,2.2) {alinx\_ov5640 0\\+ 格式转换};
-\node[blk=plc,minimum width=2.6cm] (cam1) at (6.9,0.9) {alinx\_ov5640 1\\+ 格式转换};
-\node[blk=plc,minimum width=2.2cm] (v0) at (10.0,2.2) {VDMA0 S2MM};
-\node[blk=plc,minimum width=2.2cm] (v1) at (10.0,0.9) {VDMA1 S2MM};
-\node[blk=plc,minimum width=2.2cm] (v2) at (10.0,-0.4) {VDMA2 MM2S};
-\node[blk=plc,minimum width=2.6cm] (vo) at (13.3,-0.4) {AXI4-S 转视频\\+ VTC};
-\node[blk=plc,minimum width=2.2cm] (dvi) at (16.4,-0.4) {rgb2dvi\\HDMI};
-\node[blk=plc,minimum width=2.2cm] (dyn) at (16.4,1.0) {axi\_dynclk\\像素时钟};
-\node[blk=plc,minimum width=2.6cm] (pdm) at (6.9,5.6) {pdm\_mic\\（自写）};
-\node[blk=plc,minimum width=2.6cm] (lamp) at (10.0,5.6) {AXI GPIO\\→ lamp\_projector};
-\node[blk=plc,minimum width=2.6cm] (uart) at (13.3,5.6) {AXI UART16550};
-\node[blk=plc,minimum width=2.6cm] (i2c) at (16.4,5.6) {I²C 分支 ×2\\EMIO 引出};
-\node[blk=extc,minimum width=2.2cm] (sensor) at (6.9,-0.6) {AN5642\\两路 DVP};
-\draw[darr] (ps7.east |- ic1) -- (ic1);
-\draw[darr] (ps7.east |- ic2) -- (ic2);
-\draw[arr] (ic1.north) |- (pdm.west);
-\draw[arr] (ic1.north) ++(0,0.3) -- ++(0,0.62) -| (lamp.north);
-\draw[arr] (ic1.north) ++(0,0.3) -- ++(0,0.62) -| (uart.north);
-\draw[arr] (ic1.east) -| (v2.north) ;
-\draw[arr] (sensor.north) -- (cam1.south);
-\draw[arr] (cam0) -- (v0);
-\draw[arr] (cam1) -- (v1);
-\draw[arr] (v0.south west) ++(0,0.1) -| (ic2.north);
-\draw[arr] (v1.west) -| (ic2.north);
-\draw[arr] (v2.west) -| (ic2.east);
+\node[anchor=west,font=\bfseries] at (0,7.5) {控制与外设};
+\node[blk=psc,minimum width=2.5cm] (ps) at (1.35,6.35) {Zynq PS7};
+\node[blk=extc,minimum width=2.5cm] (gp) at (4.65,6.35) {AXI 外设互联};
+\node[blk=plc,minimum width=2.3cm] (pdm) at (7.7,5) {pdm\_mic};
+\node[blk=plc,minimum width=2.7cm] (lamp) at (10.6,5) {AXI GPIO\\lamp\_projector};
+\node[blk=plc,minimum width=2.65cm] (uart) at (13.55,5) {AXI UART16550};
+\node[blk=plc,minimum width=2.4cm] (cfg) at (16.45,5) {VDMA 与\\显示寄存器};
+\node[blk=extc,minimum width=2.8cm] (emio) at (13.6,7.25) {两路 I²C 分支\\Nano UART0};
+\draw[arr] (ps) -- node[above,lbl]{GP0} (gp);
+\draw[arr] (ps.north) |- node[pos=.75,above,lbl]{EMIO} (emio.west);
+\draw (gp.east) -- (16.45,6.35);
+\foreach \n in {pdm,lamp,uart,cfg}
+  \draw[arr] (\n.north |- gp.east) -- (\n.north);
+\foreach \x in {7.7,10.6,13.55} \fill (\x,6.35) circle (1.3pt);
+
+\draw[gray!55] (0,4.25) -- (17.75,4.25);
+\node[anchor=west,font=\bfseries] at (0,3.9) {视频与存储};
+\node[blk=extc,minimum width=2.5cm] (sensor) at (1.35,2.15) {AN5642\\双路 DVP};
+\node[blk=plc,minimum width=2.7cm] (cam0) at (4.65,2.85) {OV5640 采集 0\\+ 格式转换};
+\node[blk=plc,minimum width=2.7cm] (cam1) at (4.65,1.45) {OV5640 采集 1\\+ 格式转换};
+\node[blk=plc,minimum width=2.5cm] (v0) at (7.7,2.85) {VDMA0 S2MM};
+\node[blk=plc,minimum width=2.5cm] (v1) at (7.7,1.45) {VDMA1 S2MM};
+\node[blk=extc,minimum width=2.4cm,minimum height=2.1cm] (mem) at (10.6,2.15) {AXI 存储互联};
+\node[blk=psc,minimum width=2.6cm] (ddr) at (14.0,2.15) {PS DDR};
+\node[blk=plc,minimum width=2.4cm] (v2) at (10.6,-.25) {VDMA2 MM2S};
+\node[blk=plc,minimum width=2.55cm] (vo) at (13.55,-.25) {AXI4-S 转视频\\+ VTC};
+\node[blk=plc,minimum width=2.4cm] (dvi) at (16.45,-.25) {rgb2dvi\\HDMI};
+\node[blk=plc,minimum width=2.4cm] (dyn) at (16.45,0.98) {axi\_dynclk\\像素时钟};
+\draw (sensor.east) -- (2.95,2.15);
+\fill (2.95,2.15) circle (1.3pt);
+\foreach \n/\v in {cam0/v0,cam1/v1}{
+  \draw[arr] (2.95,2.15) |- (\n.west);
+  \draw[arr] (\n) -- (\v);
+  \draw[arr] (\v.east) -- (mem.west |- \v.east);
+}
+\draw[darr] (mem) -- node[above,lbl]{HP0} (ddr);
+\draw[arr] (mem.south) -- node[right,lbl]{读出帧} (v2.north);
 \draw[arr] (v2) -- (vo);
 \draw[arr] (vo) -- (dvi);
 \draw[arr] (dyn) -- (dvi);
-\draw[arr] (ps7.north) |- (i2c.north) ;
-\node[lbl] at (3.4,5.3) {GP0};
-\node[lbl] at (3.4,-0.1) {HP0};
 \end{tikzpicture}}
 \caption{PL 块设计（简化）}
 \label{fig:bd}
