@@ -1,0 +1,7 @@
+Vivado archive validation
+90 selected source/archive files verified against recorded archive hashes.
+Five XPR projects: all referenced HDL, BD and XDC input files present.
+Shared RTL, XDC and IP repository paths resolved within the submission tree.
+Icarus Verilog: panel static and serial module elaboration passed.
+Provided printer_uart bitstream matches board/artifacts/printer_uart.bit.bin.
+Provided video: 179.633333 s, 1920x1080, 30 fps, H.264 High, AAC LC; full decode passed.

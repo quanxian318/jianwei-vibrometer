@@ -1,0 +1,342 @@
+[
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/census_cs97.v",
+    "resolved": "build/vivado/rtl/census_cs97.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/sgm_core.v",
+    "resolved": "build/vivado/rtl/sgm_core.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_core.v",
+    "resolved": "build/vivado/rtl/stereo_core.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_axi.v",
+    "resolved": "build/vivado/rtl/stereo_axi.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/audio_rtl/pdm_mic.v",
+    "resolved": "build/vivado/rtl/pdm_mic.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/lamp_projector.v",
+    "resolved": "build/vivado/rtl/lamp_projector.v"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/system.xdc",
+    "resolved": "build/vivado/constraints/system.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/hdmi_out.xdc",
+    "resolved": "build/vivado/constraints/hdmi_out.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/24_an5642_lwip_double/Vivado/auto_create_project/src/constraints/an5642.xdc",
+    "resolved": "build/vivado/constraints/an5642.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/pdm_mic_team.xdc",
+    "resolved": "build/vivado/constraints/pdm_mic_team.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/carrier_mgmt.xdc",
+    "resolved": "build/vivado/constraints/carrier_mgmt.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/lamp_pins.xdc",
+    "resolved": "build/vivado/constraints/lamp_pins.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/projector_pin.xdc",
+    "resolved": "build/vivado/constraints/projector_pin.xdc"
+  },
+  {
+    "project": "panel",
+    "original": "D:/AX7010_Carrier_Integration/printer_pins.xdc",
+    "resolved": "build/vivado/constraints/printer_pins.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/census_cs97.v",
+    "resolved": "build/vivado/rtl/census_cs97.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/sgm_core.v",
+    "resolved": "build/vivado/rtl/sgm_core.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_core.v",
+    "resolved": "build/vivado/rtl/stereo_core.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_axi.v",
+    "resolved": "build/vivado/rtl/stereo_axi.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/audio_rtl/pdm_mic.v",
+    "resolved": "build/vivado/rtl/pdm_mic.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/lamp_projector.v",
+    "resolved": "build/vivado/rtl/lamp_projector.v"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/system.xdc",
+    "resolved": "build/vivado/constraints/system.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/hdmi_out.xdc",
+    "resolved": "build/vivado/constraints/hdmi_out.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/24_an5642_lwip_double/Vivado/auto_create_project/src/constraints/an5642.xdc",
+    "resolved": "build/vivado/constraints/an5642.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/pdm_mic_team.xdc",
+    "resolved": "build/vivado/constraints/pdm_mic_team.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/carrier_mgmt.xdc",
+    "resolved": "build/vivado/constraints/carrier_mgmt.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/lamp_pins.xdc",
+    "resolved": "build/vivado/constraints/lamp_pins.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/projector_pin.xdc",
+    "resolved": "build/vivado/constraints/projector_pin.xdc"
+  },
+  {
+    "project": "sht40",
+    "original": "D:/AX7010_Carrier_Integration/printer_pins.xdc",
+    "resolved": "build/vivado/constraints/printer_pins.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/census_cs97.v",
+    "resolved": "build/vivado/rtl/census_cs97.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/sgm_core.v",
+    "resolved": "build/vivado/rtl/sgm_core.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_core.v",
+    "resolved": "build/vivado/rtl/stereo_core.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_axi.v",
+    "resolved": "build/vivado/rtl/stereo_axi.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/audio_rtl/pdm_mic.v",
+    "resolved": "build/vivado/rtl/pdm_mic.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/lamp_projector.v",
+    "resolved": "build/vivado/rtl/lamp_projector.v"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/system.xdc",
+    "resolved": "build/vivado/constraints/system.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/hdmi_out.xdc",
+    "resolved": "build/vivado/constraints/hdmi_out.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/24_an5642_lwip_double/Vivado/auto_create_project/src/constraints/an5642.xdc",
+    "resolved": "build/vivado/constraints/an5642.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/pdm_mic_team.xdc",
+    "resolved": "build/vivado/constraints/pdm_mic_team.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/carrier_mgmt.xdc",
+    "resolved": "build/vivado/constraints/carrier_mgmt.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/lamp_pins.xdc",
+    "resolved": "build/vivado/constraints/lamp_pins.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/projector_pin.xdc",
+    "resolved": "build/vivado/constraints/projector_pin.xdc"
+  },
+  {
+    "project": "lite",
+    "original": "D:/AX7010_Carrier_Integration/printer_pins.xdc",
+    "resolved": "build/vivado/constraints/printer_pins.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/census_cs97.v",
+    "resolved": "build/vivado/rtl/census_cs97.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/sgm_core.v",
+    "resolved": "build/vivado/rtl/sgm_core.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_core.v",
+    "resolved": "build/vivado/rtl/stereo_core.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_axi.v",
+    "resolved": "build/vivado/rtl/stereo_axi.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/audio_rtl/pdm_mic.v",
+    "resolved": "build/vivado/rtl/pdm_mic.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/lamp_projector.v",
+    "resolved": "build/vivado/rtl/lamp_projector.v"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/system.xdc",
+    "resolved": "build/vivado/constraints/system.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/hdmi_out.xdc",
+    "resolved": "build/vivado/constraints/hdmi_out.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/24_an5642_lwip_double/Vivado/auto_create_project/src/constraints/an5642.xdc",
+    "resolved": "build/vivado/constraints/an5642.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/pdm_mic_team.xdc",
+    "resolved": "build/vivado/constraints/pdm_mic_team.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/carrier_mgmt.xdc",
+    "resolved": "build/vivado/constraints/carrier_mgmt.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/lamp_pins.xdc",
+    "resolved": "build/vivado/constraints/lamp_pins.xdc"
+  },
+  {
+    "project": "nano_uart",
+    "original": "D:/AX7010_Carrier_Integration/projector_pin.xdc",
+    "resolved": "build/vivado/constraints/projector_pin.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/census_cs97.v",
+    "resolved": "build/vivado/rtl/census_cs97.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/sgm_core.v",
+    "resolved": "build/vivado/rtl/sgm_core.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_core.v",
+    "resolved": "build/vivado/rtl/stereo_core.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/stereo_rtl/stereo_axi.v",
+    "resolved": "build/vivado/rtl/stereo_axi.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/audio_rtl/pdm_mic.v",
+    "resolved": "build/vivado/rtl/pdm_mic.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/lamp_projector.v",
+    "resolved": "build/vivado/rtl/lamp_projector.v"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/system.xdc",
+    "resolved": "build/vivado/constraints/system.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/22_ov5640_single/Vivado/auto_create_project/src/constraints/hdmi_out.xdc",
+    "resolved": "build/vivado/constraints/hdmi_out.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/AX7010_2023.1/course_s2_vitis/24_an5642_lwip_double/Vivado/auto_create_project/src/constraints/an5642.xdc",
+    "resolved": "build/vivado/constraints/an5642.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/pdm_mic_team.xdc",
+    "resolved": "build/vivado/constraints/pdm_mic_team.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/carrier_mgmt.xdc",
+    "resolved": "build/vivado/constraints/carrier_mgmt.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/lamp_pins.xdc",
+    "resolved": "build/vivado/constraints/lamp_pins.xdc"
+  },
+  {
+    "project": "printer_uart",
+    "original": "D:/AX7010_Carrier_Integration/projector_pin.xdc",
+    "resolved": "build/vivado/constraints/projector_pin.xdc"
+  }
+]

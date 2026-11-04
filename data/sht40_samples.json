@@ -1,0 +1,62 @@
+[
+  {
+    "temperature_C": 26.911955443656055,
+    "sample": 1,
+    "management_ok": true,
+    "humidity_percent": 46.28694590676738
+  },
+  {
+    "temperature_C": 26.93331807431143,
+    "sample": 2,
+    "management_ok": true,
+    "humidity_percent": 46.29076066224155
+  },
+  {
+    "temperature_C": 26.954680704966805,
+    "sample": 3,
+    "management_ok": true,
+    "humidity_percent": 46.22018768596933
+  },
+  {
+    "temperature_C": 26.97604333562218,
+    "sample": 4,
+    "management_ok": true,
+    "humidity_percent": 46.14770733196002
+  },
+  {
+    "temperature_C": 26.97604333562218,
+    "sample": 5,
+    "management_ok": true,
+    "humidity_percent": 46.067597467002365
+  },
+  {
+    "temperature_C": 27.045471885252155,
+    "sample": 6,
+    "management_ok": true,
+    "humidity_percent": 46.06569008926528
+  },
+  {
+    "temperature_C": 27.013427939269093,
+    "sample": 7,
+    "management_ok": true,
+    "humidity_percent": 46.05424582284276
+  },
+  {
+    "temperature_C": 27.034790569924468,
+    "sample": 8,
+    "management_ok": true,
+    "humidity_percent": 46.04661631189441
+  },
+  {
+    "temperature_C": 27.096208133058667,
+    "sample": 9,
+    "management_ok": true,
+    "humidity_percent": 46.01609826810102
+  },
+  {
+    "temperature_C": 27.149614709697104,
+    "sample": 10,
+    "management_ok": true,
+    "humidity_percent": 45.9436179140917
+  }
+]

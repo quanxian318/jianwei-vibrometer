@@ -1,0 +1,7 @@
+set_property -dict {PACKAGE_PIN F20 IOSTANDARD LVCMOS33} [get_ports k1]
+set_property -dict {PACKAGE_PIN K17 IOSTANDARD LVCMOS33} [get_ports enc_sw]
+set_property -dict {PACKAGE_PIN J19 IOSTANDARD LVCMOS33} [get_ports enc_a]
+set_property -dict {PACKAGE_PIN K19 IOSTANDARD LVCMOS33} [get_ports enc_b]
+set_property -dict {PACKAGE_PIN F19 IOSTANDARD LVCMOS33} [get_ports ws_data]
+set_property -dict {SLEW SLOW DRIVE 8} [get_ports ws_data]
+set_false_path -from [get_ports {k1 enc_sw enc_a enc_b}] -to [get_cells -hier -filter {NAME =~ *panel_probe*sync1_reg*}]

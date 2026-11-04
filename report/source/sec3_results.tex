@@ -15,9 +15,9 @@
 \toprule
 \tabhead \tabh{功能} & \tabh{状态} & \tabh{依据} \\
 \midrule
-双路采集与 HDMI 显示 & 板上运行 & 45.048 帧/s，452 帧无丢帧，界面实时预览 \\
+双路采集与 HDMI 显示 & 板上运行 & 45.0477 帧/s，452 帧无丢帧，界面实时预览 \\
 多点跟踪与基线判定 & 板上运行 & 12/12 测点、11/11 窗口通过 \\
-声学辅助测频 & 板上运行 & PDM 实采，声学 19.928 Hz 与视觉一致 \\
+声学辅助测频 & 板上运行 & PDM 实采，声学 19.9277 Hz 与视觉一致 \\
 声光与语音报警 & 板上运行 & 实测时红灯、蜂鸣器、“振动异常”语音同时动作 \\
 热敏打印 & 板上运行 & 独立 UART，现场打印测量报告 \\
 APP 与网关 & 板上运行 & 局域网实时数据、报警推送与结果详情 \\
@@ -105,6 +105,8 @@ PL 端完成双路视频、HDMI、PDM 接收、补光 PWM 与看门狗、打印 
 \bottomrule
 \end{tabularx}
 \end{table}
+帧率按首末帧之间的 451 个间隔计算：$f_s=(452-1)/10.01160=45.0477$ 帧/s。记录保留计算精度，屏幕、打印和视频以 19.95 Hz、19.93 Hz、0.209 mm 显示视觉主频、声学主频和峰峰值。
+
 
 \begin{figure}[htbp]
 \centering
@@ -174,11 +176,11 @@ IOB & 53 & 100 & 53.00\% & MMCM & 1/2 \\
 \subsubsection{优化过程}
 \label{sec:opt}
 
-\paragraph{资源：双目深度从 PL 迁到 PS。}项目初期按“PL 做双目匹配、PS 做标定换算”的思路，在 PL 中实现了 Census + SGM 双目核并与队友原有的 BM 核做了对比。新核在 Middlebury 数据上精度明显更好\cite{scharstein2002}（表~\ref{tab:stereo}），与 C++ 模型逐位一致，板上诊断配置每 4 帧做一次 PS/PL 复算，累计 83 次核对零差异。但把双目核、DMA 和麦克风接收核一起放进整机后，Slice 接近用满，时序裕量只剩 +0.462 ns，已没有空间接入显示增强和位移核。考虑到主测振并不依赖深度，我们把双目深度降为辅助功能，移除 PL 双目核及其专用互联，改由 PS 以 160×90 分辨率约每秒计算一次。表~\ref{tab:res} 按功能阶段列出了资源变化：LUT 减少 5081 个，BRAM 减少 11 块，DSP 从 3 个降到 0。表中同时列出各阶段保留的功能。
+\paragraph{资源：双目深度从 PL 迁到 PS。}项目初期按“PL 做双目匹配、PS 做标定换算”的思路，在 PL 中实现了 Census + SGM 双目核并与队友原有的 BM 核做了对比。新核在 Middlebury 数据上精度明显更好\cite{scharstein2002}（表~\ref{tab:stereo}），与 C++ 模型逐位一致，板上诊断配置每 4 帧做一次 PS/PL 复算，累计 83 次核对零差异。但把双目核、DMA 和麦克风接收核一起放进整机后，Slice 接近用满，时序裕量只剩 +0.462 ns，已没有空间接入显示增强和位移核。考虑到主测振并不依赖深度，我们把双目深度降为辅助功能，移除 PL 双目核及其专用互联，改由 PS 以 160×90 分辨率约每秒计算一次。表~\ref{tab:res} 按功能阶段列出了资源变化：LUT 减少 5081 个，BRAM 减少 11 块，DSP 从 3 个降到 0。表中同时列出各阶段保留的功能。这里统计的是整机实现的净变化，包括双目核、专用 DMA、AXI 互联和重新布局产生的变化。表~\ref{tab:stereo} 中的核级综合估计对应单独的计算模块。
 
 \begin{table}[htbp]
 \centering
-\caption{PL 资源随架构调整的变化}
+\caption{PL 资源随架构调整的变化（整机实现统计）}
 \label{tab:res}
 \small
 \begin{tabularx}{\linewidth}{@{}L{3.2cm}Yrrrr@{}}
@@ -301,6 +303,7 @@ Nano 固件 & 0.2.3 编译、DFU 烧录、USB 命令应答、SD 语音读回校�
 \path{src/ax7010/linux/vibmon} & PS 主程序、测振、声学、界面、工具与测试 \\
 \path{src/ax7010/pl} & RTL、测试平台与黄金向量 \\
 \path{build/vivado} & 当前 BD、RTL、用户 IP、约束和实现报告 \\
+\path{build/vivado_tests} & 五项分项工程、前面板测试源码、位流和报告 \\
 \path{src/nano_esp32} & Nano 固件、预编译文件与 SD 卡语音 \\
 \path{src/mobile_app}、\path{src/shared} & 多端 APP 与共用协议 \\
 \path{sim}、\path{data} & 仿真入口、测试结果与板端测量 JSON \\

@@ -110,7 +110,7 @@ NFC & PN532 V3（SPI 模式） & J602 & 测点卡片识别 \\
 \begin{equation}
 \omega=\frac{2\pi n}{60},\qquad F_0=m r\omega^{2},
 \end{equation}
-其方向随转子旋转，在铝片法向的分量按 $F_0\cos\omega t$ 变化，因此铝片主要以一倍转频振动。实测主频 19.948 Hz 对应带载转速约 1197 r/min。铝片的响应幅值还取决于固定方式、连接刚度与阻尼，所以每次试验都同时记录转速与机位。
+其方向随转子旋转，在铝片法向的分量按 $F_0\cos\omega t$ 变化，因此铝片主要以一倍转频振动。实测主频 19.9476 Hz 对应带载转速约 1197 r/min。铝片的响应幅值还取决于固定方式、连接刚度与阻尼，所以每次试验都同时记录转速与机位。
 
 \begin{figure}[htbp]
 \centering
@@ -344,6 +344,9 @@ V_{\mathrm{SD\_MODE}}=3.3\,\mathrm{V}\times\frac{100}{510+100}\approx0.54\,\math
 \end{figure}
 
 \paragraph{传感器与扩展接口（图~\ref{fig:sch7}）。}LSM6DSV（相机姿态）和 ADXL345（参考振动）共用 FPGA 的一组 SPI，SCLK、MOSI 串 33 Ω 匹配，MISO 串 1 kΩ 限流；两者的中断和数据就绪信号经 1 kΩ 排阻直接进入 FPGA，便于以硬件时间戳与视频帧对齐。VL53L1X 测距和 SHT40 温湿度挂在 I²C1，J706 原为 I²C2，现复用为 MP34DT01 的 PDM 时钟和数据。两路 I²C 用 4.7 kΩ 上拉到 3V3\_SENS，按 50 pF 总线电容估计上升时间 $t_r\approx0.847RC\approx0.2\,\mu\mathrm{s}$，满足 400 kHz 快速模式的 0.3 µs 要求。PDM 数据线保留了上拉，麦克风缺失或采样相位选错时读到全 1，软件据此判断“线路卡死”。ToF 的 XSHUT 由 AO3400A 开漏控制；J705 的转速输入经 10 kΩ 上拉到 3.3 V、1 kΩ/100 pF 滤波后再经 74LVC244A 缓冲。
+
+SHT40 通过 PS I²C 分支接入 Linux 的 \code{/dev/i2c-0}，地址为 \code{0x44}。分项测试的十次界面采样中，温度为 26.912～27.150 ℃、相对湿度为 45.944～46.291\%，数值随采样更新。测试工程保存在 \path{build/vivado_tests/sht40}，读数保存在 \path{data/sht40_samples.json}。
+
 
 \begin{figure}[htbp]
 \centering

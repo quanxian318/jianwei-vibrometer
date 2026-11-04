@@ -7,7 +7,7 @@
 ## 作品资料
 
 - [技术报告](report/technical_report.pdf) / [LaTeX 源文件](report/source/main.tex)
-- [完整演示视频](media/jianwei_demo.mp4)：179.633 秒，1920×1080，H.264 + AAC
+- [完整演示视频](media/jianwei_demo.mp4)：179.633 秒，1920×1080，H.264 + AAC，约 65.4 MB
 - [英文海报](media/poster_en.pptx) / [PDF](media/poster_en.pdf)
 - [中文海报](media/poster_zh.pptx) / [PDF](media/poster_zh.pdf)
 - [全部代码 RAR](packages/jianwei_code.rar)
@@ -83,3 +83,5 @@ PS 交叉编译器为 `arm-linux-gnueabihf-g++`/`gcc`，结果为 `.build/arm/vi
 ## 许可
 
 项目原创部分采用 [MIT](LICENSE)。厂商 IP、参考模型及其他第三方材料保留原许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+
+分项 Vivado 工程入口见 [Vivado 测试工程](build/vivado_tests/README.md)。
