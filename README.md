@@ -7,7 +7,7 @@
 ## 作品资料
 
 - [技术报告](report/technical_report.pdf) / [LaTeX 源文件](report/source/main.tex)
-- [完整演示视频](media/jianwei_demo.mp4)：179.633 秒，1920×1080，H.264 + AAC，约 65.4 MB
+- [完整演示视频](media/jianwei_demo.mp4)：179.633 秒，1920×1080，H.264 + AAC，约 66.5 MB
 - [英文海报](media/poster_en.pptx) / [PDF](media/poster_en.pdf)
 - [中文海报](media/poster_zh.pptx) / [PDF](media/poster_zh.pdf)
 - [全部代码 RAR](packages/jianwei_code.rar)
