@@ -11,7 +11,7 @@
 - [英文海报](media/poster_en.pptx) / [PDF](media/poster_en.pdf)
 - [中文海报](media/poster_zh.pptx) / [PDF](media/poster_zh.pdf)
 - [全部代码 RAR](packages/jianwei_code.rar)
-- [大模型协作记录](report/interaction_records.md) / [可复用技能包](docs/nano_build.md)
+- [大模型协作记录](report/interaction_records.md) / [可复用技能包](skill/README.md)
 
 ## 系统与实测
 
@@ -78,7 +78,7 @@ PS 交叉编译器为 `arm-linux-gnueabihf-g++`/`gcc`，结果为 `.build/arm/vi
 
 ### 4. 部署与测量
 
-按 [板端说明](docs/nano_build.md) 配置预留内存、加载位流和运行程序。Nano 与 APP 分别参见 [Nano](docs/nano_build.md)、[APP](docs/nano_build.md)。固定机位并放置散斑和静止参考点，标定后先采约 15 秒停机基线，再测量约 10 秒；可在屏幕或 APP 查看结果、控制打印。
+按 [板端说明](board/README.md) 配置预留内存、加载位流和运行程序。Nano 与 APP 分别参见 [Nano](src/nano_esp32/README.md)、[APP](src/mobile_app/README.md)。固定机位并放置散斑和静止参考点，标定后先采约 15 秒停机基线，再测量约 10 秒；可在屏幕或 APP 查看结果、控制打印。
 
 ## 许可
 

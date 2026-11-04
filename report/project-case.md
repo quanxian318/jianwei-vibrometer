@@ -23,4 +23,4 @@
 
 ## 正式报告补录
 
-按 [记录模板](../skill/fpga-llm-collaboration/references/evidence-template.md) 导出该两案例的完整公开可见回答，补充对应日志、输入和产物哈希。有文件才填写文件路径；保留人工判断与未验收项。
+按 [记录模板](../skill/fpga-llm-collaboration/references/evidence-template.md) 导出该两案例的完整公开可见回答，补充对应日志、输入和产物哈希。案例归档保留人工判断、输入文件和验证结果。

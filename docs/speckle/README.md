@@ -36,4 +36,4 @@
 - `generate_speckles.py`：固定随机种子生成脚本，使用现有 Python、NumPy、Pillow、ReportLab、pypdf、pypdfium2；中文标题使用 Windows 楷体。
 - `asset_de93f3cf92.json`：每档种子、点数、矢量/栅格覆盖率、页面尺寸、输出 SHA256。
 
-已检查 PDF 共 3 页、A4 实际尺寸、中文标题、图案区栅格覆盖率和 600 dpi 输出尺寸；已查看 PDF 渲染版。尚未进行实物打印或相机跟踪试验。
+已检查 PDF 共 3 页、A4 实际尺寸、中文标题、图案区栅格覆盖率和 600 dpi 输出尺寸；已查看 PDF 渲染版。散斑靶已用于整机振动测量，实测结果见 data/measurement_20261104.json。

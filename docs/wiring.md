@@ -4,7 +4,7 @@
 
 - [逐根线CSV](wire_harness.csv)：可用于制线与通断登记。
 - [12项淘宝链接与所选规格](module_specs.md)。
-- [数据手册、原厂入口与资料缺口](nano_build.md)。
+- [数据手册、原厂入口与资料缺口](datasheets/README.md)。
 - [两板全部焊盘查询](../hardware/netlists/pin_browser.html)。
 - [实物方向和1脚位置](carrier_pin_orientation.csv)；该表只借用硬件方向，功能以本文为准。
 
@@ -229,7 +229,7 @@ MAX98357A差分输出，两根都不是GND；额定3W不是保证输出3W。
 | 2 | NANO_TX | 适配器RX | Nano D1/GPIO43 → 外部适配器RX |
 | 3 | NANO_RX | 适配器TX | 外部适配器TX → Nano D0/GPIO44 |
 
-Nano固件0.2.1起默认启用J605：115200、8N1、无流控，命令与USB-C相同；发送`ping`返回`pong`，`help`列出命令，`status`返回状态JSON。两端均输出日志与命令回复；`baud`和`flow`仅修改AX7010链路，不改变J605。接线完成不代表该版本已通过实物验证，见[Nano固件说明](nano_build.md)。
+Nano固件0.2.1起默认启用J605：115200、8N1、无流控，命令与USB-C相同；发送`ping`返回`pong`，`help`列出命令，`status`返回状态JSON。两端均输出日志与命令回复；`baud`和`flow`仅修改AX7010链路，不改变J605。接线完成不代表该版本已通过实物验证，见[Nano固件说明](../src/nano_esp32/README.md)。
 
 ## 前面板：主板J502 ↔ 小板J101
 

@@ -106,7 +106,7 @@ python3 src/pc_sim/stereo_benchmark.py <build>/stereo_eval <数据目录> out.js
 ## 还没做的
 
 1. **PL 上板**：
-   - 已在队友 AN5642 工程里用 `ax7010/pl/bd/team_bm_to_stereo.tcl` 去掉 BM、接入本核与 AXI DMA（HP1，核 0x43C2_0000、DMA 0x4040_0000），并由 `team_design.tcl` 与 MP34DT01 麦克风接收核一起综合实现（Vivado 2025.2）。DMA 存储侧为 64 位，HP1 与本核同用 40 MHz，互连不需要时钟和位宽转换（slice 已基本用满，这样才放下接收核）。全设计 13.5k LUT（76.7%）、slice 98.6%、41.5 BRAM36（69%）、3 DSP；WNS +0.462 ns、WHS +0.007 ns，无失败端点，40 MHz 域最长路径 22.8 ns（余量 1.155 ns）；位流与报告在 `src/ax7010/pl/stereo/bitstream/`（`an5642_stereo_sgm40_pdm.bit.bin` 由 `prepare_an5642_runtime.py` 加载，该脚本同时把 FCLK2 设为 40 MHz）。100 MHz 时 SGM 扫描（路径代价读出→最小值与比较→右视差缓冲写使能，22 级逻辑）约 19.4 ns，WNS −10.2 ns，所以本核和 DMA 改用 FCLK2 40 MHz，256×144 约 61 ms/对；回到 100 MHz 需要给扫描加流水并重做逐位比对。载板 `carrier::add` 尚未合入同一工程。
+   - 已在队友 AN5642 工程里用 `ax7010/pl/bd/team_bm_to_stereo.tcl` 去掉 BM、接入本核与 AXI DMA（HP1，核 0x43C2_0000、DMA 0x4040_0000），并由 `team_design.tcl` 与 MP34DT01 麦克风接收核一起综合实现（Vivado 2025.2）。DMA 存储侧为 64 位，HP1 与本核同用 40 MHz，互连不需要时钟和位宽转换（slice 已基本用满，这样才放下接收核）。全设计 13.5k LUT（76.7%）、slice 98.6%、41.5 BRAM36（69%）、3 DSP；WNS +0.462 ns、WHS +0.007 ns，无失败端点，40 MHz 域最长路径 22.8 ns（余量 1.155 ns）；位流与报告在 `src/ax7010/pl/stereo/bitstream/`（`an5642_stereo_sgm40_pdm.bit.bin` 由 `prepare_an5642_runtime.py` 加载，该脚本同时把 FCLK2 设为 40 MHz）。100 MHz 时 SGM 扫描（路径代价读出→最小值与比较→右视差缓冲写使能，22 级逻辑）约 19.4 ns，WNS −10.2 ns，所以本核和 DMA 改用 FCLK2 40 MHz，256×144 约 61 ms/对；回到 100 MHz 需要给扫描加流水并重做逐位比对。该段记录对应早期 PL 双目阶段，当前整机分工见技术报告。
    - 导出 XSA、构建 PetaLinux，用 `pl_verify_every` 观察 `pl_mismatch_frames` 是否为 0。
    - 与采集、显示、`lk_accum`、视觉显示链一起排资源：当前已用 41.5 个 BRAM36（含麦克风 FIFO 8 个）、slice 98.6%；位移核按 32×32 模板约 4–5 个 BRAM36、显示链 160×90 约 22 个，合计超过 60，接入前需要缩小麦克风 FIFO 或显示链工作图，并腾出 slice。
 2. **AN5642 实拍标定**：

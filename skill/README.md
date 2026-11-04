@@ -5,14 +5,14 @@
 | 阶段 | 入口 | 证据与边界 |
 | --- | --- | --- |
 | 工作流编排 | [FPGA 大模型协作](fpga-llm-collaboration/SKILL.md) · [工具速查](workflow-guide.md) | 总入口负责分流，工具速查负责命令和归档，历史案例见 report |
-| 架构评审 | [PL 与 PS 分工](../docs/nano_build.md) | 有项目架构调整案例，功能不同的版本须分列 |
-| 定点验证 | [整数黄金参考比对](../docs/nano_build.md) | CSV 对比已复跑，历史板端 83 次核对对应旧版双目 PL 计算链 |
-| 实现检查 | [Vivado 报告审计](../docs/nano_build.md) | 英文报告样例可复跑，区分已约束路径与约束覆盖 |
-| 采样复核 | [采样脚本](../docs/nano_build.md) · [测量证据](measurement-evidence/SKILL.md) | 前者核查频率必要条件，后者复核报告、标定和无效样本 |
-| 外设诊断 | [外设分层诊断](../docs/nano_build.md) | 区分接口、传输和实物输出，须按实际板卡复查 |
+| 架构评审 | [PL 与 PS 分工](partition_review/README.md) | 有项目架构调整案例，功能不同的版本须分列 |
+| 定点验证 | [整数黄金参考比对](golden-compare/README.md) | CSV 对比已复跑，历史板端 83 次核对对应旧版双目 PL 计算链 |
+| 实现检查 | [Vivado 报告审计](implementation_audit/README.md) | 英文报告样例可复跑，区分已约束路径与约束覆盖 |
+| 采样复核 | [采样脚本](sampling_check/README.md) · [测量证据](measurement-evidence/SKILL.md) | 前者核查频率必要条件，后者复核报告、标定和无效样本 |
+| 外设诊断 | [外设分层诊断](peripheral_diagnosis/README.md) | 区分接口、传输和实物输出，须按实际板卡复查 |
 | 装配复核 | [机电装配](mechanical-fit/SKILL.md) | CAD 和照片证据分别记录，实物试装独立验收 |
-| 交付验证 | [文件与 SHA256](../docs/nano_build.md) | 检查文件一致性与命名，功能需单独验收 |
-| 可选移植 | [PYNQ Overlay](pynq-portable-overlay/SKILL.md) | 原包记录离线预检和 RTL 仿真，PYNQ 上板仍待验证 |
+| 交付验证 | [文件与 SHA256](delivery_check/README.md) | 检查文件一致性与命名，功能需单独验收 |
+| 可选移植 | [PYNQ Overlay](pynq-portable-overlay/SKILL.md) | 提供 Overlay 契约检查、代码生成、DMA 调试与 RTL 仿真示例 |
 
 定点比对用于通用键值 CSV。PYNQ 示例自带的字流比对包含 DMA 帧长和传输契约，保留两个入口。Vivado 导出模板用于产生报告，报告审计脚本用于解读，两者可串联。
 

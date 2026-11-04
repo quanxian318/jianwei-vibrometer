@@ -915,6 +915,7 @@ void Application::onMeasureDone(const MeasureResult& r) {
     m.level = sum.level;
     m.warnPp = cfg_.alarm.warnPp;
     m.alarmPp = cfg_.alarm.alarmPp;
+    m.binaryThreshold = cfg_.alarm.binaryThreshold;
     m.envValid = s.envValid;
     m.tempC = s.tempC;
     m.rhPercent = s.rhPercent;

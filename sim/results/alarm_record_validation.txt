@@ -1,0 +1,4 @@
+Alarm application host regression
+Command: python3 tests/test_alarm_consistency_host.py <host vibmond>
+Result: passed
+Checks: binary_threshold saved with threshold snapshot; current alarm follows setting changes; saved historical record remains stable; invalid capture clears alarm.

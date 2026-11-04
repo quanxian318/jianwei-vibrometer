@@ -11,6 +11,7 @@ with tempfile.TemporaryDirectory(prefix='vibmon-alarm-') as d:
   assert app.cmd('status')['data']['alarm_level']=='报警'
   ident=last['measurement_id'];record=pathlib.Path(d)/'records'/ident/'record.json'
   saved=record.read_bytes()
+  assert json.loads(saved)["result"]["thresholds"]["binary_threshold"] is True
   assert app.cmd('set',alarm_pp=100)['ok']
   st=app.cmd('status')['data'];assert st['alarm_level']=='正常' and st['measurement']['last']['level']=='正常',st
   assert app.cmd('set',alarm_pp=.00001)['ok']

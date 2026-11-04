@@ -27,6 +27,7 @@ struct RecordMeta {
   std::string unit;  // mm | px
   AlarmLevel level = AlarmLevel::kUnknown;
   double warnPp = 0, alarmPp = 0;
+  bool binaryThreshold = false;
   bool envValid = false;
   double tempC = 0, rhPercent = 0;
   bool distanceValid = false;

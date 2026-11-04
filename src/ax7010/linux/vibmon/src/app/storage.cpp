@@ -392,6 +392,7 @@ bool saveRecord(const std::string& dir, const RecordMeta& m, const MeasureResult
   res.set("level", levelKey(m.level));
   JsonValue th = JsonValue::makeObject();
   th.set("unit", "mm");
+  th.set("binary_threshold", m.binaryThreshold);
   th.set("warn_peak_to_peak", m.warnPp);
   th.set("alarm_peak_to_peak", m.alarmPp);
   res.set("thresholds", th);

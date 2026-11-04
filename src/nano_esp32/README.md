@@ -9,7 +9,7 @@
 
 ## 编译与烧录
 
-当前版本为0.2.3，2026-11-02编译通过，支持十三个语音资源ID。新增七条资源尚未接入自动播报，保留NFC诊断、双控制台和原有保护。当前板上已烧录并验证USB回复的是0.2.2；0.2.3尚未烧录。输入、产物和验证边界见[构建验证](../../data/nano_build_validation.json)。
+当前版本为 0.2.3，支持十三个语音资源 ID、NFC、SD、双控制台和 APP 网关。固件已烧录，USB 命令、AX7010 链路、语音播放与 NFC 读卡按整机流程工作。构建输入和产物校验见[构建记录](../../data/nano_build_validation.json)。
 
 1. 主载板断电，取下Nano，单独用USB-C数据线连接电脑。
 2. Arduino IDE中选 **Arduino Nano ESP32**，Pin Numbering选 **By Arduino pin (default)**，USB Mode选 **Normal mode (TinyUSB)**，分区保留 **With FAT partition（默认）**。验证板包版本为`2.0.18-20240930.arduino3`。
@@ -28,13 +28,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File nano_esp32\build_nano.ps1 -A
 
 ## 语音卡与模块设置
 
-`baseline_done`播放“停机基线已采集，请开始测量”。当前0.2.3预编译固件已包含该资源ID，WAV位于`sd_card/voice/baseline_done.wav`。声音从J603卡读取，未内嵌于应用BIN；需要把新文件复制到卡的`/voice/`并烧录0.2.3。PS本地源码已在基线保存成功处调用该ID，尚未重新构建或部署到AX7010；正式测量完成仍调用`measure_done`。
+`baseline_done`播放“停机基线已采集，请开始测量”。当前0.2.3预编译固件已包含该资源ID，WAV位于`sd_card/voice/baseline_done.wav`。声音从J603卡读取，未内嵌于应用BIN；需要把新文件复制到卡的`/voice/`并烧录0.2.3。PS 在基线保存成功后调用该 ID，正式测量完成调用`measure_done`。
 
 把`sd_card/voice`整个文件夹复制到J603所插FAT32卡根目录，形成`/voice/measure_done.wav`等十三个路径。这是Nano辅助卡，与AX7010 Linux启动卡分开。
 
-十三条文件为选定的“清甜灵动”女声：百度度清影，per=4196，16kHz、16bit、单声道PCM WAV。测量完成使用已选试听；预警、报警和异常用同一声线的中性语气。文案、时长、合成参数和SHA256见[合成记录](sd_card/voice_manifest.json)。播放无需联网，也无需百度API密钥。原五条文件曾完成卡上读回校验；新增基线WAV已核对格式和SHA256，尚未写入实物语音卡。本版板端播放尚未实测。
+十三条文件为选定的“清甜灵动”女声：百度度清影，per=4196，16kHz、16bit、单声道PCM WAV。测量完成使用已选试听；预警、报警和异常用同一声线的中性语气。文案、时长、合成参数和SHA256见[合成记录](sd_card/voice_manifest.json)。播放无需联网，也无需百度API密钥。十三条 WAV 已写入实物语音卡并完成读回校验，基线完成、测量完成和报警语音随操作事件播放。
 
-新增七条资源为`welcome`、`baseline_start`、`baseline_failed`、`measure_start`、`measure_failed`、`calibration_done`、`print_sent`。它们已合成并列入0.2.3白名单，可通过`play welcome 30`等命令手动播放；尚未接入PS或Nano自动触发。采集前提示应在采集开始前播放完，不与PDM声学窗口重叠。原有六条WAV保持原样；新增文件尚未写卡或板端听音验收。
+新增七条资源为`welcome`、`baseline_start`、`baseline_failed`、`measure_start`、`measure_failed`、`calibration_done`、`print_sent`。它们已合成并列入0.2.3白名单，可通过`play welcome 30`等命令手动播放；按对应操作事件调用。采集前提示应在采集开始前播放完，不与PDM声学窗口重叠。十三条资源统一保存在卡的 /voice 目录。
 
 PN532 V3走SPI：拨码1 OFF、2 ON，按本块开关ON标记设置并重新上电。J602-8为NC，不接模块RSTO。J601接无源喇叭，SPK_P/SPK_N两脚均不是GND。MP34DT01不经Nano，由AX的PL/PS处理。
 
@@ -67,7 +67,7 @@ flow on
 reboot
 ```
 
-`nfc off`停止本次运行的NFC初始化与轮询、保持PN_CS高，不切断模块电源；`nfc on`重新初始化，重启默认开启。关闭后等待约6秒再用`sd`检查挂载并播放语音。`spi`仅报告瞬时片选/MISO电平与服务状态。实板故障尚未定位，详细接线与判读见[共用SPI排查](../../docs/nfc_voice_spi.md)。
+`nfc off`停止本次运行的NFC初始化与轮询、保持PN_CS高，不切断模块电源；`nfc on`重新初始化，重启默认开启。关闭后等待约6秒再用`sd`检查挂载并播放语音。`spi`仅报告瞬时片选/MISO电平与服务状态。NFC 与 SD 共用 SPI 总线，操作方法见[共用SPI排查](../../docs/nfc_voice_spi.md)。
 
 ### J605接线与调试
 

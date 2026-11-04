@@ -100,7 +100,7 @@ PL 端完成双路视频、HDMI、PDM 接收、补光 PWM 与看门狗、打印 
 峰峰值 & 1.0294 像素 / 0.2090 mm & 代表测点 $y$ 方向时域值 \\
 有效值 & 0.3451 像素 / 0.0701 mm & 同一序列，去线性趋势 \\
 尺标比例 & 0.20309 mm/像素 & 试验尺标，$y$ 方向 \\
-判级 & 报警 & 阈值：预警 0.01 mm，报警 0.02 mm \\
+判级 & 报警 & 峰峰值 0.209 mm，高于报警阈值 0.02 mm \\
 照明 & 开启，60\% & 十字激光关闭 \\
 \bottomrule
 \end{tabularx}
@@ -345,10 +345,25 @@ make -j4 BUILD=build_arm \
   LDFLAGS='-static -pthread' build_arm/vibmond
 \end{lstlisting}
 
-\paragraph{4. 板端运行。}Linux 镜像为视频帧缓存预留 DDR 顶端内存。停止相机与界面进程后，使用 \code{prepare\_an5642\_runtime.py} 加载位流并配置时钟。按 \path{config/current_board.example.json} 设置板级设备路径、外设和标定文件，然后运行：
+\paragraph{4. 板端运行。}系统使用 ALINX AX7010 的 512 MB DDR Linux 镜像。视频缓存占用 DDR 顶端 32 MiB，预留范围为 \code{0x1E000000--0x1FFFFFFF}。先在主机上处理基础镜像中的设备树，将输出文件作为启动分区的 \code{image.ub}：
 \begin{lstlisting}
-./vibmond -c board.json
+python3 src/ax7010/linux/vibmon/tools/prepare_an5642_image.py \
+  image_original.ub image.ub
 \end{lstlisting}
+板卡启动后停止相机和界面进程，加载 PL：
+\begin{lstlisting}
+python3 src/ax7010/linux/vibmon/tools/prepare_an5642_runtime.py \
+  board/artifacts/printer_uart.bit.bin
+\end{lstlisting}
+该脚本配置 FCLK1 为 125 MHz、FCLK2 为 40 MHz，并开启两路 PS I²C 时钟。Nano 使用 PS UART0 的 EMIO 接口，示例设备节点为 \code{/dev/ttyPS1}，设置为 115200、8N1、RTS/CTS 硬件流控。板级配置以 \path{config/current_board.example.json} 为入口，将相机、显示、串口、I²C 和标定文件路径设置为板上的实际路径后保存为 \code{board.json}。
+
+源码构建程序使用 \code{layout\_hash} 绑定毫米标定与测点布局。标定文件记录尺标比例、方向和布局哈希，三者匹配后输出毫米值。归档程序快照 \path{board/artifacts/vibmond.gz} 保留当次实测部署行为，沿用当前尺标比例。复现实测快照时，解压并运行：
+\begin{lstlisting}
+gzip -dk board/artifacts/vibmond.gz
+chmod +x board/artifacts/vibmond
+board/artifacts/vibmond -c board.json
+\end{lstlisting}
+重新编译源码后采用布局绑定标定；需要复现快照中的比例保留方式时，使用 \path{tools/reproduce_legacy_binary.py}，命令见仓库板端说明。
 
 \paragraph{5. Nano 与 APP。}从仓库根目录使用 arduino-cli 编译并烧录 Nano 固件：
 \begin{lstlisting}
