@@ -139,7 +139,7 @@ NFC/语音/无线 & ESP32 & PN532、microSD、I²S 功放、Wi-Fi/NTP、APP 网�
 
 \subsubsection{接口设计}
 
-各单元之间的接口在表~\ref{tab:ifaces} 中汇总。PL 外设经 AXI-Lite 映射到 PS 地址空间，地址由块设计固定；PS 与 Nano 之间使用自定义的二进制帧协议 V1（\ref{sec:nano} 节）；APP 通过 \code{/api/v1/} 下的 HTTP 接口访问设备，首次连接需配对。
+各单元之间的接口在表~\ref{tab:ifaces} 中汇总。PL 外设经 AXI-Lite 映射到 PS 地址空间，地址由块设计固定；PS 与 Nano 之间使用自定义的二进制帧协议 V1（\ref{sec:nano} 节）；APP 通过 \code{/api/v1/} 下的 HTTP 接口访问设备，默认同一局域网直接连接，可选启用配对。
 
 \begin{table}[htbp]
 \centering

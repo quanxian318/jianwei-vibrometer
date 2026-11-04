@@ -90,6 +90,7 @@
 测点数量 & 最多 12 个测点 + 4 个参考点 & 默认 4 列 3 行，模板 25×25 像素 \\
 频率范围 & 0.5 Hz～22.5 Hz & 45 帧/s 视觉采样，用于低频振动与转频观测 \\
 频率分辨率 & 窗口频点间隔 0.352 Hz & 128 帧窗，峰值插值后取 11 窗中位数 \\
+理论转频对照 & 1200 r/min，对应 20 Hz & 视觉实测 19.9476 Hz，相对差约 0.26\% \\
 主频一致性 & 视觉 19.9476 Hz，声学 19.9277 Hz & 差 0.0199 Hz，约 0.10\% \\
 位移结果 & 峰峰值 0.2090 mm，有效值 0.0701 mm & 试验尺标 0.20309 mm/像素 \\
 位移噪声 & 约 0.005～0.011 像素（约 1.1～2.3 µm） & 主频处等效背景谱幅，由基线比推算，见 \ref{sec:noise} 节 \\
@@ -101,6 +102,123 @@ PL 资源 & LUT 50.8\%，FF 41.0\%，BRAM 50.8\% & XC7Z010，Vivado 2025.2 实�
 \bottomrule
 \end{tabularx}
 \end{table}
+\FloatBarrier
+
+
+\subsection{整机实测结果}
+
+见微已完成从图像采集、测振分析到声光报警、语音、打印和 APP 查看的一体化运行。本次电机转速为 1200 r/min，理论转频为 $f=n/60=20$ Hz。视觉实测主频为 19.9476 Hz，与理论转频相差约 0.0524 Hz，相对差约 0.26\%，两者十分接近。峰峰值为 0.2090 mm，452 帧采集无丢帧，报警与测量报告在现场同步输出。
+
+2026 年 11 月 4 日 02:05 的完整测量如表~\ref{tab:record} 所示。被测物为减速电机驱动的散斑铝片，相机 1 输出 1280×720 图像，测量框位于 (197, 235)，大小 256×124 像素，12 个测点按 4 列 3 行排布，4 个参考点贴在铝片下方静止的背景上（图~\ref{fig:points}）。先采 15 s 停机基线，再启动电机测量约 10 s。
+
+\begin{table}[htbp]
+\centering
+\caption{2026-11-04 板端测量记录 \code{jianwei-ax7010-20261104-020520}}
+\label{tab:record}
+\small
+\begin{tabularx}{\linewidth}{@{}L{3.6cm}L{4.3cm}Y@{}}
+\toprule
+\tabhead \tabh{项目} & \tabh{结果} & \tabh{说明} \\
+\midrule
+电机转速 / 理论转频 & 1200 r/min / 20 Hz & $f=n/60$，实测主频相对差约 0.26\% \\
+开始时间 / 时长 & 02:05:10.6 / 10.012 s & RTC 时间源，单调时钟计时 \\
+帧数 / 帧率 & 452 帧 / 45.0477 帧/s & 收到帧率与相机帧率相同 \\
+丢帧 / 跟踪失败 / 饱和 & 0 / 0 / 0 & 无重采样补点 \\
+帧间隔抖动 & 0.417 ms & 约为帧周期的 1.9\% \\
+分析窗 & 11 个，全部为信号窗 & 128 帧窗，每 32 帧一次 \\
+视觉主频 & 19.9476 Hz & 11 窗范围 19.851～19.964 Hz \\
+声学主频 & 19.9277 Hz & 3000～8000 Hz 包络，27.2 dB \\
+主频差 & 0.0199 Hz（0.10\%） & 容差 0.399 Hz，判为一致 \\
+超过基线的测点 & 12/12 & 信号/基线比 36.3～95.0 \\
+代表测点 & 第 2 点（比值 95.0） & 波形、频谱检查通过 \\
+峰峰值 & 1.0294 像素 / 0.2090 mm & 代表测点 $y$ 方向时域值 \\
+有效值 & 0.3451 像素 / 0.0701 mm & 同一序列，去线性趋势 \\
+尺标比例 & 0.20309 mm/像素 & 试验尺标，$y$ 方向 \\
+判级 & 报警 & 峰峰值 0.209 mm，高于报警阈值 0.02 mm \\
+照明 & 开启，60\% & 十字激光关闭 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier
+
+帧率按首末帧之间的 451 个间隔计算：$f_s=(452-1)/10.01160=45.0477$ 帧/s。记录保留计算精度，屏幕、打印和视频以 19.95 Hz、19.93 Hz、0.209 mm 显示视觉主频、声学主频和峰峰值。
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.47\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=6.4cm,xmin=180,xmax=470,ymin=220,ymax=545,y dir=reverse,
+  axis equal image,xlabel={$x$ / 像素},ylabel={$y$ / 像素},tick label style={font=\scriptsize},label style={font=\footnotesize},
+  colormap={warm}{rgb255(0)=(255,236,179) rgb255(1)=(242,140,40) rgb255(2)=(178,34,34)},
+  colorbar,colorbar style={width=2.5mm,ylabel={信号/基线比},ylabel style={font=\scriptsize},tick label style={font=\scriptsize}},
+  point meta min=30,point meta max=100]
+\draw[navy,thick] (axis cs:197,235) rectangle (axis cs:453,359);
+\addplot[scatter,only marks,mark=*,mark size=3.6pt,scatter src=explicit] coordinates {
+ (229,255.67)[81.1] (293,255.67)[95.0] (357,255.67)[67.3] (421,255.67)[59.7]
+ (229,297)[75.6] (293,297)[62.3] (357,297)[60.7] (421,297)[36.3]
+ (229,338.33)[65.0] (293,338.33)[67.9] (357,338.33)[54.1] (421,338.33)[37.3]};
+\addplot[only marks,mark=square*,mark size=3pt,color=navy] coordinates {(266,494) (298,494) (266,526) (298,526)};
+\node[font=\scriptsize,anchor=south west,text=navy] at (axis cs:197,232) {测量框};
+\node[font=\scriptsize,anchor=west,text=navy] at (axis cs:305,510) {参考点};
+\end{axis}
+\end{tikzpicture}
+\caption{测点与参考点在图像中的位置}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.5\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=6.4cm,ybar,bar width=8pt,ymin=0,ymax=105,xmin=0.3,xmax=12.7,
+  xtick={1,...,12},xlabel={测点编号},ylabel={信号/基线比 $g_i$},tick label style={font=\scriptsize},
+  label style={font=\footnotesize},nodes near coords,nodes near coords style={font=\tiny,rotate=90,anchor=west},
+  grid=major,grid style={draw=gray!20}]
+\addplot[fill=amber!80,draw=amber!60!black] coordinates {(1,81.1) (2,95.0) (3,67.3) (4,59.7) (5,75.6) (6,62.3) (7,60.7) (8,36.3) (9,65.0) (10,67.9) (11,54.1) (12,37.3)};
+\draw[axred,thick,dashed] (axis cs:0.3,3) -- (axis cs:12.7,3);
+\node[font=\scriptsize,text=axred,anchor=south east] at (axis cs:12.6,4) {门限 3};
+\end{axis}
+\end{tikzpicture}
+\caption{逐点信号/基线比}
+\end{subfigure}
+\caption{2026-11-04 实测的测点布局与判定结果}
+\label{fig:points}
+\end{figure}
+
+12 个测点的信号/基线比都在 36 以上，远高于门限 3。测量框右列的测点 4、8、12 振幅较小（谐波有效值 0.26～0.30 像素），比值最低；左列和中部测点振幅较大，比值最高，铝片各处振幅的差异在测点之间清楚地表现出来。视觉与声学两条独立链路给出的主频相差 0.02 Hz，远小于视觉单窗 0.352 Hz 的频点间隔；11 个窗口的主频分布在 19.851～19.964 Hz 之间，取中位数后结果稳定。
+
+从按下“开始测量”到报警输出的过程与设计流程一致：基线采集完成时播放“停机基线已采集，请开始测量”；启动电机后点击开始，10 s 测量结束即给出结果，峰峰值 0.209 mm 超过 0.02 mm 报警阈值，红灯点亮、蜂鸣器间歇鸣响并播报“振动异常，请及时检查设备”，手机 APP 同时弹出报警；随后从结果页触发打印，热敏打印机输出含主频、峰峰值、12/12 测点和波形的报告（图~\ref{fig:uilive}、图~\ref{fig:app}）。
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=43.73mm]{\figpath/live/scr_meas.jpg}
+\caption{测量中}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=43.73mm]{\figpath/live/scr_result.jpg}
+\caption{结果页：19.95 Hz，12/12，0.209 mm}
+\end{subfigure}
+\par\vspace{6mm}
+\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=80.00mm]{\figpath/live/scr_receipt.jpg}
+\caption{打印出的测量报告}
+\end{subfigure}
+\caption{2026-11-04 实测时的屏幕与打印输出}
+\label{fig:uilive}
+\end{figure}
+\FloatBarrier
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=90.00mm]{\figpath/live/app_alarm.jpg}
+\caption{实测报警推送}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
+\includegraphics[height=90.00mm]{\figpath/live/app_result.jpg}
+\caption{实测结果详情}
+\end{subfigure}
+\caption{APP 实测报警推送与结果详情}
+\label{fig:app}
+\end{figure}
 \FloatBarrier
 
 

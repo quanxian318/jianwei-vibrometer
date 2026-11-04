@@ -7,4 +7,4 @@
 - `dist`：当前安装包；iOS包需自行签名安装。
 - `tools`：构建与PCB纹理生成脚本。
 
-[三侧对接审查](../../docs/interface_review.md)记录已复现的声学字段和连续设置问题，本次目录整理未修改界面逻辑。PCB纹理生成脚本读取根目录`01_硬件工程`的Gerber、BOM及丝印坐标。
+[三侧接口说明](../../docs/interface_review.md)说明 AX7010、Nano 网关与 APP 的数据和命令交互。默认同一局域网直接连接，也可启用配对。APP 版本为 1.0.5，Nano 固件为 0.2.3。PCB 板图随 APP 源码提供，制造文件位于 hardware/pcb。

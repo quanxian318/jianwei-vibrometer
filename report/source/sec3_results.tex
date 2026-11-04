@@ -74,82 +74,6 @@ PL 端完成双路视频、HDMI、PDM 接收、补光 PWM 与看门狗、打印 
 
 \subsection{特性成果}
 
-\subsubsection{板端实测结果}
-
-2026 年 11 月 4 日 02:05 的完整测量如表~\ref{tab:record} 所示。被测物为减速电机驱动的散斑铝片，相机 1 输出 1280×720 图像，测量框位于 (197, 235)，大小 256×124 像素，12 个测点按 4 列 3 行排布，4 个参考点贴在铝片下方静止的背景上（图~\ref{fig:points}）。先采 15 s 停机基线，再启动电机测量约 10 s。
-
-\begin{table}[htbp]
-\centering
-\caption{2026-11-04 板端测量记录 \code{jianwei-ax7010-20261104-020520}}
-\label{tab:record}
-\small
-\begin{tabularx}{\linewidth}{@{}L{3.6cm}L{4.3cm}Y@{}}
-\toprule
-\tabhead \tabh{项目} & \tabh{结果} & \tabh{说明} \\
-\midrule
-开始时间 / 时长 & 02:05:10.6 / 10.012 s & RTC 时间源，单调时钟计时 \\
-帧数 / 帧率 & 452 帧 / 45.0477 帧/s & 收到帧率与相机帧率相同 \\
-丢帧 / 跟踪失败 / 饱和 & 0 / 0 / 0 & 无重采样补点 \\
-帧间隔抖动 & 0.417 ms & 约为帧周期的 1.9\% \\
-分析窗 & 11 个，全部为信号窗 & 128 帧窗，每 32 帧一次 \\
-视觉主频 & 19.9476 Hz & 11 窗范围 19.851～19.964 Hz \\
-声学主频 & 19.9277 Hz & 3000～8000 Hz 包络，27.2 dB \\
-主频差 & 0.0199 Hz（0.10\%） & 容差 0.399 Hz，判为一致 \\
-超过基线的测点 & 12/12 & 信号/基线比 36.3～95.0 \\
-代表测点 & 第 2 点（比值 95.0） & 波形、频谱检查通过 \\
-峰峰值 & 1.0294 像素 / 0.2090 mm & 代表测点 $y$ 方向时域值 \\
-有效值 & 0.3451 像素 / 0.0701 mm & 同一序列，去线性趋势 \\
-尺标比例 & 0.20309 mm/像素 & 试验尺标，$y$ 方向 \\
-判级 & 报警 & 峰峰值 0.209 mm，高于报警阈值 0.02 mm \\
-照明 & 开启，60\% & 十字激光关闭 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-帧率按首末帧之间的 451 个间隔计算：$f_s=(452-1)/10.01160=45.0477$ 帧/s。记录保留计算精度，屏幕、打印和视频以 19.95 Hz、19.93 Hz、0.209 mm 显示视觉主频、声学主频和峰峰值。
-
-
-\begin{figure}[htbp]
-\centering
-\begin{subfigure}[b]{0.47\linewidth}\centering
-\begin{tikzpicture}
-\begin{axis}[width=\linewidth,height=6.4cm,xmin=180,xmax=470,ymin=220,ymax=545,y dir=reverse,
-  axis equal image,xlabel={$x$ / 像素},ylabel={$y$ / 像素},tick label style={font=\scriptsize},label style={font=\footnotesize},
-  colormap={warm}{rgb255(0)=(255,236,179) rgb255(1)=(242,140,40) rgb255(2)=(178,34,34)},
-  colorbar,colorbar style={width=2.5mm,ylabel={信号/基线比},ylabel style={font=\scriptsize},tick label style={font=\scriptsize}},
-  point meta min=30,point meta max=100]
-\draw[navy,thick] (axis cs:197,235) rectangle (axis cs:453,359);
-\addplot[scatter,only marks,mark=*,mark size=3.6pt,scatter src=explicit] coordinates {
- (229,255.67)[81.1] (293,255.67)[95.0] (357,255.67)[67.3] (421,255.67)[59.7]
- (229,297)[75.6] (293,297)[62.3] (357,297)[60.7] (421,297)[36.3]
- (229,338.33)[65.0] (293,338.33)[67.9] (357,338.33)[54.1] (421,338.33)[37.3]};
-\addplot[only marks,mark=square*,mark size=3pt,color=navy] coordinates {(266,494) (298,494) (266,526) (298,526)};
-\node[font=\scriptsize,anchor=south west,text=navy] at (axis cs:197,232) {测量框};
-\node[font=\scriptsize,anchor=west,text=navy] at (axis cs:305,510) {参考点};
-\end{axis}
-\end{tikzpicture}
-\caption{测点与参考点在图像中的位置}
-\end{subfigure}\hfill
-\begin{subfigure}[b]{0.5\linewidth}\centering
-\begin{tikzpicture}
-\begin{axis}[width=\linewidth,height=6.4cm,ybar,bar width=8pt,ymin=0,ymax=105,xmin=0.3,xmax=12.7,
-  xtick={1,...,12},xlabel={测点编号},ylabel={信号/基线比 $g_i$},tick label style={font=\scriptsize},
-  label style={font=\footnotesize},nodes near coords,nodes near coords style={font=\tiny,rotate=90,anchor=west},
-  grid=major,grid style={draw=gray!20}]
-\addplot[fill=amber!80,draw=amber!60!black] coordinates {(1,81.1) (2,95.0) (3,67.3) (4,59.7) (5,75.6) (6,62.3) (7,60.7) (8,36.3) (9,65.0) (10,67.9) (11,54.1) (12,37.3)};
-\draw[axred,thick,dashed] (axis cs:0.3,3) -- (axis cs:12.7,3);
-\node[font=\scriptsize,text=axred,anchor=south east] at (axis cs:12.6,4) {门限 3};
-\end{axis}
-\end{tikzpicture}
-\caption{逐点信号/基线比}
-\end{subfigure}
-\caption{2026-11-04 实测的测点布局与判定结果}
-\label{fig:points}
-\end{figure}
-
-12 个测点的信号/基线比都在 36 以上，远高于门限 3。测量框右列的测点 4、8、12 振幅较小（谐波有效值 0.26～0.30 像素），比值最低；左列和中部测点振幅较大，比值最高，铝片各处振幅的差异在测点之间清楚地表现出来。视觉与声学两条独立链路给出的主频相差 0.02 Hz，远小于视觉单窗 0.352 Hz 的频点间隔；11 个窗口的主频分布在 19.851～19.964 Hz 之间，取中位数后结果稳定。
-
-从按下“开始测量”到报警输出的过程与设计流程一致：基线采集完成时播放“停机基线已采集，请开始测量”；启动电机后点击开始，10 s 测量结束即给出结果，峰峰值 0.209 mm 超过 0.02 mm 报警阈值，红灯点亮、蜂鸣器间歇鸣响并播报“振动异常，请及时检查设备”，手机 APP 同时弹出报警；随后从结果页触发打印，热敏打印机输出含主频、峰峰值、12/12 测点和波形的报告（图~\ref{fig:uilive}、图~\ref{fig:app}）。
-
 \subsubsection{资源与时序}
 
 当前位流对应的 Vivado 2025.2 实现结果见表~\ref{tab:util}。LUT 和 BRAM 约用一半，但 Slice 占用 91.3\%：视频通路的 AXI 互联、VDMA 和格式转换分散在大量 Slice 中，每个 Slice 只用了部分 LUT。Slice 的占用成为后续加入跟踪加速核时的主要布局约束。已约束路径的最差建立裕量为 +0.756 ns，位于 125 MHz 时钟域；保持裕量为 +0.028 ns。
@@ -235,7 +159,7 @@ PS 深度阶段 & 移除 PL 双目核，深度迁到 PS & 8574 & 30.5 & 0 & 4026
 
 \paragraph{实时性：面向 PL 的 LK 累加核与 PS 端的等价优化。}LK 每次迭代的主要计算是双线性插值和五个累加和（$\sum I$、$\sum I^2$、$\sum g_xI$、$\sum g_yI$、$\sum TI$）。我们在 PL 中实现了 \code{lk\_accum}：每个时钟处理一个像素，插值精度 1/256 像素，五路 48 位整数乘加，整数 ZNCC 搜索与 LK 亚像素更新共用同一个引擎。与 C++ 位精确模型比较，合成纹理 8 例加实拍帧 8 例共 16 组黄金向量逐位一致，32×32 模板每遍 1029 个时钟。按每测点每帧约 81 次整数搜索、最多 25 次细搜和 6 次 LK 迭代估算，100 MHz 下单测点约 1.2 ms，4 个测点加 1 个背景约 5.8 ms，低于 45 帧/s 的 22 ms 帧周期，为后续把多点跟踪迁入 PL 准备好了核心。PS 端在不改变数值结果的前提下做了两项优化：高斯平滑只处理模板可能读到的区域（约为整帧计算量的十分之一）；模板插值时预先缓存 25 个行坐标与 25 个列坐标的整数部分和小数部分，插值与累加顺序保持不变，结果与原核逐位一致。
 
-\paragraph{鲁棒性：从现场失败中修正的四处问题。}一是频率搜索上限：原算法只搜索到 $0.45f_s\approx20.3$ Hz，1320 r/min 电机约 22 Hz 的峰被排除，修改为 30 Hz 软件上限并在奈奎斯特频点处增加“仍在上升则不下结论”的保护，合成信号回归 7、21.6、22 Hz 通过。二是丢帧处理：把“任何丢帧即整窗无效”改为“连续丢帧不超过 2 帧、总量不超过 5\%、间隔偏差不超过 10\% 时重采样”，并在记录中保留原始帧数和丢帧标志。三是参考点纹理：参考点落在弱纹理纸面时停机基线反复失败，移到静止纸片上清晰的文字处后，69 个基线窗口全部通过，此后把“参考点必须有二维纹理”写入操作说明。四是打印分段：24 行一段、排空后间隔 120 ms，解决了文字压扁。表~\ref{tab:optsum} 汇总了这些优化前后的对比。
+\paragraph{鲁棒性：采样、参考点与打印流程。}频率搜索采用 30 Hz 软件上限，并结合实测帧率与奈奎斯特边界检查，7、21.6、22 Hz 合成信号回归通过。短缺帧按连续不超过 2 帧、总量不超过 5\%、间隔偏差不超过 10\% 的条件重采样，记录保留原始帧数与丢帧标志。静止参考点选在清晰二维纹理区域，69 个基线窗口全部通过。打印采用 24 行分段、UART 排空和 120 ms 间隔，同一份 720 行报告正常输出。表~\ref{tab:optsum} 汇总优化前后的处理策略与结果。
 
 \begin{table}[htbp]
 \centering
@@ -253,7 +177,7 @@ PL LUT / BRAM / DSP & 13655 / 41.5 / 3 & 8945 / 30.5 / 0 & 实现报告，功能
 丢帧处理 & 任一丢帧整窗无效 & ≤5\% 有界重采样 & 回归测试与记录标志 \\
 平滑计算量 & 整帧 & 约 1/10，结果逐位一致 & 模板读取范围分析 \\
 PDM 抽取 & 逐位积分（约 1000 万次加法/s） & 查表（125 万次/s） & 与逐位实现逐位一致 \\
-打印 & 局部文字压扁 & 720 行报告正常 & 同一报告重打对照 \\
+打印 & 连续光栅传输 & 24 行分段，720 行报告正常 & 同一报告重打对照 \\
 \bottomrule
 \end{tabularx}
 \end{table}

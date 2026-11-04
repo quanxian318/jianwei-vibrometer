@@ -405,26 +405,9 @@ $P_1$、$P_2$ 分别惩罚 1 像素和更大的视差跳变。各路径代价相
 
 每次测量生成一条 JSON 记录（格式 \code{vision-vibration-record-1}），包含测量编号、UTC 与本地时间、时间来源、相机实测帧率与抖动、丢帧数、测量框与 12 个测点和 4 个参考点的坐标、标定编号与比例、主频与振幅、逐点信号/基线比与谐波有效值、窗口统计、阈值快照与判级、采集质量计数、照明状态，以及完整的声学分析和音频文件名。波形、频谱和音频另存为 CSV 与 WAV。
 
-热敏打印机宽 384 点。打印服务把报告（含波形和频谱缩略图）渲染为 384 点宽的位图，按 ESC/POS 光栅命令分段发送。早期版本出现局部文字被压扁的现象，检查渲染位图比例正常后，问题定位在串口传输与分段打印的衔接；改为每 24 行光栅一段、每段发送后等待 UART 发送 FIFO 排空并间隔 120 ms 后，同一份 720 行的报告打印正常。
+热敏打印机宽 384 点。打印服务把报告（含波形和频谱缩略图）渲染为 384 点宽的位图，按 ESC/POS 光栅命令分段发送。每 24 行光栅作为一段，发送后等待 UART FIFO 排空并间隔 120 ms，720 行测量报告中的文字、波形和频谱均正常输出。
 
-\begin{figure}[htbp]
-\centering
-\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
-\includegraphics[height=43.73mm]{\figpath/live/scr_meas.jpg}
-\caption{测量中}
-\end{subfigure}\hfill
-\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
-\includegraphics[height=43.73mm]{\figpath/live/scr_result.jpg}
-\caption{结果页：19.95 Hz，12/12，0.209 mm}
-\end{subfigure}
-\par\vspace{6mm}
-\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
-\includegraphics[height=80.00mm]{\figpath/live/scr_receipt.jpg}
-\caption{打印出的测量报告}
-\end{subfigure}
-\caption{2026-11-04 实测时的屏幕与打印输出}
-\label{fig:uilive}
-\end{figure}
+
 
 \subsubsection{Nano ESP32 固件}
 \label{sec:nano}
@@ -455,29 +438,20 @@ $10+n$ & 2 & CRC-16/CCITT-FALSE（多项式 0x1021，初值 0xFFFF），覆盖�
 \end{tabular}
 \end{table}
 
-语音资源为 13 条 16 kHz、16 位单声道 WAV，存放在主载板的 microSD 卡中，包括开机欢迎、开始与完成基线采集、开始测量、测量完成、振动预警、振动报警、打印与存储异常等提示，由 AX 根据事件提交 asset\_id 和音量。播放命令被接受只表示任务入队，播放是否完成以 AUDIO\_DONE 或 AUDIO\_FAILED 事件为准。
+语音资源为 13 条 16 kHz、16 位单声道 WAV，存放在主载板的 microSD 卡中，包含欢迎、基线、测量、判警和打印等操作提示，支持事件播报与语音命令调用。主要流程在基线成功后播放 baseline\_done，在测量结束后按结果播放 measure\_done、vibration\_warn 或 vibration\_alarm，AX 提交 asset\_id 与音量。播放命令被接受只表示任务入队，播放是否完成以 AUDIO\_DONE 或 AUDIO\_FAILED 事件为准。
 
 \subsubsection{移动端 APP}
 
-APP 的界面用 HTML 与 JavaScript 实现一次，Android（Java）、iOS（Swift）和 Windows（C++）只提供原生外壳和设备发现。手机和电脑可以在同一局域网内直接访问 AX7010 的 HTTP 接口，也可以连接 ESP32 的热点，由 Nano 的网关转发。首次连接需要配对。APP 提供实时位移曲线、开始/停止测量、采集基线、照明控制、结果详情（含三维时频图）、历史记录、测点设置和设备数字孪生视图；测量结束和报警时同步推送（图~\ref{fig:app}）。
+APP 的界面用 HTML 与 JavaScript 实现一次，Android（Java）、iOS（Swift）和 Windows（C++）只提供原生外壳和设备发现。手机和电脑可以在同一局域网内直接访问 AX7010 的 HTTP 接口，也可以连接 ESP32 的热点，由 Nano 的网关转发。默认在同一局域网直接连接；启用 \code{app\_api.require\_pairing} 时使用配对码。APP 提供实时位移曲线、开始/停止测量、采集基线、照明控制、结果详情（含三维时频图）、历史记录、测点设置和设备数字孪生视图；测量结束和报警时同步推送（图~\ref{fig:app}）。
+
+
+
+\FloatBarrier
 
 \begin{figure}[htbp]
 \centering
-\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
-\includegraphics[height=90.00mm]{\figpath/live/app_alarm.jpg}
-\caption{实测报警推送}
-\end{subfigure}\hfill
-\begin{subfigure}[t]{0.48000\linewidth}\centering\vspace{0pt}
-\includegraphics[height=90.00mm]{\figpath/live/app_result.jpg}
-\caption{实测结果详情}
-\end{subfigure}
-\par\vspace{6mm}
-\begin{subfigure}[t]{0.96000\linewidth}\centering\vspace{0pt}
 \includegraphics[height=82.56mm]{\figpath/app/app_twin.jpg}
-\caption{设备数字孪生与爆炸视图}
-\end{subfigure}
-\caption{APP 界面与实测结果}
-\label{fig:app}
+\caption{APP 设备数字孪生与爆炸视图}
+\label{fig:app-twin}
 \end{figure}
-
 \FloatBarrier

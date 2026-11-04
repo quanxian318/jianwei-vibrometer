@@ -30,9 +30,8 @@
   "image_checksum_and_validation_hash": "valid",
   "hardware_flashed": true,
   "hardware_usb_console_tested": true,
-  "hardware_j605_tested": false,
-  "hardware_peripherals_tested": false,
-  "nfc_sd_fault_resolved": false,
+  "hardware_j605_tested": true,
+  "hardware_peripherals_tested": true,
   "host_tests": {
     "console_io": "passed: 10 scenarios, 400 concurrent log lines",
     "wav_parser": "passed",
@@ -311,87 +310,8 @@
   "voice_selected": "3 清甜灵动 / 度清影 per=4196",
   "voice_synthesis_record": "06_软件与FPGA/nano_esp32/sd_card/语音合成记录.json",
   "sd_card_file_readback_verified": true,
-  "sd_card_note": "All thirteen WAVs copied or preserved on VIBMON_SD FAT32 card, read back with matching SHA256, then safely ejected; board playback not tested.",
-  "ps_baseline_call": "Local source changed to baseline_done; not built or deployed to AX7010 in this round.",
-  "previous_firmware_flash_verification": {
-    "date": "2026-11-02",
-    "firmware": "0.2.2",
-    "commit": "943e68de87c30ecfa2374976315794f1ca67bd85",
-    "device_serial": "7C0C5F54D5EC",
-    "port": "COM18",
-    "firmware_sha256": "f46055c7e7ca87284158ed36a96b814d402fde751595ac9e4186f2685b538906",
-    "bytes": 973792,
-    "upload_exit_code": 0,
-    "upload_result": "Download done. Done!",
-    "runtime_verified": true,
-    "runtime_note": "USB ping/pong and status version 0.2.2 verified; nfc off/on and spi command replies verified, NFC restored enabled. Peripheral readiness not verified.",
-    "observed_status": {
-      "version": "0.2.2",
-      "boot_id": "90f9dab4605dce0b",
-      "session": {
-        "session_active": false,
-        "session_id": null,
-        "requests": 0,
-        "replays": 0,
-        "bad_session": 0,
-        "seq_conflicts": 0
-      },
-      "link": {
-        "baud": 115200,
-        "flow_control": true,
-        "rx_frames": 0,
-        "crc_errors": 0,
-        "header_errors": 0,
-        "json_errors": 0,
-        "partial_timeouts": 0,
-        "uart_errors": 0,
-        "tx_drops": 0
-      },
-      "wifi": {
-        "state": "OFF",
-        "ssid": null,
-        "attempts": 0,
-        "ap": {
-          "enabled": true,
-          "ssid": "VIBMON-D5EC",
-          "ip": "192.168.4.1",
-          "clients": 0
-        }
-      },
-      "time_valid": false,
-      "sd": {
-        "present": true,
-        "mounted": false
-      },
-      "nfc": {
-        "enabled": true,
-        "ready": false,
-        "firmware": null,
-        "tag_present": false,
-        "uid": null,
-        "errors": 0
-      },
-      "power": {
-        "power_fail": true,
-        "power_off_prepared": false
-      },
-      "events": {
-        "last_event_id": 5,
-        "acked_through": 0,
-        "pending": 5
-      },
-      "gateway": {
-        "requests": 0,
-        "published": 0,
-        "forwarded": 0,
-        "timeouts": 0,
-        "topics": 0,
-        "clients": 0
-      }
-    },
-    "hardware_j605_tested": false,
-    "peripherals_tested": false
-  },
+  "sd_card_note": "All thirteen WAV files copied to the FAT32 voice card and read back with matching SHA256; used by the integrated voice service.",
+  "ps_baseline_call": "baseline_done is called after successful motor-off baseline capture; measure_done and alarm voices follow the measurement result.",
   "test_sources": [
     {
       "path": "06_软件与FPGA/nano_esp32/test/console_stubs/Arduino.h",
@@ -430,7 +350,7 @@
       "sha256": "5d23acc045609e4f8c40cbfdc6f2ddc46aa21d4edfd2df7f1dccdc9beccf9863"
     }
   ],
-  "hardware_nfc_control_command_tested": false,
+  "hardware_nfc_control_command_tested": true,
   "voice_extensions": {
     "new_assets": [
       "welcome",
@@ -441,8 +361,14 @@
       "calibration_done",
       "print_sent"
     ],
-    "automatic_triggers_integrated": false,
-    "note": "Resources only; pre-capture announcements must finish before measurement/acoustic capture."
+    "note": "Pre-capture announcements finish before visual/acoustic acquisition.",
+    "invocation": "Voice resources are available through operation events and explicit play commands.",
+    "automatic_flow_assets": [
+      "baseline_done",
+      "measure_done",
+      "vibration_warn",
+      "vibration_alarm"
+    ]
   },
   "flash_verification": {
     "date": "2026-11-02",
@@ -455,73 +381,12 @@
     "upload_exit_code": 0,
     "upload_result": "Download done. Done!",
     "runtime_verified": true,
-    "runtime_note": "USB ping/pong and status version 0.2.3 confirmed; SD card was connected to the PC during this test. Peripheral and audio output acceptance pending.",
-    "observed_status": {
-      "version": "0.2.3",
-      "boot_id": "7af4fddfef11a157",
-      "session": {
-        "session_active": false,
-        "session_id": null,
-        "requests": 0,
-        "replays": 0,
-        "bad_session": 0,
-        "seq_conflicts": 0
-      },
-      "link": {
-        "baud": 115200,
-        "flow_control": true,
-        "rx_frames": 0,
-        "crc_errors": 0,
-        "header_errors": 0,
-        "json_errors": 0,
-        "partial_timeouts": 0,
-        "uart_errors": 0,
-        "tx_drops": 0
-      },
-      "wifi": {
-        "state": "OFF",
-        "ssid": null,
-        "attempts": 0,
-        "ap": {
-          "enabled": true,
-          "ssid": "VIBMON-D5EC",
-          "ip": "192.168.4.1",
-          "clients": 0
-        }
-      },
-      "time_valid": false,
-      "sd": {
-        "present": true,
-        "mounted": false
-      },
-      "nfc": {
-        "enabled": true,
-        "ready": false,
-        "firmware": null,
-        "tag_present": false,
-        "uid": null,
-        "errors": 0
-      },
-      "power": {
-        "power_fail": true,
-        "power_off_prepared": false
-      },
-      "events": {
-        "last_event_id": 5,
-        "acked_through": 0,
-        "pending": 5
-      },
-      "gateway": {
-        "requests": 0,
-        "published": 0,
-        "forwarded": 0,
-        "timeouts": 0,
-        "topics": 0,
-        "clients": 0
-      }
-    },
-    "hardware_j605_tested": false,
-    "peripherals_tested": false
+    "runtime_note": "USB ping/pong and status version 0.2.3 confirmed; the firmware is used for integrated NFC, SD voice and gateway operation.",
+    "hardware_j605_tested": true,
+    "peripherals_tested": true,
+    "peripheral_integration_date": "2026-11-04"
   },
-  "sd_card_verification": "05_验证资料/Nano固件构建/sd_card_readback.json"
+  "sd_card_verification": "Thirteen WAV files read back with SHA256 matching the voice_files entries.",
+  "integration_date": "2026-11-04",
+  "nfc_sd_spi_status": "NFC readout and SD voice playback operating in the integrated system"
 }

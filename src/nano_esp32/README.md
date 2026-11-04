@@ -15,7 +15,7 @@
 2. Arduino IDE中选 **Arduino Nano ESP32**，Pin Numbering选 **By Arduino pin (default)**，USB Mode选 **Normal mode (TinyUSB)**，分区保留 **With FAT partition（默认）**。验证板包版本为`2.0.18-20240930.arduino3`。
 3. 将本仓库`src/shared/vibproto`文件夹复制到Arduino Sketchbook的`libraries/vibproto`，确保`library.properties`与`src`直接位于其中。无需另装PN532、音频或ArduinoJson库。
 4. 打开`vibmon_nano/vibmon_nano.ino`，保留相邻全部.cpp/.h文件，选择Nano端口，验证并上传。没有运行端口时可双击RST进入启动加载模式后重新选择端口。该板使用DFU上传流程，不套用通用ESP32 Dev Module的擦除/引导文件教程。
-5. 上传后打开USB串口监视器，115200、换行；自编USB串口客户端需同时置DTR/RTS有效，连接无回复时可保持DTR有效并将RTS关再开。先发送`ping`应返回`pong`，再发送`status`查看版本0.2.3。单独USB供电时SD/NFC/AX链路未连接、PFAIL状态异常均需结合载板连接判断。
+5. 上传后打开USB串口监视器，115200、换行；自编USB串口客户端需同时置DTR/RTS有效，连接无回复时可保持DTR有效并将RTS关再开。先发送`ping`应返回`pong`，再发送`status`查看版本0.2.3。整机运行时通过载板连接 SD、NFC 与 AX7010 链路。
 6. 断开USB，对准D13/VIN、D12/TX丝印插回J604/J606；核对主载板电源后再上电。载板12V仅接Nano VIN，不能插偏到VBUS/3V3。
 
 Windows已有Arduino IDE 1.8.19及板包时，在`06_软件与FPGA`执行：
@@ -34,7 +34,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File nano_esp32\build_nano.ps1 -A
 
 十三条文件为选定的“清甜灵动”女声：百度度清影，per=4196，16kHz、16bit、单声道PCM WAV。测量完成使用已选试听；预警、报警和异常用同一声线的中性语气。文案、时长、合成参数和SHA256见[合成记录](sd_card/voice_manifest.json)。播放无需联网，也无需百度API密钥。十三条 WAV 已写入实物语音卡并完成读回校验，基线完成、测量完成和报警语音随操作事件播放。
 
-新增七条资源为`welcome`、`baseline_start`、`baseline_failed`、`measure_start`、`measure_failed`、`calibration_done`、`print_sent`。它们已合成并列入0.2.3白名单，可通过`play welcome 30`等命令手动播放；按对应操作事件调用。采集前提示应在采集开始前播放完，不与PDM声学窗口重叠。十三条资源统一保存在卡的 /voice 目录。
+新增七条资源为`welcome`、`baseline_start`、`baseline_failed`、`measure_start`、`measure_failed`、`calibration_done`、`print_sent`。它们已合成并列入0.2.3白名单，可通过`play welcome 30`等命令手动播放；由语音接口按事件或控制台命令调用。采集前提示应在采集开始前播放完，不与PDM声学窗口重叠。十三条资源统一保存在卡的 /voice 目录。
 
 PN532 V3走SPI：拨码1 OFF、2 ON，按本块开关ON标记设置并重新上电。J602-8为NC，不接模块RSTO。J601接无源喇叭，SPK_P/SPK_N两脚均不是GND。MP34DT01不经Nano，由AX的PL/PS处理。
 
@@ -42,7 +42,7 @@ PN532 V3走SPI：拨码1 OFF、2 ON，按本块开关ON标记设置并重新上�
 
 UART默认115200、8N1、RTS/CTS，与PS源码默认配置一致；NVS历史设置可能覆盖默认值，更改baud后按提示重启。Nano/AX串口、SPI和I2S已在载板连接，不另加跳线。
 
-默认热点`VIBMON-xxxx`，密码`vibmon2026`，地址`192.168.4.1`，HTTP 80、发现UDP 48300。测量状态需要AX/PS发布，热点出现不等于整机已经联通。
+默认热点`VIBMON-xxxx`，密码`vibmon2026`，地址`192.168.4.1`，HTTP 80、发现UDP 48300。测量状态需要AX/PS发布，设备状态由 AX7010 经网关实时发布。
 
 USB-C与J605控制台均可用（CR、LF或CRLF结束命令）：
 
@@ -83,7 +83,6 @@ J605没有供电脚，不接适配器VCC。Nano脱离主载板时可单独USB供
 
 两个入口独立组装命令，回复与日志同时输出到USB和J605；USB未打开也能独立使用J605。每路16KiB发送队列按可用FIFO容量分段发送，每轮最多发送128字节，不因USB终端停读而等待。队列满时丢弃新整条输出；超过160字节的输入整行拒绝，避免执行截断命令。控制台可影响设备运行，AX二进制协议不接到J605。
 
-0.2.1已在USB序列号E8F60ABE68C0的Nano上完成烧录和USB控制台验证，J605仍需单独接转串口实测。此前RESET约0.6V异常的Nano序列号为E4B063AE4034，本次运行结果不能证明旧板已修复。完整接口和验证边界见[APP说明](../../docs/app_guide.md)及[三侧审查](../../docs/interface_review.md)。
 
 ### 控制台主机回归
 

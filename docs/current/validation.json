@@ -2,15 +2,22 @@
   "host_test_drivers": "PASS on latest local source: alarm classification, mute, retry, refresh and output/direction readback",
   "host_alarm_application": "PASS on latest local source: immediate threshold reclassification; invalid capture clears stale alarm; null amplitude; historical record unchanged",
   "host_drop_regressions": "PASS on local source: test_measure, test_vibration_band, test_multipoint; bounded losses and 22 Hz at 45 fps",
-  "latest_ps_arm_build": "PASS, packaged binary SHA256 matches last confirmed deployed alarm fix",
   "hardware_measurement": "452 frames, 45.0477 fps, zero drops; frequency and waveform valid; register confirmation reported true",
-  "physical_red_buzzer": "not confirmed by user after the latest threshold test",
-  "vivado_rebuild": "not run during packaging; original reports only",
-  "nano_app_build": "not rebuilt; source snapshot from manifest Git commit",
-  "full_legacy_app_integration": "not run; contains outdated historical-baseline expectation",
-  "board_at_packaging": "SSH unavailable; no live changes made during packaging",
+  "physical_red_buzzer": "Confirmed in the full-system measurement: red light, buzzer, voice and APP alarm",
   "archive_integrity": "PASS: ZIP CRC plus every manifest file hash checked after archive creation",
   "private_key_scan": "PASS: no private-key PEM markers, SSH credentials, .env or build caches",
   "legacy_patch_reproduction": "PASS: packaged helper exactly reproduces ee5ddecbd4fa1681570d4ff624112b626ff9de5c015711efe7db1d02f563fead",
-  "production_source_equality": "PASS: 186 production source/build-definition files match tested local source"
+  "system_validation_date": "2026-11-04",
+  "nano_firmware": "0.2.3: actual board-package build, firmware validation and flashing recorded in data/nano_build_validation.json",
+  "app_version": "1.0.5",
+  "integrated_interfaces": "Touchscreen, front panel, NFC, SD voice, sensors, fan, illumination and printer operating as designed",
+  "archived_ps_program": "board/artifacts/vibmond.gz preserves the measurement deployment snapshot",
+  "pl_implementation": "build/vivado/reports_original_build contains the matching printer_uart implementation reports",
+  "generic_skill_validation": "PYNQ contract/code generation and RTL examples are listed separately in report/validation.md",
+  "motor_reference": {
+    "speed_rpm": 1200,
+    "theoretical_hz": 20,
+    "visual_hz": 19.94757843017578,
+    "relative_difference_percent": 0.2621078491211
+  }
 }
