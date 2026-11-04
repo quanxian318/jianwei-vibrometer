@@ -855,5 +855,22 @@
   "jianwei-vibrometer/data/sht40_samples.json": "0c0e9b9020b18e781a12aee131f1ce332c3ac27449cdcba0311164477e8f31e1",
   "jianwei-vibrometer/sim/results/vivado_archive_validation.txt": "7a281832bf454c36b0be047a0fcb3cbabd6f3c344681c17006915269e0ff2750",
   "jianwei-vibrometer/src/mobile_app/tools/build_apk.sh": "df583cf784e4ee77bab62eafa9a8f783d29336004db917f65492217189d301c1",
-  "jianwei-vibrometer/src/mobile_app/tools/build_windows.sh": "95d5c2e684aebbbca9a0be6702a7cbed2d035ee03eb3ec7bfff315796be3db95"
+  "jianwei-vibrometer/src/mobile_app/tools/build_windows.sh": "95d5c2e684aebbbca9a0be6702a7cbed2d035ee03eb3ec7bfff315796be3db95",
+  "jianwei-vibrometer/report/agent_collaboration_and_skills.md": "6349921bfa14b2807897496ccfbe332d3e3ad6da2f49b7abc760bb054a7949eb",
+  "jianwei-vibrometer/report/build.ps1": "fe5dc79a54a31fdfbee2db3e1474485ec4e17ca7f31d0e064357e19994f407e1",
+  "jianwei-vibrometer/report/consolidation.md": "4c20b8f5f398d55fe23247e6f42340f55730452af11365a9549bfa1b0eeb1da3",
+  "jianwei-vibrometer/report/consolidation_validation.json": "27012dd756d9f849b9bd75a3594929fd5ff3e44d6b5f3bd45fdfaaab4f4f7cf2",
+  "jianwei-vibrometer/report/interaction_records.md": "652923a71fdc63e4acbe2437ccc77997ef96d11acffe91400ad05af9321d8892",
+  "jianwei-vibrometer/report/mechanical_and_measurement_skill_notes.md": "0a67bc6529b8449b439d057f9e4dcd192062af1f8acc2c1a39b67a1e1695ea15",
+  "jianwei-vibrometer/report/offline_workflow_validation.json": "9f53ead0546e9d81a7edb5faf5b8200023b2543d082477638c2f72f4af4104e1",
+  "jianwei-vibrometer/report/project-case.md": "48f41abef919a795ac47a909710e11f1729470cff635a5d3c78b58394209e901",
+  "jianwei-vibrometer/report/review-cases.md": "a13d892ece347f78cb343fa0743ca32f41522a7dcf8713ccc0da0c0e172165c4",
+  "jianwei-vibrometer/report/review_workflow_validation.json": "0520432efa242c6642c0b7a34068f67373ddcfcf7d94430d4c22d8b8972ef07b",
+  "jianwei-vibrometer/report/skill_extension_validation.json": "0203504b66aad52123d25b070eac8a6beeddcc41d58e86d0a70d9b4af727d1cf",
+  "jianwei-vibrometer/report/submission-checklist.md": "c8cf73c08faafadf628c567169bc652966f12e08ccdec4313b1faf93e1a421b7",
+  "jianwei-vibrometer/report/validation.md": "91d8ecdd62b2324e943f383553b494cc0eb3609f5e52b860d958f291d0a0c7b9",
+  "jianwei-vibrometer/report/review-cases/baseline.json": "3956734aed7629b645f9ae5a5c93dddfb49aba5acf7835527e0c1cc95d0dbbb4",
+  "jianwei-vibrometer/report/review-cases/candidate.json": "19872c77ae0e2a4e7776c0b9ef7a2fcf769ee25fc15f7d978c4cd6e8eccc2aed",
+  "jianwei-vibrometer/report/review-cases/scope_rejection_result.json": "823183229e4c4e856925441dbf61fcbe85e633da0c146f34ed20a6ec64540b34",
+  "jianwei-vibrometer/report/review-cases/vivado_audit_result.json": "dfc227106a1a762383439bfddfa2ad85b7eeeab1c01dfd27ae852b6fcac30731"
 }
